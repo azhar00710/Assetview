@@ -1,10 +1,12 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { authHeaders } from '../lib/authApi';
 
 const API = import.meta.env.VITE_API_URL || '/api/v1';
 const MUTATION_TIMEOUT_MS = 20000;
 
 async function fetchJson(url, options = {}, { timeoutMs } = {}) {
-  const headers = { ...options.headers };
+  // Writes require the Bearer token — smart-ident routes reject unauthenticated non-GETs
+  const headers = authHeaders({ ...options.headers });
   if (options.body) {
     headers['Content-Type'] = headers['Content-Type'] || 'application/json';
   }
