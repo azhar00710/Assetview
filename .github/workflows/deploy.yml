@@ -1,0 +1,49 @@
+name: Deploy to DigitalOcean Droplet
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.DROPLET_IP }}
+          username: root
+          key: ${{ secrets.DROPLET_SSH_KEY }}
+          command_timeout: 10m
+          script: |
+            set -e
+            cd /opt/PID_assetview
+
+            echo "=== Pulling latest code ==="
+            git fetch origin main
+            git reset --hard origin/main
+
+            echo "=== Running database migrations ==="
+            for f in database/migration*.sql; do
+              echo "Running $f ..."
+              sudo -u postgres psql -d assetview -f "$f" 2>&1 || true
+            done
+
+            echo "=== Installing backend dependencies ==="
+            cd backend
+            npm ci --production
+            npx prisma generate
+
+            echo "=== Building frontend ==="
+            cd ../frontend
+            npm ci
+            npm run build
+            rm -rf ../backend/public/assets/*
+            cp -r dist/* ../backend/public/
+
+            echo "=== Restarting services ==="
+            pm2 restart api-feature
+            pm2 save
+
+            echo "=== Deploy complete ==="

@@ -1,0 +1,176 @@
+================================================================================
+DECK DRAIN & DRY SERVICE WATER SYSTEM - P&ID
+================================================================================
+Drawing No:     AD-28-D-100003-SHT-001
+Project:        11594: AS-BUILT RECOVERY - PHASE II
+                (PACKAGE 5: LZ - ZCSC & PACKAGE 6: ABK)
+Client:         ADNOC Offshore
+Location:       ABU AL BUKHOOSH WELL HEAD TOWER - AREA 28
+Platform:       AKK 4 WELL HEAD PLATFORM
+Type:           DECK DRAIN AND DRY SERVICE WATER SYSTEM P&ID
+Revision:       1
+Date:           18 Jun 2025
+Scale:          N.T.S
+Supersedes:     TOTAL ABK DWG. NO. 0000617-28-U-99-103 1/1 REV-11
+Site Walkthrough: 15 JAN 2024
+
+================================================================================
+REFERENCE DRAWINGS
+================================================================================
+P&ID Legend, Symbols & Instrument Details:  AD-82-D-100001 TO AD-82-D-100005
+Instrument Connections Standard:            SP.A714Y.00.1311.003
+
+================================================================================
+EQUIPMENT
+================================================================================
+
+Tag         | Name       | Size                                  | Design Press | Design Temp      | Capacity | Trim Number
+------------|------------|---------------------------------------|--------------|------------------|----------|------------------
+Q-2803      | SUMP TANK  | 2000 mm L X 2000 mm W X 1000 mm H    | 1.0 barg     | -25°C / 55°C     | 4 m³     | VT-B06S-Q-2803-N
+
+================================================================================
+FLAME ARRESTORS
+================================================================================
+
+Tag         | Location
+------------|---------------------------
+FA-2803     | Upper deck vent
+FA-2804     | Mezzanine deck vent
+FA-2805     | Well deck vent
+FA-2806     | Helideck vent
+
+================================================================================
+INSTRUMENTS
+================================================================================
+
+Tag             | Type  | Description / Service
+----------------|-------|----------------------------------------------------------
+283010.LT       | LT    | Level Transmitter (sump tank Q-2803)
+283010.LG       | LG    | Level Gauge (sump tank Q-2803)
+283010.LI       | LI    | Level Indicator (sump tank Q-2803)
+
+================================================================================
+LINES (PIPING) - DECK DRAIN SYSTEM
+================================================================================
+
+Line Number                         | Size  | Class | Service
+------------------------------------|-------|-------|---------------------------
+3"-DH-28-31-0304-B03-N             | 3"    | B03   | Closed drain header (main)
+3"-DH-28-31-0301-B03-N             | 3"    | B03   | Closed drain
+3"-DH-28-31-0110-B03-N             | 3"    | B03   | Closed drain
+2"-DH-28-31-0205-B03-N             | 2"    | B03   | Closed drain
+2"-DH-28-31-0203-B03-N             | 2"    | B03   | Closed drain
+2"-DH-28-31-0202-B03-N             | 2"    | B03   | Closed drain
+2"-DH-28-31-0101-B03-N             | 2"    | B03   | Closed drain
+2"-DH-28-31-0103-B03-N             | 2"    | B03   | Closed drain
+2"-DH-28-31-0104-B03-N             | 2"    | B03   | Closed drain
+2"-DH-28-31-0105-B03-N             | 2"    | B03   | Closed drain
+2"-DH-28-31-0107-B03-N             | 2"    | B03   | Closed drain
+2"-DH-28-31-0311-B06S-N            | 2"    | B06S  | Closed drain
+2"-DH-28-31-0314-B06S-N            | 2"    | B06S  | Closed drain
+3"-DH-28-31-0211-B06S-N            | 3"    | B06S  | Closed drain
+1"-DH-28-31-0204-B03-N             | 1"    | B03   | Closed drain (from corrosion inhibitor)
+4"-DH-28-31-0302-B03-N             | 4"    | B03   | Closed drain
+
+LINES (PIPING) - VENT SYSTEM
+Line Number                         | Size  | Class | Service
+------------------------------------|-------|-------|---------------------------
+3"-V-28-22-0101-B16-N              | 3"    | B16   | Vent
+3"-V-28-22-0102-B16-N              | 3"    | B16   | Vent
+3"-V-28-22-0103-B16-N              | 3"    | B16   | Vent
+3"-V-28-22-0105-B16-N              | 3"    | B16   | Vent (PSV outlet)
+4"-V-28-22-0104-B16-N              | 4"    | B16   | Vent
+4"-V-28-22-0105-B16-N              | 4"    | B16   | Vent
+3"-V-28-22-0301-B03-N              | 3"    | B03   | Vent
+3"-V-28-22-0302-B03-N              | 3"    | B03   | Vent
+6"-V-28-22-0301-B03-N              | 6"    | B03   | Vent (main header)
+3"-V-28-22-0310-B26S-N             | 3"    | B26S  | Vent
+3"-V-28-22-0601-B06S-N             | 3"    | B06S  | Vent
+2"-V-28-22-0110-B26S-N             | 2"    | B26S  | Vent
+2"-V-28-22-0203-B10-N              | 2"    | B10   | Vent
+4"-V-28-22-0202-B47-N              | 4"    | B47   | Vent
+
+LINES (PIPING) - DRY SERVICE WATER
+Line Number                         | Size  | Class | Service
+------------------------------------|-------|-------|---------------------------
+6"-DW-28-31-0301-B95-N             | 6"    | B95   | Dry service water
+6"-DW-28-31-0302-B95-N             | 6"    | B95   | Dry service water
+4"-DW-28-31-0301-B95-N             | 4"    | B95   | Dry service water
+4"-DW-28-31-0301-B06S-N            | 4"    | B06S  | Dry service water
+
+LINES (PIPING) - PRODUCTION HEADER
+Line Number                         | Size  | Class | Service
+------------------------------------|-------|-------|---------------------------
+2"-H-28-12-0326-J26S-N             | 2"    | J26S  | Production header drain
+2"-H-28-12-0330-J26S-N             | 2"    | J26S  | Production header drain
+2"-H-28-12-0225-J26S-N             | 2"    | J26S  | Production header
+
+================================================================================
+INLINE VALVES
+================================================================================
+
+Tag         | Size  | Notes
+------------|-------|------------------------------------------
+V-28101     | 2"    | On drain line
+V-28103     | 4"    | On drain header
+V-28107     | 4"    | On drain
+V-28108     | 4"    | On drain
+HV-280301   | -     | Main drain header isolation
+
+================================================================================
+DECK LEVELS (Drain Collection)
+================================================================================
+- WELL DECK (top level)
+- UPPER DECK
+- MEZZANINE DECK
+- CELLAR DECK (lowest level)
+- BOAT LANDING
+
+Drain flow: All decks → Drain headers → Q-2803 Sump Tank
+Overflow: Q-2803 → OVERFLOW TO SEA
+Drain gradient: MIN. 1% slope, 500 MIN. clearance
+
+================================================================================
+CROSS-REFERENCES FROM OTHER SHEETS
+================================================================================
+
+Ref   | Drawing                          | Description
+------|----------------------------------|------------------------------------------------
+1033  | AD-28-D-100004-SHT-001          | FROM Q-2801 METHANOL STORAGE TANK (blanketing)
+1034  | AD-28-D-100004-SHT-001          | FROM PSV-282010 Q-2801 METHANOL TANK
+1032  | AD-28-D-100001-SHT-001          | FROM WELLHEAD FLOWLINE UPSTREAM CHOKE
+1031  | AD-28-D-100004-SHT-001          | PORTABLE METHANOL INJECTION PACKAGE
+1015  | AD-28-D-100001-SHT-001          | FROM WELLHEAD MANIFOLD
+1016  | AD-28-D-100001-SHT-001          | FROM 3"-V-28-22-0103-B16-N VENT
+1024  | AD-28-D-100001-SHT-001          | FROM 3"-V-28-22-0102-B16-N VENT
+1019  | AD-28-D-100007-SHT-001          | FROM PRODUCTION HEADER 14"-H-28-12-0320-J26S-N
+1020  | AD-28-D-100007-SHT-001          | FROM GP-2802 PIG LAUNCHER
+1021  | AD-28-D-100007-SHT-001          | FROM MANIFOLD/GP-2802
+1022  | AD-28-D-100007-SHT-001          | FROM GP-2802 DRIP PAN
+1014  | AD-28-D-100002-SHT-001          | FROM G-2802 PUMP SKID CORROSION INHIBITOR PACKAGE
+1023  | AD-28-D-100001-SHT-001          | FROM 3"-V-28-22-0105-B16-N PSV-281010
+1026  | AD-28-D-100001-SHT-001          | FROM 3"-V-28-22-0101-B16-N VENT
+1027  | AD-28-D-100002-SHT-001          | FROM CORROSION INHIBITOR STORAGE TANK Q-2802
+1028  | AD-28-D-100001-SHT-001          | FROM DRIP PAN GP-2801 PIG LAUNCHER
+1025  | AD-28-D-100004-SHT-001          | FROM Q-2801 METHANOL STORAGE TANK
+1017  | AD-28-D-100005-SHT-001          | FROM AF-9/AF-10 VENT UPSTREAM CHOKE
+1018  | AD-28-D-100001-SHT-001          | FROM GP-2801 PIG LAUNCHER
+1013  | AD-28-D-100006-SHT-001          | FROM AF-9/AF-10 UPSTREAM CHOKE
+1030  | AD-28-D-100001-SHT-001          | FROM PSV-281020, PSV-281030, PCV-281010, PCV-281020
+
+================================================================================
+NOTES
+================================================================================
+1. SUMP TANK IS PERIODICALLY DRAIN TO PORTABLE SUMP TANK VIA QUICK CONNECTED FLEXIBLE HOSE.
+2. DRAIN NETWORK PROVIDED WITH 1% SLOPE MINIMUM, NO POCKET, AT LOW POINT.
+3. EXISTING SUMP TANK REPLACED DURING OKID PROJECT.
+4. PROVISION FOR FUTURE CONNECTIONS.
+5. ACCESSIBILITY FOR MAINTENANCE PURPOSE.
+
+================================================================================
+DRY SERVICE WATER CONNECTIONS
+================================================================================
+- HOSE CONNECTION FOR BOAT SUPPLY (BOAT LANDING) - multiple locations
+- ATMOSPHERIC VENT SAFE AREA HELIDECK connections
+- GWR (Guided Wave Radar) level measurement on Q-2803
+- FROM TRANSFORMER DRIP TRAY connection

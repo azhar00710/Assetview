@@ -1,0 +1,352 @@
+================================================================================
+PRODUCTION LINES - P&ID
+================================================================================
+Drawing No:     AD-28-D-100001-SHT-001
+Project:        11594: AS-BUILT RECOVERY - PHASE II
+                (PACKAGE 5: LZ - ZCSC & PACKAGE 6: ABK)
+Client:         ADNOC Offshore
+Location:       ABU AL BUKHOOSH WELL HEAD TOWER - AREA 28
+Platform:       AKK 4 WELL HEAD PLATFORM
+Type:           PRODUCTION LINES PIPING AND INSTRUMENTATION DIAGRAM
+Revision:       1
+Date:           18 Jun 2025
+Scale:          N.T.S
+Supersedes:     TOTAL ABK DWG. NO. 0000617-28-U-99-101 1/1 REV-14
+Site Walkthrough: 15 JAN 2024
+
+================================================================================
+REFERENCE DRAWINGS
+================================================================================
+P&ID Legend, Symbols & Instrument Details:  AD-82-D-100001 TO AD-82-D-100005
+Instrument Connections Standard:            SP.A714Y.00.1311.003
+
+================================================================================
+EQUIPMENT
+================================================================================
+
+Tag             | Name                          | Size / Details                    | Design Press | Design Temp | Trim Number
+----------------|-------------------------------|-----------------------------------|--------------|-------------|------------------
+GP-2801         | PIG LAUNCHER                  | 230 mm I.390 mm OD X 3,895 mm L  | 350.0 barg   | 46°C/90°C   | VT-J16-GP-2801-N
+G-2803.B        | N2 ACCUMULATOR SKID           | -                                 | -            | -           | -
+KW-2801         | WELLHEAD SAFETY CABINET       | -                                 | -            | -           | -
+
+================================================================================
+WELL DATA - AF-4 (SLOT 2)
+================================================================================
+Casing Program:
+  - 20" surface casing
+  - 13-3/8" intermediate casing
+  - 9-5/8" production casing
+  - 7-5/8" liner (VERTICAL)
+
+Wellhead Equipment:
+  - DHSV (Downhole Safety Valve) - A.289910.DHSV
+  - SSV (Surface Safety Valve) - A.289920.SSV
+  - WV (Wing Valve) - A.289930.WV
+  - ESV (Emergency Shutdown Valve) - ESV.289960
+  - HCV (Choke Valve) - A.281040.HCV
+
+================================================================================
+VALVES
+================================================================================
+
+Tag                 | Type  | Size    | Service/Notes
+--------------------|-------|---------|------------------------------------------------
+HV-289920.A-01      | HV    | 1"      | Hydraulic valve, wellhead safety
+HV-289920.A-02      | HV    | 1"      | Hydraulic valve, wellhead safety
+HV-289920.A-03      | HV    | 1"      | Hydraulic valve, wellhead safety
+HV-289920.A-04      | HV    | 1"      | Hydraulic valve, wellhead safety
+HV-289920.A-05      | HV    | 1"      | Hydraulic valve, wellhead safety
+HV-289920.A-06      | HV    | 1"      | Hydraulic valve, wellhead safety
+HV-289920.A-07      | HV    | 1/2"    | Hydraulic valve, wellhead safety
+HV-289920.A-08      | HV    | 2"      | Hydraulic valve, wellhead safety
+HV-289920.A-09      | HV    | 2"      | Hydraulic valve, wellhead safety
+HV-280101           | HV    | 8"      | Production header valve
+HV-280102           | HV    | 1"      | Production line isolation
+HV-280103           | HV    | 2"      | Production line isolation
+HV-280104           | HV    | 3"      | Production line isolation
+HV-280105           | HV    | 8"      | Production line isolation
+HV-281002.A-01      | HV    | 1"      | Choke valve control
+A.281053.HV         | HV    | -       | Manifold HV (multiple: A, B, C)
+A.281054.HV         | HV    | -       | Manifold HV (multiple: A, B, C)
+PSV-281010          | PSV   | -       | PSET=350.00 barg
+PSV1 (on GP-2801)   | PSV   | 3"x2"   | Pig launcher PSV
+
+================================================================================
+SAFETY VALVES (PSV) SETTINGS
+================================================================================
+
+PSV Tag         | Set Pressure
+----------------|---------------
+PSV-281010      | 350.00 barg
+PSV (unnamed)   | 140 barg
+PSV (unnamed)   | 80 barg
+PSV (unnamed)   | 250 barg (x2)
+PSV (unnamed)   | 70 barg
+
+================================================================================
+INSTRUMENTS
+================================================================================
+
+Tag             | Type  | Description / Service
+----------------|-------|----------------------------------------------------------
+289901.TSHH     | TSHH  | Temperature Switch High High (RTU)
+289901.TW       | TW    | Temperature Well
+289901.TT       | TT    | Temperature Transmitter
+289901.TI       | TI    | Temperature Indicator
+289901.TE       | TE    | Temperature Element
+289901.HS       | HS    | Hand Switch (ESD-1 Hand Switches, 4 NOS.)
+287701.XS       | XS    | Shutdown Switch
+281010.TI       | TI    | Temperature Indicator
+281010.TW       | TW    | Temperature Well
+281010.TT       | TT    | Temperature Transmitter
+281010.TE       | TE    | Temperature Element
+281010.PT       | PT    | Pressure Transmitter
+281010.PI       | PI    | Pressure Indicator
+281010.PG       | PG    | Pressure Gauge
+281010.FT       | FT    | Flow Transmitter
+281010.FI       | FI    | Flow Indicator
+281010.FXI      | FXI   | Flow Ratio Indicator
+281010.FE       | FE    | Flow Element
+281010.LAL      | LAL   | Level Alarm Low
+281010.LSL      | LSL   | Level Switch Low
+281010.ZI       | ZI    | Position Indicator
+281011.TW       | TW    | Temperature Well
+281011.TG       | TG    | Temperature Gauge
+281011.XL       | XL    | Signal Light (A2)
+281012.XA       | XA    | Alarm (A2)
+281013.PG       | PG    | Pressure Gauge
+281014.PG       | PG    | Pressure Gauge
+281015.PG       | PG    | Pressure Gauge
+281017.PG       | PG    | Pressure Gauge
+281020.PI       | PI    | Pressure Indicator
+281020.TW       | TW    | Temperature Well
+281020.PT       | PT    | Pressure Transmitter
+281020.LAL      | LAL   | Level Alarm Low
+281020.LSL      | LSL   | Level Switch Low
+281021.PG       | PG    | Pressure Gauge
+281030.PG       | PG    | Pressure Gauge
+281030.PT       | PT    | Pressure Transmitter
+281030.PI       | PI    | Pressure Indicator
+281040.PT       | PT    | Pressure Transmitter
+281040.PI       | PI    | Pressure Indicator
+281040.PG       | PG    | Pressure Gauge
+281041.PG       | PG    | Pressure Gauge
+281044.PT       | PT    | Pressure Transmitter
+281044.PI       | PI    | Pressure Indicator
+281045.PT       | PT    | Pressure Transmitter
+281045.PI       | PI    | Pressure Indicator
+281060.XA       | XA    | Alarm
+281060.XS       | XS    | Shutdown Switch
+281060.HS       | HS    | Hand Switch
+281060.PS       | PS    | Pressure Switch
+281070.PAL      | PAL   | Pressure Alarm Low
+281070.PSL      | PSL   | Pressure Switch Low
+281080.PAL      | PAL   | Pressure Alarm Low
+281080.PSL      | PSL   | Pressure Switch Low
+281090.HS       | HS    | Hand Switch
+281090.PAL      | PAL   | Pressure Alarm Low
+281090.PSL      | PSL   | Pressure Switch Low
+281090.PS       | PS    | Pressure Switch
+281100.PAL      | PAL   | Pressure Alarm Low
+281100.PSL      | PSL   | Pressure Switch Low
+281100.HS       | HS    | Hand Switch
+282030.FI       | FI    | Flow Indicator (Corrosion Inhibitor)
+288801.XA       | XA    | Fire Alarm
+288801.XS       | XS    | Fire Shutdown Switch
+289910.ZSC      | ZSC   | Position Switch Closed (DHSV)
+289910.ZLC      | ZLC   | Position Limit Closed (DHSV)
+289910.ZLO      | ZLO   | Position Limit Open (DHSV)
+289910.XS       | XS    | Shutdown Switch (DHSV)
+289910.XA       | XA    | Alarm (DHSV)
+289920.ZSC      | ZSC   | Position Switch Closed (SSV)
+289920.ZSO      | ZSO   | Position Switch Open (SSV)
+289920.ZLC      | ZLC   | Position Limit Closed (SSV)
+289920.ZLO      | ZLO   | Position Limit Open (SSV)
+289920.XA       | XA    | Alarm (SSV)
+289920.XS       | XS    | Shutdown Switch (SSV)
+289921.XS       | XS    | Shutdown Switch
+289921.XA       | XA    | Alarm
+289930.ZSC      | ZSC   | Position Switch Closed (WV)
+289930.ZSO      | ZSO   | Position Switch Open (WV)
+289930.ZLC      | ZLC   | Position Limit Closed (WV)
+289930.ZLO      | ZLO   | Position Limit Open (WV)
+289940.PALL     | PALL  | Pressure Alarm Low Low
+289940.PSLL     | PSLL  | Pressure Switch Low Low
+289941.PSLL     | PSLL  | Pressure Switch Low Low
+289942.PSHH     | PSHH  | Pressure Switch High High
+289942.PAHH     | PAHH  | Pressure Alarm High High
+289942.PY       | PY    | Pressure Relay
+289943.PSHH     | PSHH  | Pressure Switch High High
+289944.PSHH     | PSHH  | Pressure Switch High High
+289945.PSHH     | PSHH  | Pressure Switch High High
+289960.ZSO      | ZSO   | Position Switch Open (ESV)
+289960.ZST      | ZST   | Position Switch Travel (ESV)
+289960.ZLO      | ZLO   | Position Limit Open (ESV)
+289960.ZLC      | ZLC   | Position Limit Closed (ESV)
+289960.HS       | HS    | Hand Switch (ESV)
+289961.PSLL     | PSLL  | Pressure Switch Low Low
+289961.XA       | XA    | Alarm
+289961.XS       | XS    | Shutdown Switch
+289962.PSHH     | PSHH  | Pressure Switch High High
+289962.PY       | PY    | Pressure Relay
+289971.XA       | XA    | Alarm
+289971.XS       | XS    | Shutdown Switch
+289972.XA       | XA    | Alarm
+289972.XS       | XS    | Shutdown Switch
+289980.PG       | PG    | Pressure Gauge (N2)
+289981.PG       | PG    | Pressure Gauge (N2)
+281010.CI       | CI    | Corrosion Inhibitor Injection
+281020.CEM      | CEM   | Corrosion Monitoring Element
+
+================================================================================
+LINES (PIPING)
+================================================================================
+
+Line Number                         | Size  | Class | Service
+------------------------------------|-------|-------|---------------------------
+8"-H-28-12-0102-J16-P              | 8"    | J16   | Production (from well)
+8"-H-28-12-0103-J16-P              | 8"    | J16   | Production
+8"-H-28-12-0104-J16-P              | 8"    | J16   | Production
+8"-H-28-12-0105-J16-P              | 8"    | J16   | Production
+8"-H-28-18-0101-J20-N              | 8"    | J20   | Vent
+4"-H-28-12-0112-J16-N              | 4"    | J16   | Production branch
+2"-H-28-12-0104-J16-N              | 2"    | J16   | Production drain
+2"-H-28-12-0107-J16-N              | 2"    | J16   | Production drain
+2"-H-28-12-0108-J16-N              | 2"    | J16   | Production drain
+2"-H-28-12-0109-J16-N              | 2"    | J16   | Production drain
+2"-H-28-12-0114-H03S-N             | 2"    | H03S  | HP drain
+3"-H-28-12-0113-H03S-N             | 3"    | H03S  | HP drain
+1"-H-28-18-0101-J16-N              | 1"    | J16   | Vent
+2"-H-28-12-0105-J16-N              | 2"    | J16   | Production branch
+8"-H-28-12-0123-J26S-P             | 8"    | J26S  | Production header (from AF-9)
+8"-H-28-12-0223-J26S-P             | 8"    | J26S  | Production header (from AF-10)
+8"-H-28-12-0328-J26S-P             | 8"    | J26S  | Production header (from AF-4)
+8"-H-28-12-0331-J26S-P             | 8"    | J26S  | Production header (test manifold)
+8"-H-28-12-0332-J26S-P             | 8"    | J26S  | Production header
+3"-DH-28-31-0110-B03-N             | 3"    | B03   | Closed drain
+3"-DH-28-31-0108-B06S-N            | 3"    | B06S  | Closed drain (PSET=140 barg)
+3"-DH-28-31-0109-B06S-N            | 3"    | B06S  | HP closed drain
+3"-DH-28-31-0414-B06S-N            | 3"    | B06S  | Closed drain
+2"-DH-28-31-0101-B03-N             | 2"    | B03   | Closed drain
+2"-DH-28-31-0103-B03-N             | 2"    | B03   | Closed drain
+2"-DH-28-31-0104-B03-N             | 2"    | B03   | Closed drain
+2"-DH-28-31-0105-B03-N             | 2"    | B03   | Closed drain
+3"-V-28-22-0101-B16-N              | 3"    | B16   | Vent
+3"-V-28-22-0102-B16-N              | 3"    | B16   | Vent
+3"-V-28-22-0103-B16-N              | 3"    | B16   | Vent
+3"-V-28-22-0105-B16-N              | 3"    | B16   | Vent (PSV)
+1-1/2"-N-28-21-0201-J47-N          | 1-1/2"| J47   | Nitrogen
+1-1/2"-N-28-21-0201-J48-N          | 1-1/2"| J48   | Nitrogen
+1"-JC-28-29-0201-J47-N             | 1"    | J47   | Chemical injection
+1"-JC-28-29-0201-J48-N             | 1"    | J48   | Chemical injection
+1"-JC-28-29-0201-J16-N             | 1"    | J16   | Chemical injection
+1"-MT-28-29-0201-J16-N             | 1"    | J16   | Methanol injection
+2"-MT-28-29-0202-J47-N             | 2"    | J47   | Methanol
+2"-MT-28-29-0713-J48-N             | 2"    | J48   | Methanol
+1-1/2"-MT-28-29-0201-J47-N         | 1-1/2"| J47   | Methanol
+1-1/2"-MT-28-29-0110-J48-N         | 1-1/2"| J48   | Methanol
+
+================================================================================
+INLINE VALVES (manually operated)
+================================================================================
+
+Tag         | Size  | Type | Status
+------------|-------|------|--------
+V-28159     | 2"    | CSO  | Closed Shut Off
+V-28160     | 1"    | -    | -
+V-28161     | 1"    | CSO  | Closed Shut Off
+V-28162     | 1"    | -    | -
+V-28163     | 1"    | -    | -
+V-28164     | 1"    | CSO  | -
+V-28165     | 2"    | -    | -
+V-28166     | 1"    | -    | -
+V-28167     | 3/4"  | -    | -
+V-28168     | 1"    | -    | -
+V-28169     | 3/4"  | -    | -
+V-28170     | 3/4"  | -    | -
+V-28171     | -     | -    | -
+V-28172     | 3/4"  | -    | -
+V-28173     | 1/2"  | -    | -
+V-28174     | 2"    | CSO  | -
+V-28175     | 2"    | CSO  | -
+V-28176     | 3/4"  | -    | -
+V-28177     | 2"    | -    | -
+V-28178     | 1"    | -    | -
+V-28179     | -     | -    | -
+V-28180     | -     | -    | -
+V-28181     | 2"    | CSO  | -
+V-28182     | 1"    | -    | -
+V-28183     | 2"    | -    | -
+V-28184     | 3/4"  | -    | -
+V-28185     | 1"    | -    | -
+V-28186     | 1"    | CSO  | -
+V-28187     | 1"    | -    | -
+V-28201     | 1/2"  | -    | -
+
+================================================================================
+CROSS-REFERENCES TO OTHER SHEETS
+================================================================================
+
+Ref   | Drawing                          | Description
+------|----------------------------------|------------------------------------------------
+1028  | AD-28-D-100003-SHT-001          | TO 3"-DH-28-31-0304-B03-N CLOSED DRAIN HEADER
+1030  | AD-28-D-100003-SHT-001          | TO CLOSED DRAIN HEADER
+1035  | AD-28-D-100002-SHT-001          | FROM CORROSION INHIBITOR PUMPS (P-2802.A/B/C)
+1087  | AD-28-D-100004-SHT-001          | FROM PORTABLE METHANOL INJECTION PUMP
+1123  | AD-28-D-100005-SHT-001          | METHANOL INJECTION UPSTREAM CHOKE AF9/10
+1302  | -                                | FROM EB-2830 DISTRIBUTION PANEL (24 VDC)
+1387  | AD-28-D-100006-SHT-001          | FROM WELL AF-10 FLOWLINE 8"-H-28-12-0221-J85S-N
+1103  | AD-28-D-100005-SHT-001          | FROM AF-9 FLOWLINE 8"-H-28-12-0121-J85S-P
+1015  | AD-28-D-100003-SHT-001          | TO PRODUCTION HEADER
+1019  | AD-28-D-100003-SHT-001          | TO CLOSED DRAIN HEADER
+
+================================================================================
+NOTES (from drawing)
+================================================================================
+1.  LOW/LOW PRESSURE CLOSES WING AND MASTER VALVES OF TEST WELL FLOWING TO PIG AND ESV 289960.
+2.  IN CASE OF SHUTDOWN, CHOKE VALVE ARE AUTOMATICALLY CLOSE.
+3.  ANNULUS PRESSURE THROUGH PRODUCTION CHOKE.
+4.  PRESSURE INDICATOR FOR HYDRAULIC NETWORK.
+5.  POSITIVE STATUS OF DOWNHOLE SAFETY VALVE.
+6.  CLOSE WING AND MASTER IN 30 SECONDS.
+7.  PERMISSION TO OPEN THE WELLHEAD VALVES ONLY WHEN CHOKE IS CLOSED.
+8.  QUICK DUMP VALVES INSTALLED TO REDUCE CLOSURE TIME OF MASTER AND WING VALVE INC. INCLUDING ESV, MV, ESV
+9.  AND CHOKE VALVE IN EMERGENCY CASE.
+10. PRESSURE FOR NITROGEN BACK UP.
+11. HYDRAULIC OIL RESERVOIR LEVEL FOR SAFETY CABINET.
+12. HOSE DIAMETER OF WELL VALVE IS IDENTICAL TO INSIDE DIAMETER OF PIPELINE.
+13. SPOOL PIECE FOR MAINTENANCE PURPOSES.
+14. ESV ON RISER TO BE LOCATED IN SAFE AREA AWAY FROM POTENTIAL FIRE OR EXPLOSION SOURCES.
+    HOWEVER, ACCESS AND MAINTENANCE FACILITIES TO BE PROVIDED.
+15. BE METHANOL AND NITROGEN SUPPLY POINTS TO BE CLOSE TO PIG TRAP, 8MM MANIFOLD AFTER
+    PIGGING OPERATIONS.
+16. FI LOCALLY READABLE FROM CHOKE VALVE.
+17. INSTALLED SAFETY CABINET TO BE DESIGNED FOR TWO WELLS AND ONE IN FUTURE.
+18. 10 PUMP FLAG ALARM.
+19. IDENTICAL ARRANGEMENT TO KZ WELLHEAD.
+20. CORROSION LINES FOR FUTURE WELLHEADS.
+21. LOW ON PRESSURE CLOSE WING AND MASTER VALVES.
+22. POSITION INDICATORS ON WHCP (QL 281011.A2, & DCS (QL 281011.A) INDICATE WHICH WELL IS ON TEST.
+23. PARTIAL THICKNESS FACILITIES NEEDED.
+24. CORRECTIONS FOR GAS FLOW CALCULATED IN PLC.
+25. SIMULTANEOUS OPENING (WITH TIME DELAY), CLOSURE (WITH WELL ON) OF PRODUCTION / TEST LINES ARE
+    ALARMED ON DCS (XA 281012.A.1 / WHCP (XA 281012.A))
+26. INJECTION POINT TO BE CLOSE TO WING VALVE.
+27. METHANOL INJECTION DEPENDANT ON WELLSTREAM TEMPERATURE AND PRESSURE.
+28. SAFE IN VALUE (TYPE GLOBE) PART OF CHEMICAL.
+29. POSITION INDICATORS ON WHCP (QL 281011.C1, DCS (QL 281011.C) INDICATE WHICH WELL IS ON TEST.
+30. POSITION INDICATORS ON WHCP (QL 281011.B2, & DCS (QL 281011.B) INDICATE WHICH WELL IS ON TEST.
+
+================================================================================
+LOGIC NOTES
+================================================================================
+1. TO/FROM WELLHEAD SAFETY CABINET
+
+================================================================================
+LOCAL CONTROL PANELS
+================================================================================
+- LOCAL CONTROL PANEL (HCV LCP-1): Detail for choke valve control
+- KW-2801 WELLHEAD SAFETY CABINET: Contains PS2-10, PS2-13, PS2-15
+- LOCAL GAS DETECTION: JCS-28710.1
+- FIRE DETECTION: Connected to fire detection equipment

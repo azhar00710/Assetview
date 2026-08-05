@@ -1,0 +1,161 @@
+services:
+  florence-ocr:
+    build: ./services/florence-ocr
+    ports:
+      - "8011:8000"
+    environment:
+      FLORENCE_MODEL_ID: ${FLORENCE_MODEL_ID:-microsoft/Florence-2-base-ft}
+      FLORENCE_OCR_API_KEY: ${FLORENCE_OCR_API_KEY:-}
+      FLORENCE_MAX_NEW_TOKENS: ${FLORENCE_MAX_NEW_TOKENS:-512}
+      FLORENCE_TILE_SIZE: ${FLORENCE_TILE_SIZE:-1600}
+      FLORENCE_TILE_OVERLAP: ${FLORENCE_TILE_OVERLAP:-220}
+    volumes:
+      - florence_models:/root/.cache/huggingface
+    healthcheck:
+      test: ["CMD-SHELL", "python -c \"import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health')\""]
+      interval: 20s
+      timeout: 10s
+      retries: 6
+      start_period: 40s
+    restart: unless-stopped
+
+  paddle-ocr:
+    build: ./services/paddle-ocr
+    container_name: assetview-paddle-ocr
+    ports:
+      - "8010:8000"
+    environment:
+      PADDLE_OCR_LANG: ${PADDLE_OCR_LANG:-en}
+      PADDLE_OCR_API_KEY: ${PADDLE_OCR_API_KEY:-}
+    volumes:
+      - paddle_models:/models
+    healthcheck:
+      test: ["CMD-SHELL", "python -c \"import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health')\""]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+      start_period: 20s
+    restart: unless-stopped
+
+  postgres:
+    image: postgres:15-alpine
+    container_name: assetview-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: assetview
+      POSTGRES_PASSWORD: assetview
+      POSTGRES_DB: assetview
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./database/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql
+      - ./database/migration_annotations.sql:/docker-entrypoint-initdb.d/02-migration-annotations.sql
+      - ./database/migration_v2.1_storage_versioning.sql:/docker-entrypoint-initdb.d/03-migration-storage.sql
+      - ./database/migration_v3_hierarchy.sql:/docker-entrypoint-initdb.d/04-migration-hierarchy.sql
+      - ./database/migration_approval_status.sql:/docker-entrypoint-initdb.d/05-migration-approval.sql
+      - ./database/migration_tag_document.sql:/docker-entrypoint-initdb.d/06-migration-tag-document.sql
+      - ./database/migration_topology.sql:/docker-entrypoint-initdb.d/07-migration-topology.sql
+      - ./database/migration_ocr.sql:/docker-entrypoint-initdb.d/08-migration-ocr.sql
+      - ./database/migration_pid_annotation_module.sql:/docker-entrypoint-initdb.d/09-migration-pid-annotation.sql
+      - ./database/migration_ocr_v2.sql:/docker-entrypoint-initdb.d/10-migration-ocr-v2.sql
+      - ./database/migration_line_engineering_data.sql:/docker-entrypoint-initdb.d/11-migration-line-engineering.sql
+      - ./database/migrations/003_topology_edges.sql:/docker-entrypoint-initdb.d/12-migration-topology-edges.sql
+      - ./database/migration_tag_dictionary.sql:/docker-entrypoint-initdb.d/13-migration-tag-dictionary.sql
+      - ./database/migration_ocr_ai_analysis.sql:/docker-entrypoint-initdb.d/14-migration-ocr-ai-analysis.sql
+      - ./database/migration_tag_dictionary_extended_codes.sql:/docker-entrypoint-initdb.d/15-migration-tag-dictionary-extended.sql
+      - ./database/migration_tag_analysis.sql:/docker-entrypoint-initdb.d/16-migration-tag-analysis.sql
+      - ./database/migrations/009_ocr_zone_profile.sql:/docker-entrypoint-initdb.d/17-migration-ocr-zone-profile.sql
+      - ./database/migrations/010_ocr_feedback_learning.sql:/docker-entrypoint-initdb.d/18-migration-ocr-feedback-learning.sql
+      - ./database/migrations/012_ai_batch_detection.sql:/docker-entrypoint-initdb.d/19-migration-ai-batch-detection.sql
+      - ./database/migrations/013_pnid_line_dimensions.sql:/docker-entrypoint-initdb.d/20-migration-pnid-line-dims.sql
+      - ./database/migrations/014_grounding_dino_config.sql:/docker-entrypoint-initdb.d/21-migration-grounding-dino.sql
+      - ./database/seed.sql:/docker-entrypoint-initdb.d/90-seed.sql
+      - ./database/seed_topology_edges.sql:/docker-entrypoint-initdb.d/91-seed-topology-edges.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U assetview"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build: ./backend
+    container_name: assetview-api
+    ports:
+      - "3001:3001"
+    environment:
+      DATABASE_URL: postgresql://assetview:assetview@postgres:5432/assetview
+      PORT: "3001"
+      AI_ANNOTATE_PILOT_ENABLED: ${AI_ANNOTATE_PILOT_ENABLED:-true}
+      TREX2_API_URL: ${TREX2_API_URL:-}
+      TREX2_API_KEY: ${TREX2_API_KEY:-}
+      GROUNDING_DINO_API_URL: ${GROUNDING_DINO_API_URL:-}
+      GROUNDING_DINO_API_KEY: ${GROUNDING_DINO_API_KEY:-}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      # OCR credentials for Google Cloud Vision (required for tag text extraction)
+      VISION_CREDENTIALS_JSON: ${VISION_CREDENTIALS_JSON:-}
+      # Debug mode: set to 'true' to save annotated images and OCR crops to /tmp/ai-annotate-debug/
+      AI_ANNOTATE_DEBUG: ${AI_ANNOTATE_DEBUG:-false}
+      # T-Rex2 stability: keep DDS input near SDK default for reliable latency/coords
+      AI_ANNOTATE_DDS_MAX_DIM: ${AI_ANNOTATE_DDS_MAX_DIM:-1536}
+      # Higher resolution for text-based detection (GroundingDINO). Text labels need more pixels.
+      AI_ANNOTATE_TEXT_MAX_DIM: ${AI_ANNOTATE_TEXT_MAX_DIM:-3072}
+      AI_ANNOTATE_TREX_SCORE_THRESHOLD: ${AI_ANNOTATE_TREX_SCORE_THRESHOLD:-0.2}
+      AI_ANNOTATE_DDS_TIMEOUT_MS: ${AI_ANNOTATE_DDS_TIMEOUT_MS:-180000}
+      AI_ANNOTATE_DDS_POLL_MS: ${AI_ANNOTATE_DDS_POLL_MS:-1200}
+      AI_ANNOTATE_PDF_DENSITY: ${AI_ANNOTATE_PDF_DENSITY:-420}
+      OCR_ENABLE_VERTICAL_GROUPING: "true"
+      OCR_ENABLE_ROTATION_GROUPING: "true"
+      OCR_ENABLE_ZONE_NOISE_FILTER: "true"
+      OCR_STAGE2_MAX_WORDS_PER_CALL: "1000"
+      OCR_STAGE2_MAX_FULLTEXT_CHARS: "3000"
+      OCR_AUTO_APPROVE_CONFIDENCE: "0.95"
+      OCR_REVIEW_CONFIDENCE_MIN: "0.70"
+      # Paddle OCR service (Phase 1 text-first OCR)
+      PADDLE_OCR_URL: ${PADDLE_OCR_URL:-http://paddle-ocr:8000/ocr}
+      PADDLE_OCR_API_KEY: ${PADDLE_OCR_API_KEY:-}
+      PADDLE_OCR_TIMEOUT_MS: ${PADDLE_OCR_TIMEOUT_MS:-120000}
+      OCR_PADDLE_PDF_DENSITY: ${OCR_PADDLE_PDF_DENSITY:-420}
+      # Florence OCR service (evaluation OCR provider)
+      FLORENCE_OCR_URL: ${FLORENCE_OCR_URL:-http://florence-ocr:8000/ocr}
+      FLORENCE_OCR_API_KEY: ${FLORENCE_OCR_API_KEY:-}
+      FLORENCE_OCR_TIMEOUT_MS: ${FLORENCE_OCR_TIMEOUT_MS:-600000}
+      OCR_FLORENCE_PDF_DENSITY: ${OCR_FLORENCE_PDF_DENSITY:-220}
+    volumes:
+      - pidstorage:/app/storage
+      - ./database:/app/database:ro
+      - ./data:/app/storage/pids
+    depends_on:
+      postgres:
+        condition: service_healthy
+      paddle-ocr:
+        condition: service_healthy
+      florence-ocr:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:3001/health || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+      start_period: 20s
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        VITE_API_URL: ${VITE_API_URL:-/api/v1}
+        VITE_AI_ANNOTATE_PILOT_ENABLED: ${VITE_AI_ANNOTATE_PILOT_ENABLED:-true}
+    container_name: assetview-web
+    ports:
+      - "5173:80"
+    depends_on:
+      backend:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  pgdata:
+  pidstorage:
+  paddle_models:
+  florence_models:

@@ -1,0 +1,7 @@
+run_mode,pnid_id,drawing_number,reviewer,started_at,ended_at,review_time_seconds,total_detections,accepted,rejected,edited,uncertain,reviewer_decisions,new_tags_discovered,matched_existing_entities,notes
+baseline,,,,,,,,,,,,,,,
+baseline,,,,,,,,,,,,,,,
+baseline,,,,,,,,,,,,,,,
+ai_native,,,,,,,,,,,,,,,
+ai_native,,,,,,,,,,,,,,,
+ai_native,,,,,,,,,,,,,,,

@@ -1,0 +1,156 @@
+================================================================================
+CORROSION INHIBITOR PACKAGE G-2802 - P&ID
+================================================================================
+Drawing No:     AD-28-D-100002-SHT-001
+Project:        11594: AS-BUILT RECOVERY - PHASE II
+                (PACKAGE 5: LZ - ZCSC & PACKAGE 6: ABK)
+Client:         ADNOC Offshore
+Location:       ABU AL BUKHOOSH WELL HEAD TOWER - AREA 28
+Platform:       AKK 4 WELL HEAD PLATFORM
+Type:           CORROSION INHIBITOR PACKAGE G-2802 P&ID
+Revision:       1
+Date:           18 Jun 2025
+Scale:          N.T.S
+Supersedes:     TOTAL ABK DWG. NO. 0000617-28-U-99-102 1/1 REV-10
+Site Walkthrough: 15 JAN 2024
+
+================================================================================
+REFERENCE DRAWINGS
+================================================================================
+P&ID Legend, Symbols & Instrument Details:  AD-82-D-100001 TO AD-82-D-100005
+Instrument Connections Standard:            SP.A714Y.00.1311.003
+
+================================================================================
+EQUIPMENT
+================================================================================
+
+Tag         | Name                               | Size                          | Design Press | Design Temp | Capacity    | Trim Number
+------------|-------------------------------------|-------------------------------|--------------|-------------|-------------|------------------
+G-2802      | CORROSION INHIBITOR PACKAGE         | 1.85 m L X 1.3 m W X 2.25m H | -            | -           | -           | -
+Q-2802      | CORROSION INHIBITOR STORAGE TANK    | 1000 mm OD X 4595 mm TL/TL   | 3.5 barg     | 55°C        | 3 m³/hr     | VT-B56-Q-2802-N
+P-2802.A    | CORROSION INHIBITOR INJECTION PUMP  | -                             | Disch: 97 barg / Design: 350 barg | - | 6.3 l/hr | -
+P-2802.B    | CORROSION INHIBITOR INJECTION PUMP  | -                             | Disch: 97 barg / Design: 350 barg | - | 6.3 l/hr | -
+P-2802.C    | CORROSION INHIBITOR INJECTION PUMP  | -                             | Disch: 97 barg / Design: 350 barg | - | 6.3 l/hr | -
+
+Pump Details (P-2802.A/B/C):
+  - Design Flow Rate: 6.3 l/hr
+  - Discharge Pressure: 97 barg
+  - Design Discharge Pressure: 350 barg
+  - Estimated Power: 0.3 kW
+
+================================================================================
+INSTRUMENTS
+================================================================================
+
+Tag             | Type  | Description / Service
+----------------|-------|----------------------------------------------------------
+282010.PG (A)   | PG    | Pressure Gauge (discharge side pump A)
+282010.PG (B)   | PG    | Pressure Gauge (discharge side pump B)
+282010.PG (C)   | PG    | Pressure Gauge (discharge side pump C)
+282010.PB (A1)  | PB    | Pushbutton (pump A start)
+282010.PB (A2)  | PB    | Pushbutton (pump A stop)
+282010.PB (B1)  | PB    | Pushbutton (pump B start)
+282010.PB (B2)  | PB    | Pushbutton (pump B stop)
+282010.PB (C1)  | PB    | Pushbutton (pump C start)
+282010.PB (C2)  | PB    | Pushbutton (pump C stop)
+282020.LI       | LI    | Level Indicator (storage tank)
+282020.LG       | LG    | Level Gauge (storage tank)
+282020.LT       | LT    | Level Transmitter (storage tank)
+282020.LALL     | LALL  | Level Alarm Low Low (storage tank)
+282020.LSLL     | LSLL  | Level Switch Low Low (storage tank)
+282020.XA       | XA    | Alarm (level)
+282020.XL (A1)  | XL    | Signal Light
+282020.XL (B1)  | XL    | Signal Light
+282020.XL (C1)  | XL    | Signal Light
+282020.XL (C2)  | XL    | Signal Light
+289901.PT (A)   | PT    | Pressure Transmitter
+289901.PT (B)   | PT    | Pressure Transmitter
+289901.PT (C)   | PT    | Pressure Transmitter
+289901.PI (A)   | PI    | Pressure Indicator
+289901.PI (B)   | PI    | Pressure Indicator
+289901.PI (C)   | PI    | Pressure Indicator
+
+================================================================================
+SAFETY VALVES
+================================================================================
+
+Tag             | Type  | Set Pressure
+----------------|-------|-------------
+PSV-282020.A    | PSV   | 320 barg
+PSV-282020.B    | PSV   | 320 barg
+PSV-282020.C    | PSV   | 320 barg
+
+================================================================================
+LINES (PIPING)
+================================================================================
+
+Line Number                         | Size  | Class | Service
+------------------------------------|-------|-------|---------------------------
+1"-JC-28-29-0201-J47-N             | 1"    | J47   | Chemical injection (to well)
+1"-JC-28-29-0202-B56-N             | 1"    | B56   | Chemical injection (package internal)
+1"-JC-28-29-0110-J48-N             | 1"    | J48   | Chemical injection
+1"-JC-28-29-0111-J48-N             | 1"    | J48   | Chemical injection
+1"-DH-28-31-0204-B03-N             | 1"    | B03   | Closed drain
+2"-DH-28-31-0203-B03-N             | 2"    | B03   | Closed drain
+2"-DH-28-31-0203-B06S-N            | 2"    | B06S  | Closed drain
+2"-JC-28-29-0202-B56-N             | 2"    | B56   | Chemical injection (internal)
+2"-JC-28-29-0202-B48-N             | 2"    | B48   | Chemical injection
+2"-JC-28-29-0203-B47-N             | 2"    | B47   | Chemical injection
+1"-JC-28-29-0202-B48-N             | 1"    | B48   | Chemical injection
+2"-V-28-22-0204-B06-N              | 2"    | B06   | Vent
+
+================================================================================
+INLINE VALVES
+================================================================================
+
+Tag         | Size  | Notes
+------------|-------|------------------------------------------
+V-28139     | -     | On drain line
+V-28140     | -     | On vent, atmospheric vent safe area
+V-28141     | -     | On supply line
+V-28195     | -     | On package piping
+V-28196     | -     | On package piping
+V-28197     | -     | On package piping
+V-28198     | -     | On package piping
+V-28199     | -     | On package piping
+V-28200     | -     | On package piping
+
+================================================================================
+CONTROLS & ELECTRICAL
+================================================================================
+
+- LOCAL CONTROL PANEL (NEW) for pump control
+- Pump controls: START/STOP for P-2802.A, P-2802.B, P-2802.C
+- RUNNING/STOP indication (RTU) for each pump
+- FAULT (COMMON) indication (RTU)
+- Electrical supply from EB-2930.B ELECTRICAL DISTRIBUTION 24V DC
+
+================================================================================
+CROSS-REFERENCES TO OTHER SHEETS
+================================================================================
+
+Ref   | Drawing                          | Description
+------|----------------------------------|------------------------------------------------
+1035  | AD-28-D-100001-SHT-001          | TO FLOWLINE UPSTREAM AF-4 CHOKE
+1036  | AD-28-D-100005-SHT-001          | TO FLOWLINE UPSTREAM AF-9 CHOKE
+1037  | AD-28-D-100006-SHT-001          | TO FLOWLINE UPSTREAM AF-10 CHOKE
+1014  | AD-28-D-100003-SHT-001          | TO 2"-DH-28-31-0301-B03-N CLOSED DRAIN HEADER
+
+================================================================================
+NOTES
+================================================================================
+1. PS-282020 AND ED 7.2 (ZE THE SAME S.I.1) PHYSICAL OUTPUT.
+2. PSV AT DISCHARGE P-2802 ARE TO BE INSTALLED INCLUDE BY PACKAGE VENDOR.
+   PSV(H-289901.A STOP P-2802.A,
+   PSV(H-289901.B STOP P-2802.B,
+   PSV(H-289901.C STOP P-2802.C.
+3. PSSHH-289901 & STOP P-2802.B.
+4. LSLL-282020.S (S.I.D.1 TRIP SIGNAL FOR PUMP P-2802.A, P-2802.B, P-2802.C.
+5. XS-289920 (S.E.S.D.1 STOP ALL PUMPS P-2802 A/B/C.
+
+================================================================================
+SUPPLY CONNECTIONS
+================================================================================
+- ATMOSPHERIC VENT SAFE AREA PERSONAL TO HELIDECK
+- HOSE CONNECTION FOR BOAT SUPPLY (BOAT LANDING) - 2" connection
+- 18" tank access

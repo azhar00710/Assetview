@@ -1,0 +1,1262 @@
+{
+  "legendPdf": "/pid-legend/pid-legend.pdf",
+  "legendSheet": "/pid-legend/page-1.png",
+  "legendUrl": "https://www.edrawsoft.com/pid/images/pid-legend.pdf",
+  "sheetSize": {
+    "width": 1625,
+    "height": 12339
+  },
+  "symbolCount": 70,
+  "symbols": [
+    {
+      "id": "sym_lc",
+      "label": "Level Controller",
+      "abbr": "LC",
+      "category": "instrument",
+      "keywords": [
+        "level",
+        "controller"
+      ],
+      "image": "/pid-symbols/sym_lc.png",
+      "source": "edraw-pid-legend",
+      "legendBox": [
+        662,
+        398,
+        64,
+        56
+      ]
+    },
+    {
+      "id": "sym_pt",
+      "label": "Pressure Transmitter",
+      "abbr": "PT",
+      "category": "instrument",
+      "keywords": [
+        "pressure",
+        "transmitter"
+      ],
+      "image": "/pid-symbols/sym_pt.png",
+      "source": "edraw-pid-legend",
+      "legendBox": [
+        662,
+        438,
+        64,
+        56
+      ]
+    },
+    {
+      "id": "sym_pi",
+      "label": "Pressure Indicator",
+      "abbr": "PI",
+      "category": "instrument",
+      "keywords": [
+        "pressure",
+        "indicator"
+      ],
+      "image": "/pid-symbols/sym_pi.png",
+      "source": "edraw-pid-legend",
+      "legendBox": [
+        662,
+        458,
+        64,
+        56
+      ]
+    },
+    {
+      "id": "sym_pc",
+      "label": "Pressure Controller",
+      "abbr": "PC",
+      "category": "instrument",
+      "keywords": [
+        "pressure",
+        "controller"
+      ],
+      "image": "/pid-symbols/sym_pc.png",
+      "source": "edraw-pid-legend",
+      "legendBox": [
+        662,
+        608,
+        64,
+        56
+      ]
+    },
+    {
+      "id": "sym_pic",
+      "label": "Pressure Indicating Controller",
+      "abbr": "PIC",
+      "category": "instrument",
+      "keywords": [
+        "pressure",
+        "controller"
+      ],
+      "image": "/pid-symbols/sym_pic.png",
+      "source": "edraw-pid-legend",
+      "legendBox": [
+        662,
+        668,
+        64,
+        56
+      ]
+    },
+    {
+      "id": "sym_pr",
+      "label": "Pressure Recorder",
+      "abbr": "PR",
+      "category": "instrument",
+      "keywords": [
+        "pressure",
+        "recorder"
+      ],
+      "image": "/pid-symbols/sym_pr.png",
+      "source": "edraw-pid-legend",
+      "legendBox": [
+        662,
+        778,
+        64,
+        56
+      ]
+    },
+    {
+      "id": "sym_ti",
+      "label": "Temperature Indicator",
+      "abbr": "TI",
+      "category": "instrument",
+      "keywords": [
+        "temperature",
+        "indicator"
+      ],
+      "image": "/pid-symbols/sym_ti.png",
+      "source": "edraw-pid-legend",
+      "legendBox": [
+        337,
+        698,
+        64,
+        56
+      ]
+    },
+    {
+      "id": "sym_tt",
+      "label": "Temperature Transmitter",
+      "abbr": "TT",
+      "category": "instrument",
+      "keywords": [
+        "temperature",
+        "transmitter"
+      ],
+      "image": "/pid-symbols/sym_tt.png",
+      "source": "edraw-pid-legend",
+      "legendBox": [
+        337,
+        768,
+        64,
+        56
+      ]
+    },
+    {
+      "id": "sym_tc",
+      "label": "Temperature Controller",
+      "abbr": "TC",
+      "category": "instrument",
+      "keywords": [
+        "temperature",
+        "controller"
+      ],
+      "image": "/pid-symbols/sym_tc.png",
+      "source": "edraw-pid-legend",
+      "legendBox": [
+        337,
+        868,
+        64,
+        56
+      ]
+    },
+    {
+      "id": "sym_tr",
+      "label": "Temperature Recorder",
+      "abbr": "TR",
+      "category": "instrument",
+      "keywords": [
+        "temperature",
+        "recorder"
+      ],
+      "image": "/pid-symbols/sym_tr.png",
+      "source": "edraw-pid-legend",
+      "legendBox": [
+        337,
+        898,
+        64,
+        56
+      ]
+    },
+    {
+      "id": "sym_fi",
+      "label": "Flow Indicator",
+      "abbr": "FI",
+      "category": "instrument",
+      "keywords": [
+        "flow",
+        "indicator"
+      ],
+      "image": "/pid-symbols/sym_fi.png",
+      "source": "edraw-pid-legend",
+      "legendBox": [
+        337,
+        1038,
+        64,
+        56
+      ]
+    },
+    {
+      "id": "sym_ft",
+      "label": "Flow Transmitter",
+      "abbr": "FT",
+      "category": "instrument",
+      "keywords": [
+        "flow",
+        "transmitter"
+      ],
+      "image": "/pid-symbols/sym_ft.png",
+      "source": "edraw-pid-legend",
+      "legendBox": [
+        337,
+        1100,
+        64,
+        56
+      ]
+    },
+    {
+      "id": "sym_fr",
+      "label": "Flow Recorder",
+      "abbr": "FR",
+      "category": "instrument",
+      "keywords": [
+        "flow",
+        "recorder"
+      ],
+      "image": "/pid-symbols/sym_fr.png",
+      "source": "edraw-pid-legend",
+      "legendBox": [
+        337,
+        1168,
+        64,
+        56
+      ]
+    },
+    {
+      "id": "sym_fc",
+      "label": "Flow Controller",
+      "abbr": "FC",
+      "category": "instrument",
+      "keywords": [
+        "flow",
+        "controller"
+      ],
+      "image": "/pid-symbols/sym_fc.png",
+      "source": "edraw-pid-legend",
+      "legendBox": [
+        337,
+        1288,
+        64,
+        56
+      ]
+    },
+    {
+      "id": "sym_fe",
+      "label": "Flow Element",
+      "abbr": "FE",
+      "category": "instrument",
+      "keywords": [
+        "flow",
+        "element",
+        "orifice"
+      ],
+      "image": "/pid-symbols/sym_fe.png",
+      "source": "edraw-pid-legend",
+      "legendBox": [
+        662,
+        908,
+        64,
+        56
+      ]
+    },
+    {
+      "id": "sym_li",
+      "label": "Level Indicator",
+      "abbr": "LI",
+      "category": "instrument",
+      "keywords": [
+        "level",
+        "indicator"
+      ],
+      "image": "/pid-symbols/sym_li.png",
+      "source": "edraw-pid-legend",
+      "legendBox": [
+        337,
+        1350,
+        64,
+        56
+      ]
+    },
+    {
+      "id": "sym_lt",
+      "label": "Level Transmitter",
+      "abbr": "LT",
+      "category": "instrument",
+      "keywords": [
+        "level",
+        "transmitter"
+      ],
+      "image": "/pid-symbols/sym_lt.png",
+      "source": "edraw-pid-legend",
+      "legendBox": [
+        337,
+        1490,
+        64,
+        56
+      ]
+    },
+    {
+      "id": "sym_lr",
+      "label": "Level Recorder",
+      "abbr": "LR",
+      "category": "instrument",
+      "keywords": [
+        "level",
+        "recorder"
+      ],
+      "image": "/pid-symbols/sym_lr.png",
+      "source": "edraw-pid-legend",
+      "legendBox": [
+        337,
+        1570,
+        64,
+        56
+      ]
+    },
+    {
+      "id": "sym_lg",
+      "label": "Level Gauge",
+      "abbr": "LG",
+      "category": "instrument",
+      "keywords": [
+        "level",
+        "gauge"
+      ],
+      "image": "/pid-symbols/sym_lg.png",
+      "source": "edraw-pid-legend",
+      "legendBox": [
+        662,
+        1078,
+        64,
+        56
+      ]
+    },
+    {
+      "id": "sym_at",
+      "label": "Analyzer Transmitter",
+      "abbr": "AT",
+      "category": "instrument",
+      "keywords": [
+        "analyzer",
+        "transmitter"
+      ],
+      "image": "/pid-symbols/sym_at.png",
+      "source": "edraw-pid-legend",
+      "legendBox": [
+        662,
+        1178,
+        64,
+        56
+      ]
+    },
+    {
+      "id": "sym_gate_valve",
+      "label": "Hand-Operated Gate Valve",
+      "abbr": "GV",
+      "category": "valve",
+      "keywords": [
+        "gate",
+        "valve",
+        "hand"
+      ],
+      "image": "/pid-symbols/sym_gate_valve.png",
+      "source": "edraw-pid-legend",
+      "legendBox": [
+        5,
+        1755,
+        90,
+        58
+      ]
+    },
+    {
+      "id": "sym_check_valve",
+      "label": "Check Valve",
+      "abbr": "CKV",
+      "category": "valve",
+      "keywords": [
+        "check",
+        "non-return"
+      ],
+      "image": "/pid-symbols/sym_check_valve.png",
+      "source": "edraw-pid-legend",
+      "legendBox": [
+        330,
+        1755,
+        80,
+        80
+      ]
+    },
+    {
+      "id": "sym_solenoid_valve",
+      "label": "Solenoid Valve",
+      "abbr": "SV",
+      "category": "valve",
+      "keywords": [
+        "solenoid"
+      ],
+      "image": "/pid-symbols/sym_solenoid_valve.png",
+      "source": "edraw-pid-legend",
+      "legendBox": [
+        655,
+        1755,
+        80,
+        80
+      ]
+    },
+    {
+      "id": "sym_3way_valve",
+      "label": "4-Way Plug Valve",
+      "abbr": "4V",
+      "category": "valve",
+      "keywords": [
+        "four",
+        "way",
+        "plug"
+      ],
+      "image": "/pid-symbols/sym_3way_valve.png",
+      "source": "edraw-pid-legend",
+      "legendBox": [
+        980,
+        1755,
+        80,
+        80
+      ]
+    },
+    {
+      "id": "sym_pinch_valve",
+      "label": "Pinch Valve",
+      "abbr": "PV",
+      "category": "valve",
+      "keywords": [
+        "pinch"
+      ],
+      "image": "/pid-symbols/sym_pinch_valve.png",
+      "source": "edraw-pid-legend",
+      "legendBox": [
+        1305,
+        1755,
+        80,
+        80
+      ]
+    },
+    {
+      "id": "sym_globe_valve",
+      "label": "Hand-Operated Globe Valve",
+      "abbr": "GLV",
+      "category": "valve",
+      "keywords": [
+        "globe",
+        "valve"
+      ],
+      "image": "/pid-symbols/sym_globe_valve.png",
+      "source": "edraw-pid-legend",
+      "legendBox": [
+        5,
+        1810,
+        80,
+        80
+      ]
+    },
+    {
+      "id": "sym_ball_valve",
+      "label": "Flanged Valve",
+      "abbr": "BV",
+      "category": "valve",
+      "keywords": [
+        "ball",
+        "flanged"
+      ],
+      "image": "/pid-symbols/sym_ball_valve.png",
+      "source": "edraw-pid-legend",
+      "legendBox": [
+        330,
+        1810,
+        80,
+        80
+      ]
+    },
+    {
+      "id": "sym_motor_valve",
+      "label": "Motor-Operated Valve",
+      "abbr": "MOV",
+      "category": "valve",
+      "keywords": [
+        "motor",
+        "operated"
+      ],
+      "image": "/pid-symbols/sym_motor_valve.png",
+      "source": "edraw-pid-legend",
+      "legendBox": [
+        655,
+        1888,
+        80,
+        80
+      ]
+    },
+    {
+      "id": "sym_plug_valve",
+      "label": "Pilot Gate Valve",
+      "abbr": "PLG",
+      "category": "valve",
+      "keywords": [
+        "plug",
+        "pilot"
+      ],
+      "image": "/pid-symbols/sym_plug_valve.png",
+      "source": "edraw-pid-legend",
+      "legendBox": [
+        655,
+        1980,
+        80,
+        80
+      ]
+    },
+    {
+      "id": "sym_control_valve",
+      "label": "Balanced Diaphragm Gate Valve",
+      "abbr": "CV",
+      "category": "valve",
+      "keywords": [
+        "control",
+        "diaphragm"
+      ],
+      "image": "/pid-symbols/sym_control_valve.png",
+      "source": "edraw-pid-legend",
+      "legendBox": [
+        980,
+        1888,
+        80,
+        80
+      ]
+    },
+    {
+      "id": "sym_angle_valve",
+      "label": "Angle Valve",
+      "abbr": "AV",
+      "category": "valve",
+      "keywords": [
+        "angle"
+      ],
+      "image": "/pid-symbols/sym_angle_valve.png",
+      "source": "edraw-pid-legend",
+      "legendBox": [
+        330,
+        1980,
+        80,
+        80
+      ]
+    },
+    {
+      "id": "sym_safety_valve",
+      "label": "Relief Valve",
+      "abbr": "PSV",
+      "category": "valve",
+      "keywords": [
+        "safety",
+        "relief",
+        "psv"
+      ],
+      "image": "/pid-symbols/sym_safety_valve.png",
+      "source": "edraw-pid-legend",
+      "legendBox": [
+        980,
+        1980,
+        80,
+        80
+      ]
+    },
+    {
+      "id": "sym_butterfly_valve",
+      "label": "Butterfly Valve",
+      "abbr": "BFV",
+      "category": "valve",
+      "keywords": [
+        "butterfly"
+      ],
+      "image": "/pid-symbols/sym_butterfly_valve.png",
+      "source": "edraw-pid-legend",
+      "legendBox": [
+        1305,
+        11158,
+        80,
+        50
+      ]
+    },
+    {
+      "id": "sym_needle_valve",
+      "label": "Needle Valve",
+      "abbr": "NV",
+      "category": "valve",
+      "keywords": [
+        "needle"
+      ],
+      "image": "/pid-symbols/sym_needle_valve.png",
+      "source": "edraw-pid-legend",
+      "legendBox": [
+        5,
+        2095,
+        80,
+        80
+      ]
+    },
+    {
+      "id": "sym_diaphragm_valve",
+      "label": "Rotary Valve",
+      "abbr": "RV",
+      "category": "valve",
+      "keywords": [
+        "diaphragm",
+        "rotary"
+      ],
+      "image": "/pid-symbols/sym_diaphragm_valve.png",
+      "source": "edraw-pid-legend",
+      "legendBox": [
+        1305,
+        2095,
+        80,
+        80
+      ]
+    },
+    {
+      "id": "sym_compressor",
+      "label": "Compressor",
+      "abbr": "K",
+      "category": "pump",
+      "keywords": [
+        "compressor"
+      ],
+      "image": "/pid-symbols/sym_compressor.png",
+      "source": "edraw-pid-legend",
+      "legendBox": [
+        5,
+        2705,
+        80,
+        80
+      ]
+    },
+    {
+      "id": "sym_fan",
+      "label": "Fan / Blower",
+      "abbr": "FN",
+      "category": "pump",
+      "keywords": [
+        "fan",
+        "blower"
+      ],
+      "image": "/pid-symbols/sym_fan.png",
+      "source": "edraw-pid-legend",
+      "legendBox": [
+        330,
+        2705,
+        80,
+        80
+      ]
+    },
+    {
+      "id": "sym_pump",
+      "label": "Centrifugal Pump",
+      "abbr": "P",
+      "category": "pump",
+      "keywords": [
+        "centrifugal",
+        "pump"
+      ],
+      "image": "/pid-symbols/sym_pump.png",
+      "source": "edraw-pid-legend",
+      "legendBox": [
+        330,
+        2795,
+        80,
+        80
+      ]
+    },
+    {
+      "id": "sym_pump_vertical",
+      "label": "Vertical Pump",
+      "abbr": "VPU",
+      "category": "pump",
+      "keywords": [
+        "vertical"
+      ],
+      "image": "/pid-symbols/sym_pump_vertical.png",
+      "source": "edraw-pid-legend",
+      "legendBox": [
+        5,
+        2795,
+        80,
+        80
+      ]
+    },
+    {
+      "id": "sym_pump_reciprocating",
+      "label": "Reciprocating Pump",
+      "abbr": "RP",
+      "category": "pump",
+      "keywords": [
+        "reciprocating"
+      ],
+      "image": "/pid-symbols/sym_pump_reciprocating.png",
+      "source": "edraw-pid-legend",
+      "legendBox": [
+        5,
+        2888,
+        80,
+        80
+      ]
+    },
+    {
+      "id": "sym_pump_centrifugal2",
+      "label": "Centrifugal Pump 2",
+      "abbr": "P2",
+      "category": "pump",
+      "keywords": [
+        "centrifugal"
+      ],
+      "image": "/pid-symbols/sym_pump_centrifugal2.png",
+      "source": "edraw-pid-legend",
+      "legendBox": [
+        655,
+        2795,
+        80,
+        80
+      ]
+    },
+    {
+      "id": "sym_pump_positive",
+      "label": "Positive Displacement Pump",
+      "abbr": "PD",
+      "category": "pump",
+      "keywords": [
+        "positive",
+        "displacement"
+      ],
+      "image": "/pid-symbols/sym_pump_positive.png",
+      "source": "edraw-pid-legend",
+      "legendBox": [
+        655,
+        2888,
+        80,
+        80
+      ]
+    },
+    {
+      "id": "sym_pump_vacuum",
+      "label": "Vacuum Pump",
+      "abbr": "VP",
+      "category": "pump",
+      "keywords": [
+        "vacuum"
+      ],
+      "image": "/pid-symbols/sym_pump_vacuum.png",
+      "source": "edraw-pid-legend",
+      "legendBox": [
+        655,
+        2978,
+        80,
+        80
+      ]
+    },
+    {
+      "id": "sym_pump_gear",
+      "label": "Gear Pump",
+      "abbr": "GP",
+      "category": "pump",
+      "keywords": [
+        "gear"
+      ],
+      "image": "/pid-symbols/sym_pump_gear.png",
+      "source": "edraw-pid-legend",
+      "legendBox": [
+        1305,
+        2888,
+        80,
+        80
+      ]
+    },
+    {
+      "id": "sym_pump_screw",
+      "label": "Screw Pump",
+      "abbr": "SP",
+      "category": "pump",
+      "keywords": [
+        "screw"
+      ],
+      "image": "/pid-symbols/sym_pump_screw.png",
+      "source": "edraw-pid-legend",
+      "legendBox": [
+        980,
+        2978,
+        80,
+        80
+      ]
+    },
+    {
+      "id": "sym_motor",
+      "label": "Motor",
+      "abbr": "M",
+      "category": "equipment",
+      "keywords": [
+        "motor",
+        "diesel"
+      ],
+      "image": "/pid-symbols/sym_motor.png",
+      "source": "edraw-pid-legend",
+      "legendBox": [
+        1305,
+        2705,
+        80,
+        80
+      ]
+    },
+    {
+      "id": "sym_column",
+      "label": "Fluidized Bed Column",
+      "abbr": "COL",
+      "category": "equipment",
+      "keywords": [
+        "column",
+        "tower"
+      ],
+      "image": "/pid-symbols/sym_column.png",
+      "source": "edraw-pid-legend",
+      "legendBox": [
+        5,
+        4228,
+        72,
+        110
+      ]
+    },
+    {
+      "id": "sym_vessel_v",
+      "label": "Vertical Vessel",
+      "abbr": "V-V",
+      "category": "equipment",
+      "keywords": [
+        "vessel",
+        "vertical"
+      ],
+      "image": "/pid-symbols/sym_vessel_v.png",
+      "source": "edraw-pid-legend",
+      "legendBox": [
+        330,
+        4058,
+        72,
+        110
+      ]
+    },
+    {
+      "id": "sym_tank",
+      "label": "Tank",
+      "abbr": "TK",
+      "category": "equipment",
+      "keywords": [
+        "tank",
+        "barrel"
+      ],
+      "image": "/pid-symbols/sym_tank.png",
+      "source": "edraw-pid-legend",
+      "legendBox": [
+        655,
+        4058,
+        72,
+        110
+      ]
+    },
+    {
+      "id": "sym_he_plate",
+      "label": "Cone Roof Tank",
+      "abbr": "CRT",
+      "category": "equipment",
+      "keywords": [
+        "cone",
+        "tank",
+        "roof"
+      ],
+      "image": "/pid-symbols/sym_he_plate.png",
+      "source": "edraw-pid-legend",
+      "legendBox": [
+        980,
+        4058,
+        72,
+        110
+      ]
+    },
+    {
+      "id": "sym_tank_floating",
+      "label": "Internal Floating Roof Tank",
+      "abbr": "FRT",
+      "category": "equipment",
+      "keywords": [
+        "floating",
+        "roof"
+      ],
+      "image": "/pid-symbols/sym_tank_floating.png",
+      "source": "edraw-pid-legend",
+      "legendBox": [
+        980,
+        4228,
+        72,
+        110
+      ]
+    },
+    {
+      "id": "sym_vessel_h",
+      "label": "Pit Vessel",
+      "abbr": "V-H",
+      "category": "equipment",
+      "keywords": [
+        "vessel",
+        "horizontal",
+        "pit"
+      ],
+      "image": "/pid-symbols/sym_vessel_h.png",
+      "source": "edraw-pid-legend",
+      "legendBox": [
+        1305,
+        4228,
+        100,
+        72
+      ]
+    },
+    {
+      "id": "sym_mixer",
+      "label": "Mixing Vessel",
+      "abbr": "MX",
+      "category": "equipment",
+      "keywords": [
+        "mixer",
+        "agitator"
+      ],
+      "image": "/pid-symbols/sym_mixer.png",
+      "source": "edraw-pid-legend",
+      "legendBox": [
+        5,
+        3908,
+        72,
+        110
+      ]
+    },
+    {
+      "id": "sym_separator",
+      "label": "Separator",
+      "abbr": "SEP",
+      "category": "equipment",
+      "keywords": [
+        "separator",
+        "knockout"
+      ],
+      "image": "/pid-symbols/sym_separator.png",
+      "source": "edraw-pid-legend",
+      "legendBox": [
+        980,
+        10658,
+        80,
+        80
+      ]
+    },
+    {
+      "id": "sym_filter",
+      "label": "Filter",
+      "abbr": "FL",
+      "category": "equipment",
+      "keywords": [
+        "filter",
+        "strainer"
+      ],
+      "image": "/pid-symbols/sym_filter.png",
+      "source": "edraw-pid-legend",
+      "legendBox": [
+        330,
+        4710,
+        72,
+        90
+      ]
+    },
+    {
+      "id": "sym_reactor",
+      "label": "Products Vessel",
+      "abbr": "RX",
+      "category": "equipment",
+      "keywords": [
+        "reactor",
+        "vessel"
+      ],
+      "image": "/pid-symbols/sym_reactor.png",
+      "source": "edraw-pid-legend",
+      "legendBox": [
+        1305,
+        3908,
+        72,
+        110
+      ]
+    },
+    {
+      "id": "sym_heat_exchanger",
+      "label": "Heat Exchanger",
+      "abbr": "HX",
+      "category": "equipment",
+      "keywords": [
+        "heat",
+        "exchanger"
+      ],
+      "image": "/pid-symbols/sym_heat_exchanger.png",
+      "source": "edraw-pid-legend",
+      "legendBox": [
+        330,
+        6120,
+        80,
+        80
+      ]
+    },
+    {
+      "id": "sym_cooling_tower",
+      "label": "Cooling Tower",
+      "abbr": "CT",
+      "category": "equipment",
+      "keywords": [
+        "cooling",
+        "tower"
+      ],
+      "image": "/pid-symbols/sym_cooling_tower.png",
+      "source": "edraw-pid-legend",
+      "legendBox": [
+        330,
+        6010,
+        72,
+        90
+      ]
+    },
+    {
+      "id": "sym_fired_heater",
+      "label": "Combustion Chamber",
+      "abbr": "FH",
+      "category": "equipment",
+      "keywords": [
+        "fired",
+        "heater",
+        "furnace"
+      ],
+      "image": "/pid-symbols/sym_fired_heater.png",
+      "source": "edraw-pid-legend",
+      "legendBox": [
+        1305,
+        6530,
+        80,
+        80
+      ]
+    },
+    {
+      "id": "sym_tee",
+      "label": "Top-Bottom",
+      "abbr": "TEE",
+      "category": "piping",
+      "keywords": [
+        "tee",
+        "branch"
+      ],
+      "image": "/pid-symbols/sym_tee.png",
+      "source": "edraw-pid-legend",
+      "legendBox": [
+        12,
+        11205,
+        64,
+        56
+      ]
+    },
+    {
+      "id": "sym_elbow",
+      "label": "Sleeve Joint",
+      "abbr": "ELB",
+      "category": "piping",
+      "keywords": [
+        "elbow",
+        "bend"
+      ],
+      "image": "/pid-symbols/sym_elbow.png",
+      "source": "edraw-pid-legend",
+      "legendBox": [
+        337,
+        11205,
+        64,
+        56
+      ]
+    },
+    {
+      "id": "sym_reducer",
+      "label": "Reducer",
+      "abbr": "RED",
+      "category": "piping",
+      "keywords": [
+        "reducer"
+      ],
+      "image": "/pid-symbols/sym_reducer.png",
+      "source": "edraw-pid-legend",
+      "legendBox": [
+        662,
+        11678,
+        64,
+        56
+      ]
+    },
+    {
+      "id": "sym_flange",
+      "label": "Flange",
+      "abbr": "FLG",
+      "category": "piping",
+      "keywords": [
+        "flange"
+      ],
+      "image": "/pid-symbols/sym_flange.png",
+      "source": "edraw-pid-legend",
+      "legendBox": [
+        662,
+        11078,
+        64,
+        56
+      ]
+    },
+    {
+      "id": "sym_spectacle",
+      "label": "Spectacle Blind",
+      "abbr": "SB",
+      "category": "piping",
+      "keywords": [
+        "spectacle",
+        "blind"
+      ],
+      "image": "/pid-symbols/sym_spectacle.png",
+      "source": "edraw-pid-legend",
+      "legendBox": [
+        337,
+        11888,
+        64,
+        56
+      ]
+    },
+    {
+      "id": "sym_union",
+      "label": "Union",
+      "abbr": "UN",
+      "category": "piping",
+      "keywords": [
+        "union"
+      ],
+      "image": "/pid-symbols/sym_union.png",
+      "source": "edraw-pid-legend",
+      "legendBox": [
+        662,
+        11148,
+        64,
+        56
+      ]
+    },
+    {
+      "id": "sym_expansion",
+      "label": "Compensate",
+      "abbr": "EJ",
+      "category": "piping",
+      "keywords": [
+        "expansion"
+      ],
+      "image": "/pid-symbols/sym_expansion.png",
+      "source": "edraw-pid-legend",
+      "legendBox": [
+        1312,
+        11498,
+        64,
+        56
+      ]
+    },
+    {
+      "id": "sym_strainer",
+      "label": "Y-Strainer",
+      "abbr": "YS",
+      "category": "piping",
+      "keywords": [
+        "strainer"
+      ],
+      "image": "/pid-symbols/sym_strainer.png",
+      "source": "edraw-pid-legend",
+      "legendBox": [
+        12,
+        11718,
+        64,
+        56
+      ]
+    },
+    {
+      "id": "sym_orifice_plate",
+      "label": "Orifice Plate",
+      "abbr": "ORF",
+      "category": "piping",
+      "keywords": [
+        "orifice",
+        "plate"
+      ],
+      "image": "/pid-symbols/sym_orifice_plate.png",
+      "source": "edraw-pid-legend",
+      "legendBox": [
+        662,
+        11348,
+        64,
+        56
+      ]
+    },
+    {
+      "id": "sym_blind_flange",
+      "label": "Bell Mouth",
+      "abbr": "BM",
+      "category": "piping",
+      "keywords": [
+        "blind",
+        "bell"
+      ],
+      "image": "/pid-symbols/sym_blind_flange.png",
+      "source": "edraw-pid-legend",
+      "legendBox": [
+        1312,
+        10818,
+        64,
+        56
+      ]
+    },
+    {
+      "id": "sym_steam_trap",
+      "label": "Flame Arrester",
+      "abbr": "FA",
+      "category": "piping",
+      "keywords": [
+        "flame",
+        "arrester"
+      ],
+      "image": "/pid-symbols/sym_steam_trap.png",
+      "source": "edraw-pid-legend",
+      "legendBox": [
+        987,
+        10818,
+        72,
+        90
+      ]
+    }
+  ]
+}

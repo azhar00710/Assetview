@@ -1,0 +1,481 @@
+openapi: 3.1.0
+info:
+  title: Central Engineering Hub API
+  version: 1.0.0
+  summary: Enterprise API for central engineering master and module integrations
+servers:
+  - url: https://api.central-engineering.example.com
+security:
+  - bearerAuth: []
+
+tags:
+  - name: Tenants
+  - name: Modules
+  - name: ChangePackages
+  - name: MasterData
+  - name: Sync
+  - name: Events
+  - name: Admin
+
+paths:
+  /api/v1/tenants:
+    get:
+      tags: [Tenants]
+      summary: List tenants
+      operationId: listTenants
+      responses:
+        "200":
+          description: OK
+    post:
+      tags: [Tenants]
+      summary: Create tenant
+      operationId: createTenant
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateTenantRequest"
+      responses:
+        "201":
+          description: Created
+
+  /api/v1/tenants/{tenantId}/modules:
+    get:
+      tags: [Modules]
+      summary: List enabled modules for a tenant
+      operationId: listTenantModules
+      parameters:
+        - $ref: "#/components/parameters/TenantId"
+      responses:
+        "200":
+          description: OK
+    patch:
+      tags: [Modules]
+      summary: Enable or disable tenant modules
+      operationId: patchTenantModules
+      parameters:
+        - $ref: "#/components/parameters/TenantId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PatchTenantModulesRequest"
+      responses:
+        "200":
+          description: Updated
+
+  /api/v1/tenants/{tenantId}/module-clients:
+    post:
+      tags: [Modules]
+      summary: Register integration client credentials for a module/system
+      operationId: registerModuleClient
+      parameters:
+        - $ref: "#/components/parameters/TenantId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RegisterModuleClientRequest"
+      responses:
+        "201":
+          description: Registered
+
+  /api/v1/change-packages:
+    post:
+      tags: [ChangePackages]
+      summary: Create a change package
+      operationId: createChangePackage
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateChangePackageRequest"
+      responses:
+        "201":
+          description: Created
+    get:
+      tags: [ChangePackages]
+      summary: List change packages
+      operationId: listChangePackages
+      parameters:
+        - in: query
+          name: tenant_id
+          schema:
+            type: string
+            format: uuid
+        - in: query
+          name: status
+          schema:
+            $ref: "#/components/schemas/ChangePackageStatus"
+      responses:
+        "200":
+          description: OK
+
+  /api/v1/change-packages/{packageId}/submit:
+    post:
+      tags: [ChangePackages]
+      summary: Submit package into validation pipeline
+      operationId: submitChangePackage
+      parameters:
+        - $ref: "#/components/parameters/PackageId"
+      responses:
+        "200":
+          description: Submitted
+
+  /api/v1/change-packages/{packageId}/validate:
+    post:
+      tags: [ChangePackages]
+      summary: Trigger validation
+      operationId: validateChangePackage
+      parameters:
+        - $ref: "#/components/parameters/PackageId"
+      responses:
+        "200":
+          description: Validation complete
+
+  /api/v1/change-packages/{packageId}/map:
+    post:
+      tags: [ChangePackages]
+      summary: Trigger semantic mapping and identity candidate generation
+      operationId: mapChangePackage
+      parameters:
+        - $ref: "#/components/parameters/PackageId"
+      responses:
+        "200":
+          description: Mapping complete
+
+  /api/v1/change-packages/{packageId}/approvals:
+    post:
+      tags: [ChangePackages]
+      summary: Submit approval decision
+      operationId: createApprovalDecision
+      parameters:
+        - $ref: "#/components/parameters/PackageId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateApprovalDecisionRequest"
+      responses:
+        "200":
+          description: Decision recorded
+
+  /api/v1/change-packages/{packageId}/inject:
+    post:
+      tags: [ChangePackages]
+      summary: Inject approved package into master
+      operationId: injectChangePackage
+      parameters:
+        - $ref: "#/components/parameters/PackageId"
+      responses:
+        "202":
+          description: Injection started
+
+  /api/v1/change-packages/{packageId}/publish:
+    post:
+      tags: [ChangePackages]
+      summary: Publish injected package and emit events
+      operationId: publishChangePackage
+      parameters:
+        - $ref: "#/components/parameters/PackageId"
+      responses:
+        "200":
+          description: Published
+
+  /api/v1/master/tags:
+    get:
+      tags: [MasterData]
+      summary: Query canonical tags
+      operationId: listMasterTags
+      parameters:
+        - in: query
+          name: tenant_id
+          schema:
+            type: string
+            format: uuid
+        - in: query
+          name: q
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+
+  /api/v1/master/relationships:
+    get:
+      tags: [MasterData]
+      summary: Query canonical relationships
+      operationId: listMasterRelationships
+      parameters:
+        - in: query
+          name: tenant_id
+          schema:
+            type: string
+            format: uuid
+        - in: query
+          name: object_id
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+
+  /api/v1/sync/satellites/{satelliteId}/pull-token:
+    post:
+      tags: [Sync]
+      summary: Issue sync token for satellite pull
+      operationId: createSatellitePullToken
+      parameters:
+        - $ref: "#/components/parameters/SatelliteId"
+      responses:
+        "201":
+          description: Token issued
+
+  /api/v1/sync/satellites/{satelliteId}/checkpoints:
+    get:
+      tags: [Sync]
+      summary: Get satellite sync checkpoint state
+      operationId: getSatelliteCheckpoint
+      parameters:
+        - $ref: "#/components/parameters/SatelliteId"
+      responses:
+        "200":
+          description: OK
+    post:
+      tags: [Sync]
+      summary: Update satellite sync checkpoint after successful processing
+      operationId: upsertSatelliteCheckpoint
+      parameters:
+        - $ref: "#/components/parameters/SatelliteId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpsertCheckpointRequest"
+      responses:
+        "200":
+          description: Updated
+
+  /api/v1/events/subscriptions:
+    post:
+      tags: [Events]
+      summary: Create webhook/event subscription
+      operationId: createEventSubscription
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateEventSubscriptionRequest"
+      responses:
+        "201":
+          description: Created
+
+  /api/v1/events/subscriptions/{subscriptionId}:
+    patch:
+      tags: [Events]
+      summary: Update event subscription
+      operationId: patchEventSubscription
+      parameters:
+        - $ref: "#/components/parameters/SubscriptionId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PatchEventSubscriptionRequest"
+      responses:
+        "200":
+          description: Updated
+
+  /api/v1/admin/deployments:
+    get:
+      tags: [Admin]
+      summary: List deployment profiles
+      operationId: listDeploymentProfiles
+      responses:
+        "200":
+          description: OK
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  parameters:
+    TenantId:
+      in: path
+      name: tenantId
+      required: true
+      schema:
+        type: string
+        format: uuid
+    PackageId:
+      in: path
+      name: packageId
+      required: true
+      schema:
+        type: string
+        format: uuid
+    SatelliteId:
+      in: path
+      name: satelliteId
+      required: true
+      schema:
+        type: string
+    SubscriptionId:
+      in: path
+      name: subscriptionId
+      required: true
+      schema:
+        type: string
+        format: uuid
+
+  schemas:
+    ChangePackageStatus:
+      type: string
+      enum: [DRAFT, SUBMITTED, VALIDATED, MAPPED, REVIEW_REQUIRED, APPROVED, INJECTED, PUBLISHED, REJECTED, NEEDS_REWORK, CANCELLED]
+
+    CreateTenantRequest:
+      type: object
+      required: [name, code, deployment_mode]
+      properties:
+        name:
+          type: string
+        code:
+          type: string
+        deployment_mode:
+          type: string
+          enum: [SAAS_MULTI_TENANT, SINGLE_TENANT_CLOUD, ON_PREMISE, HYBRID]
+        data_residency:
+          type: string
+
+    PatchTenantModulesRequest:
+      type: object
+      properties:
+        enabled_modules:
+          type: array
+          items:
+            type: string
+        disabled_modules:
+          type: array
+          items:
+            type: string
+
+    RegisterModuleClientRequest:
+      type: object
+      required: [module_name, auth_type]
+      properties:
+        module_name:
+          type: string
+        auth_type:
+          type: string
+          enum: [OAUTH2_CLIENT_CREDENTIALS, API_KEY, MTLS]
+        scopes:
+          type: array
+          items:
+            type: string
+        callback_urls:
+          type: array
+          items:
+            type: string
+            format: uri
+
+    CreateChangePackageRequest:
+      type: object
+      required: [tenant_id, source_system, package_type]
+      properties:
+        tenant_id:
+          type: string
+          format: uuid
+        source_system:
+          type: string
+        source_org:
+          type: string
+        package_type:
+          type: string
+          enum: [NEW_INSTALLATION, DESIGN_MODIFICATION, AS_BUILT_UPDATE, VENDOR_DATA, LATE_REDLINE]
+        criticality:
+          type: string
+          enum: [LOW, MEDIUM, HIGH, SAFETY_CRITICAL]
+        scope:
+          type: object
+          additionalProperties: true
+        artifacts:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+
+    CreateApprovalDecisionRequest:
+      type: object
+      required: [approver_role, decision]
+      properties:
+        approver_role:
+          type: string
+        decision:
+          type: string
+          enum: [APPROVE, REJECT, REQUEST_REWORK]
+        reason:
+          type: string
+        evidence_refs:
+          type: array
+          items:
+            type: string
+
+    UpsertCheckpointRequest:
+      type: object
+      required: [tenant_id, checkpoint]
+      properties:
+        tenant_id:
+          type: string
+          format: uuid
+        checkpoint:
+          type: string
+        last_event_id:
+          type: string
+
+    CreateEventSubscriptionRequest:
+      type: object
+      required: [tenant_id, event_types, delivery]
+      properties:
+        tenant_id:
+          type: string
+          format: uuid
+        event_types:
+          type: array
+          items:
+            type: string
+        filter:
+          type: object
+          additionalProperties: true
+        delivery:
+          type: object
+          required: [mode]
+          properties:
+            mode:
+              type: string
+              enum: [WEBHOOK, MESSAGE_BUS]
+            webhook_url:
+              type: string
+              format: uri
+            topic:
+              type: string
+
+    PatchEventSubscriptionRequest:
+      type: object
+      properties:
+        active:
+          type: boolean
+        event_types:
+          type: array
+          items:
+            type: string

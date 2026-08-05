@@ -1,0 +1,7 @@
+fastapi
+uvicorn[standard]
+Pillow
+PyMuPDF
+transformers==4.49.0
+safetensors
+sentencepiece

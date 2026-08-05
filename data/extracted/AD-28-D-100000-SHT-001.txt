@@ -1,0 +1,77 @@
+================================================================================
+DRAWING INDEX - P&ID SET
+================================================================================
+Drawing No:     AD-28-D-100000-SHT-001
+Project:        11594: AS-BUILT RECOVERY - PHASE II
+                (PACKAGE 5: LZ - ZCSC & PACKAGE 6: ABK)
+Client:         ADNOC Offshore
+Contractor:     AVENIR INT'L ENGINEERS & CONSULTANTS
+Location:       ABU AL BUKHOOSH WELL HEAD TOWER - AREA 28
+Platform:       AKK 4 WELL HEAD PLATFORM
+Type:           DRAWING INDEX - PIPING AND INSTRUMENTATION DIAGRAM
+Revision:       1
+Date:           18 Jun 2025
+Scale:          N.T.S
+Supersedes:     TOTAL ABK DWG. NO. 0000617-28-U-99000-SHT 1/1 REV-16
+
+================================================================================
+DRAWING LIST
+================================================================================
+
+SL.NO | DRAWING NUMBER              | DESCRIPTION                                                                                          | REV
+------|-----------------------------|------------------------------------------------------------------------------------------------------|----
+1     | AD-28-D-100000-SHT-001      | ABU AL BUKHOOSH WELL HEAD TOWER - AREA 28 AKK 4 WELL HEAD PLATFORM DRAWING INDEX P&ID               | 1
+2     | AD-28-D-100001-SHT-001      | ABU AL BUKHOOSH WELL HEAD TOWER - AREA 28 AKK 4 WELL HEAD PLATFORM PRODUCTION LINES P&ID            | 1
+3     | AD-28-D-100002-SHT-001      | ABU AL BUKHOOSH WELL HEAD TOWER - AREA 28 AKK 4 WELL HEAD PLATFORM CORROSION INHIBITOR PACKAGE G-2802 P&ID | 1
+4     | AD-28-D-100003-SHT-001      | ABU AL BUKHOOSH WELL HEAD TOWER - AREA 28 AKK 4 WELL HEAD PLATFORM DECK DRAIN & DRY SERVICE WATER SYSTEM P&ID | 1
+5     | AD-28-D-100004-SHT-001      | ABU AL BUKHOOSH WELL HEAD TOWER - AREA 28 AKK 4 WELL HEAD PLATFORM METHANOL INJECTION PACKAGE G-2801 P&ID | 1
+6     | AD-28-D-100005-SHT-001      | ABU AL BUKHOOSH WELL HEAD TOWER - AREA 28 AKK 4 WELL HEAD PLATFORM AF-9 AKK4 WELLHEAD FLOW LINES P&ID | 1
+7     | AD-28-D-100006-SHT-001      | ABU AL BUKHOOSH WELL HEAD TOWER - AREA 28 AKK 4 WELL HEAD PLATFORM AF-10 AKK4 WELLHEAD FLOW LINES P&ID | 1
+8     | AD-28-D-100007-SHT-001      | ABU AL BUKHOOSH WELL HEAD TOWER - AREA 28 AKK 4 WELL HEAD PLATFORM PIG LAUNCHER & MANIFOLD P&ID     | 1
+
+================================================================================
+SYSTEM BREAKDOWN (by P&ID Sheet)
+================================================================================
+
+SYSTEM: PRODUCTION LINES (Sheet 001)
+  - Primary system for well AF-4 production
+  - Wellhead safety cabinet KW-2801
+  - Well AF-4 slot 2 (20" / 13-3/8" / 9-5/8" / 7-5/8" casing)
+  - SSV, WV, DHSV, ESV valves
+  - HCV (choke valve) with local control panel
+  - N2 accumulator skid G-2803.B
+
+SYSTEM: CORROSION INHIBITOR (Sheet 002)
+  - Package G-2802
+  - Storage tank Q-2802
+  - Injection pumps P-2802.A/B/C
+  - Local control panel
+
+SYSTEM: DECK DRAIN & DRY SERVICE WATER (Sheet 003)
+  - Sump tank Q-2803
+  - Deck drain network (upper deck, mezzanine deck, cellar deck, well deck)
+  - Dry service water hose connections
+  - Flame arrestors FA-2803, FA-2804, FA-2805, FA-2806
+
+SYSTEM: METHANOL INJECTION (Sheet 004)
+  - Package G-2801
+  - Storage tank Q-2801
+  - Methanol injection to upstream choke and flowline
+
+SYSTEM: AF-9 WELLHEAD FLOW LINES (Sheet 005)
+  - Well AF-9 slot 2
+  - SSV, WV, DHSV valves
+  - HCV (choke valve) with local control panel
+  - Flow to AKK4 production header
+
+SYSTEM: AF-10 WELLHEAD FLOW LINES (Sheet 006)
+  - Well AF-10 slot 6
+  - SSV, WV, DHSV valves
+  - HCV (choke valve) with local control panel
+  - Flow to AKK4 production header / test manifold
+
+SYSTEM: PIG LAUNCHER & MANIFOLD (Sheet 007)
+  - Pig launcher GP-2802
+  - Production manifold / test manifold
+  - ESV-289950
+  - 14" production header to NKPP platform

@@ -1,0 +1,525 @@
+/* ═══════════════════════════════════════════════════════
+   Material Design 3 — Global Styles for AssetView
+   Teal-tinted dark theme with vibrant accent colors
+   ═══════════════════════════════════════════════════════ */
+
+/* Google Fonts — must precede @tailwind directives */
+@import url('https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Roboto:wght@400;500;700&family=Roboto+Mono:wght@400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ═══ M3 CSS Custom Properties — Teal-Tinted Dark Theme ═══
+   Surfaces: Neutral palette at hue ~160, chroma ~6
+   This gives every surface a subtle green warmth.
+   ═══════════════════════════════════════════════════════ */
+:root {
+  /* ─── Surfaces (teal-tinted) ─── */
+  --md-surface:                  #0E1512;
+  --md-surface-dim:              #0A110E;
+  --md-surface-container-lowest: #060D0A;
+  --md-surface-container-low:    #141D19;
+  --md-surface-container:        #1A2521;
+  --md-surface-container-high:   #243330;
+  --md-surface-container-highest:#2F3D3A;
+  --md-surface-bright:           #354540;
+  --md-surface-variant:          #3F4F4A;
+
+  /* ─── On-Surface (text) ─── */
+  --md-on-surface:          #E1E8E5;
+  --md-on-surface-variant:  #BFC9C5;
+  --md-outline:             #899490;
+  --md-outline-variant:     #3F4F4A;
+
+  /* ─── Primary (Vibrant Teal) ─── */
+  --md-primary:               #4FE2B0;
+  --md-on-primary:            #003828;
+  --md-primary-container:     #005E42;
+  --md-on-primary-container:  #73FFCC;
+
+  /* ─── Secondary (Vibrant Blue) ─── */
+  --md-secondary:               #8AB4FF;
+  --md-on-secondary:            #002F6B;
+  --md-secondary-container:     #004A9F;
+  --md-on-secondary-container:  #D4E3FF;
+
+  /* ─── Tertiary (Vibrant Orange) ─── */
+  --md-tertiary:               #FFB068;
+  --md-on-tertiary:            #4A2800;
+  --md-tertiary-container:     #6A3B00;
+  --md-on-tertiary-container:  #FFDCB8;
+
+  /* ─── Error (Vibrant Red) ─── */
+  --md-error:               #FF897A;
+  --md-on-error:            #690100;
+  --md-error-container:     #930100;
+  --md-on-error-container:  #FFDAD4;
+
+  /* ─── Semantic — Oil & Gas System Types ─── */
+  --md-sys-process:    #4FE2B0;
+  --md-sys-utility:    #8AB4FF;
+  --md-sys-safety:     #FF897A;
+  --md-sys-instrument: #FFD466;
+  --md-sil-purple:     #CDB4FF;
+
+  /* ─── Inverse (snackbars, tooltips) ─── */
+  --md-inverse-surface:    #E1E8E5;
+  --md-inverse-on-surface: #2C3330;
+  --md-inverse-primary:    #006C4D;
+
+  /* ─── Easing ─── */
+  --md-easing-standard:          cubic-bezier(0.2, 0.0, 0, 1.0);
+  --md-easing-standard-decel:    cubic-bezier(0, 0, 0, 1);
+  --md-easing-standard-accel:    cubic-bezier(0.3, 0, 1, 1);
+  --md-easing-emphasized:        cubic-bezier(0.2, 0.0, 0, 1.0);
+  --md-easing-emphasized-decel:  cubic-bezier(0.05, 0.7, 0.1, 1.0);
+  --md-easing-emphasized-accel:  cubic-bezier(0.3, 0.0, 0.8, 0.15);
+
+  /* ─── State layer opacities ─── */
+  --md-state-hover:    0.08;
+  --md-state-focus:    0.12;
+  --md-state-pressed:  0.12;
+  --md-state-dragged:  0.16;
+}
+
+/* ═══ M3 Light Theme ═══ */
+[data-theme="light"] {
+  /* ─── Surfaces ─── */
+  --md-surface:                  #F5FBF7;
+  --md-surface-dim:              #D6DCD8;
+  --md-surface-container-lowest: #FFFFFF;
+  --md-surface-container-low:    #F0F6F2;
+  --md-surface-container:        #EAF0EC;
+  --md-surface-container-high:   #E4EBE7;
+  --md-surface-container-highest:#DEE5E1;
+  --md-surface-bright:           #F5FBF7;
+  --md-surface-variant:          #DAE5E0;
+
+  /* ─── On-Surface (text) ─── */
+  --md-on-surface:          #171D1A;
+  --md-on-surface-variant:  #3F4945;
+  --md-outline:             #6F7975;
+  --md-outline-variant:     #BFC9C5;
+
+  /* ─── Primary (Teal) ─── */
+  --md-primary:               #006C4D;
+  --md-on-primary:            #FFFFFF;
+  --md-primary-container:     #73FFCC;
+  --md-on-primary-container:  #002115;
+
+  /* ─── Secondary (Blue) ─── */
+  --md-secondary:               #0057B3;
+  --md-on-secondary:            #FFFFFF;
+  --md-secondary-container:     #D4E3FF;
+  --md-on-secondary-container:  #001B3E;
+
+  /* ─── Tertiary (Orange) ─── */
+  --md-tertiary:               #8B5000;
+  --md-on-tertiary:            #FFFFFF;
+  --md-tertiary-container:     #FFDCB8;
+  --md-on-tertiary-container:  #2C1600;
+
+  /* ─── Error ─── */
+  --md-error:               #BA1A1A;
+  --md-on-error:            #FFFFFF;
+  --md-error-container:     #FFDAD4;
+  --md-on-error-container:  #410001;
+
+  /* ─── Semantic — Oil & Gas System Types ─── */
+  --md-sys-process:    #006C4D;
+  --md-sys-utility:    #0057B3;
+  --md-sys-safety:     #BA1A1A;
+  --md-sys-instrument: #7D5800;
+  --md-sil-purple:     #6750A4;
+
+  /* ─── Inverse ─── */
+  --md-inverse-surface:    #2C3330;
+  --md-inverse-on-surface: #E1E8E5;
+  --md-inverse-primary:    #4FE2B0;
+}
+
+/* Light theme scrollbar */
+[data-theme="light"] ::-webkit-scrollbar-thumb {
+  background: rgba(0, 108, 77, 0.2);
+}
+[data-theme="light"] ::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 108, 77, 0.4);
+}
+[data-theme="light"] * {
+  scrollbar-color: rgba(0, 108, 77, 0.2) transparent;
+}
+
+/* ═══ Base Styles ═══ */
+html, body {
+  font-family: 'Google Sans', 'Roboto', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ═══ M3 Scrollbar (teal-tinted) ═══ */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--md-primary) 15%, transparent);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: color-mix(in srgb, var(--md-primary) 30%, transparent);
+}
+
+/* Firefox scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in srgb, var(--md-primary) 15%, transparent) transparent;
+}
+
+/* ═══ M3 State Layer (hover/focus/press overlay) ═══ */
+@layer components {
+  .md-interactive {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+  }
+
+  .md-interactive::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: currentColor;
+    opacity: 0;
+    transition: opacity 150ms var(--md-easing-standard);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .md-interactive:hover::before {
+    opacity: var(--md-state-hover);
+  }
+
+  .md-interactive:focus-visible::before {
+    opacity: var(--md-state-focus);
+  }
+
+  .md-interactive:active::before {
+    opacity: var(--md-state-pressed);
+  }
+
+  /* Ripple container */
+  .md-ripple-host {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .md-ripple-host .md-ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: currentColor;
+    opacity: 0.12;
+    transform: scale(0);
+    animation: md-ripple 450ms var(--md-easing-standard) forwards;
+    pointer-events: none;
+  }
+
+  /* ─── M3 Elevation surfaces (tonal + shadow) ─── */
+  .md-elevation-0 { background-color: var(--md-surface); }
+  .md-elevation-1 {
+    background-color: var(--md-surface-container-low);
+    box-shadow: 0 1px 3px 1px rgba(0,0,0,0.15), 0 1px 2px 0 rgba(0,0,0,0.3);
+  }
+  .md-elevation-2 {
+    background-color: var(--md-surface-container);
+    box-shadow: 0 2px 6px 2px rgba(0,0,0,0.15), 0 1px 2px 0 rgba(0,0,0,0.3);
+  }
+  .md-elevation-3 {
+    background-color: var(--md-surface-container-high);
+    box-shadow: 0 4px 8px 3px rgba(0,0,0,0.15), 0 1px 3px 0 rgba(0,0,0,0.3);
+  }
+  .md-elevation-4 {
+    background-color: var(--md-surface-container-highest);
+    box-shadow: 0 6px 10px 4px rgba(0,0,0,0.15), 0 2px 3px 0 rgba(0,0,0,0.3);
+  }
+
+  /* ─── M3 Chip base ─── */
+  .md-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 12px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 16px;
+    white-space: nowrap;
+    transition: background-color 150ms var(--md-easing-standard);
+  }
+
+  /* ─── M3 Filter chip (toolbar toggles) ─── */
+  .md-filter-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    border: 1px solid var(--md-outline);
+    background: transparent;
+    color: var(--md-on-surface);
+    cursor: pointer;
+    transition: all 200ms var(--md-easing-standard);
+  }
+
+  .md-filter-chip:hover {
+    background: color-mix(in srgb, var(--md-primary) 8%, transparent);
+  }
+
+  .md-filter-chip[data-selected="true"] {
+    background: var(--md-secondary-container);
+    color: var(--md-on-secondary-container);
+    border-color: transparent;
+  }
+
+  /* ─── M3 Filled tonal button ─── */
+  .md-btn-tonal {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 24px;
+    border-radius: 9999px;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    border: none;
+    background: var(--md-primary-container);
+    color: var(--md-on-primary-container);
+    cursor: pointer;
+    transition: all 200ms var(--md-easing-standard);
+  }
+
+  .md-btn-tonal:hover {
+    box-shadow: 0 1px 3px 1px rgba(0,0,0,0.15), 0 1px 2px 0 rgba(0,0,0,0.3);
+    filter: brightness(1.08);
+  }
+
+  /* ─── M3 Filled button ─── */
+  .md-btn-filled {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 24px;
+    border-radius: 9999px;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    border: none;
+    background: var(--md-primary);
+    color: var(--md-on-primary);
+    cursor: pointer;
+    transition: all 200ms var(--md-easing-standard);
+  }
+
+  .md-btn-filled:hover {
+    box-shadow: 0 1px 3px 1px rgba(0,0,0,0.15), 0 1px 2px 0 rgba(0,0,0,0.3);
+    filter: brightness(1.08);
+  }
+
+  /* ─── M3 Outlined button ─── */
+  .md-btn-outlined {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 24px;
+    border-radius: 9999px;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    border: 1px solid var(--md-outline);
+    background: transparent;
+    color: var(--md-primary);
+    cursor: pointer;
+    transition: all 200ms var(--md-easing-standard);
+  }
+
+  .md-btn-outlined:hover {
+    background: color-mix(in srgb, var(--md-primary) 8%, transparent);
+  }
+
+  /* ─── M3 Icon button ─── */
+  .md-icon-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 9999px;
+    border: none;
+    background: transparent;
+    color: var(--md-on-surface-variant);
+    cursor: pointer;
+    transition: background-color 150ms var(--md-easing-standard);
+  }
+
+  .md-icon-btn:hover {
+    background: color-mix(in srgb, var(--md-on-surface) 8%, transparent);
+  }
+
+  /* ─── M3 Text input ─── */
+  .md-input {
+    padding: 10px 16px;
+    border-radius: 9999px;
+    border: none;
+    background: var(--md-surface-container-high);
+    color: var(--md-on-surface);
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    outline: none;
+    transition: all 200ms var(--md-easing-standard);
+  }
+
+  .md-input::placeholder {
+    color: var(--md-on-surface-variant);
+  }
+
+  .md-input:focus {
+    box-shadow: 0 0 0 2px var(--md-primary);
+  }
+
+  /* ─── M3 Card ─── */
+  .md-card {
+    background: var(--md-surface-container);
+    border: 1px solid var(--md-outline-variant);
+    border-radius: 12px;
+    transition: all 200ms var(--md-easing-standard);
+  }
+
+  .md-card:hover {
+    background: var(--md-surface-container-high);
+    box-shadow: 0 2px 6px 2px rgba(0,0,0,0.15), 0 1px 2px 0 rgba(0,0,0,0.3);
+  }
+
+  /* ─── M3 Card filled ─── */
+  .md-card-filled {
+    background: var(--md-surface-container-high);
+    border-radius: 12px;
+    transition: all 200ms var(--md-easing-standard);
+  }
+
+  /* ─── M3 List item ─── */
+  .md-list-item {
+    transition: background-color 150ms var(--md-easing-standard);
+    border-radius: 12px;
+  }
+
+  .md-list-item:hover {
+    background-color: color-mix(in srgb, var(--md-on-surface) 8%, transparent);
+  }
+
+  /* ─── M3 Navigation rail item ─── */
+  .md-nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 12px 16px;
+    border-radius: 16px;
+    color: var(--md-on-surface-variant);
+    transition: all 200ms var(--md-easing-standard);
+    cursor: pointer;
+  }
+
+  .md-nav-item:hover {
+    background: color-mix(in srgb, var(--md-on-surface) 8%, transparent);
+  }
+
+  .md-nav-item[data-active="true"] {
+    background: var(--md-secondary-container);
+    color: var(--md-on-secondary-container);
+  }
+
+  /* ─── M3 Divider ─── */
+  .md-divider {
+    border: none;
+    height: 1px;
+    background: var(--md-outline-variant);
+  }
+}
+
+/* ═══ Staggered list animation helper ═══ */
+.md-stagger > * {
+  animation: md-list-enter 250ms cubic-bezier(0.05, 0.7, 0.1, 1.0) both;
+}
+.md-stagger > *:nth-child(1)  { animation-delay: 0ms; }
+.md-stagger > *:nth-child(2)  { animation-delay: 30ms; }
+.md-stagger > *:nth-child(3)  { animation-delay: 60ms; }
+.md-stagger > *:nth-child(4)  { animation-delay: 90ms; }
+.md-stagger > *:nth-child(5)  { animation-delay: 120ms; }
+.md-stagger > *:nth-child(6)  { animation-delay: 150ms; }
+.md-stagger > *:nth-child(7)  { animation-delay: 180ms; }
+.md-stagger > *:nth-child(8)  { animation-delay: 210ms; }
+.md-stagger > *:nth-child(9)  { animation-delay: 240ms; }
+.md-stagger > *:nth-child(10) { animation-delay: 270ms; }
+.md-stagger > *:nth-child(n+11) { animation-delay: 300ms; }
+
+/* ═══ Keyframes ═══ */
+@keyframes md-list-enter {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes md-register-enter {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes md-detail-enter {
+  from { opacity: 0; transform: translateY(100%); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes md-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes md-ripple {
+  from { transform: scale(0); opacity: 0.12; }
+  to   { transform: scale(2.5); opacity: 0; }
+}
+
+@keyframes md-shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes slideInRight {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
+/* ═══ Accessibility — Reduced Motion ═══ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Smart Identification — transparent Konva overlay (P&ID visible underneath) */
+.smart-ident-stage,
+.smart-ident-stage canvas {
+  background: transparent !important;
+  background-color: transparent !important;
+}

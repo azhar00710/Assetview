@@ -1,0 +1,25 @@
+{
+  "name": "geosoft-assetview",
+  "version": "2.0.0",
+  "private": true,
+  "description": "GeoSoft AssetView — Intelligent Asset Environment for Oil & Gas",
+  "scripts": {
+    "start": "bash start.sh",
+    "start:win": "powershell -ExecutionPolicy Bypass -File start.ps1",
+    "dev": "node backend/scripts/ensureDatabase.mjs && concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "dev:backend": "cd backend && npm run dev",
+    "dev:frontend": "cd frontend && npm run dev",
+    "db:up": "docker compose up -d postgres",
+    "db:status": "docker ps --filter name=assetview-db --format \"table {{.Names}}\\t{{.Status}}\\t{{.Ports}}\"",
+    "stop": "node backend/scripts/stopDev.mjs",
+    "db:setup": "cd database && ./setup.sh",
+    "db:reset": "cd database && ./reset.sh",
+    "install:all": "npm install && cd backend && npm install && cd ../frontend && npm install",
+    "build": "cd frontend && npm ci && npm run build && cp -r dist/* ../backend/public/",
+    "build:do": "cd backend && npm ci && npx prisma generate && cd ../frontend && npm ci && VITE_API_URL=/api/v1 npm run build && cp -r dist/* ../backend/public/",
+    "test": "cd backend && npm test"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.0"
+  }
+}

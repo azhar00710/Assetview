@@ -1,0 +1,78 @@
+name: Central Hub Smoke Test
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  central-hub-smoke:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_DB: assetview
+          POSTGRES_USER: assetview
+          POSTGRES_PASSWORD: assetview
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U assetview -d assetview"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    env:
+      DATABASE_URL: postgresql://assetview:assetview@localhost:5432/assetview
+      PORT: 3001
+      CENTRAL_HUB_BASE_URL: http://127.0.0.1:3001/api/v1
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: backend/package-lock.json
+
+      - name: Install backend dependencies
+        working-directory: backend
+        run: npm ci
+
+      - name: Start backend API
+        working-directory: backend
+        run: |
+          npm run start > /tmp/central-hub-api.log 2>&1 &
+          echo $! > /tmp/central-hub-api.pid
+
+      - name: Wait for API health
+        run: |
+          for i in {1..30}; do
+            if curl -sf "http://127.0.0.1:3001/api/v1/central-hub/health" > /dev/null; then
+              echo "API is healthy"
+              exit 0
+            fi
+            sleep 2
+          done
+          echo "API failed to start"
+          cat /tmp/central-hub-api.log || true
+          exit 1
+
+      - name: Run Central Hub smoke test
+        working-directory: backend
+        run: npm run test:central-hub-smoke
+
+      - name: Print API logs on failure
+        if: failure()
+        run: cat /tmp/central-hub-api.log || true
+
+      - name: Stop backend API
+        if: always()
+        run: |
+          if [ -f /tmp/central-hub-api.pid ]; then
+            kill "$(cat /tmp/central-hub-api.pid)" || true
+          fi

@@ -1,0 +1,116 @@
+// Draft schema for Central Engineering Hub domain.
+// Keep this as a staging file until migration order is finalized.
+
+enum ceh_deployment_mode {
+  SAAS_MULTI_TENANT
+  SINGLE_TENANT_CLOUD
+  ON_PREMISE
+  HYBRID
+}
+
+enum ceh_change_package_status {
+  DRAFT
+  SUBMITTED
+  VALIDATED
+  MAPPED
+  REVIEW_REQUIRED
+  APPROVED
+  INJECTED
+  PUBLISHED
+  REJECTED
+  NEEDS_REWORK
+  CANCELLED
+}
+
+enum ceh_approval_decision {
+  APPROVE
+  REJECT
+  REQUEST_REWORK
+}
+
+model ceh_tenant {
+  id              String                      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  tenant_code     String                      @unique @db.VarChar(50)
+  tenant_name     String                      @db.VarChar(200)
+  deployment_mode ceh_deployment_mode
+  data_residency  String?                     @db.VarChar(100)
+  metadata        Json?                       @default("{}")
+  created_at      DateTime?                   @default(now()) @db.Timestamptz(6)
+  updated_at      DateTime?                   @default(now()) @db.Timestamptz(6)
+  modules         ceh_tenant_module[]
+  clients         ceh_module_client[]
+  packages        ceh_change_package[]
+}
+
+model ceh_tenant_module {
+  id            String      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  tenant_id     String      @db.Uuid
+  module_name   String      @db.VarChar(100)
+  is_enabled    Boolean?    @default(true)
+  config        Json?       @default("{}")
+  created_at    DateTime?   @default(now()) @db.Timestamptz(6)
+  updated_at    DateTime?   @default(now()) @db.Timestamptz(6)
+  tenant        ceh_tenant  @relation(fields: [tenant_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@unique([tenant_id, module_name])
+}
+
+model ceh_module_client {
+  id            String      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  tenant_id     String      @db.Uuid
+  module_name   String      @db.VarChar(100)
+  auth_type     String      @db.VarChar(50)
+  scopes        Json?       @default("[]")
+  callback_urls Json?       @default("[]")
+  is_active     Boolean?    @default(true)
+  created_at    DateTime?   @default(now()) @db.Timestamptz(6)
+  updated_at    DateTime?   @default(now()) @db.Timestamptz(6)
+  tenant        ceh_tenant  @relation(fields: [tenant_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@index([tenant_id, module_name])
+}
+
+model ceh_change_package {
+  id            String                     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  tenant_id     String                     @db.Uuid
+  package_ref   String                     @unique @db.VarChar(100)
+  source_system String                     @db.VarChar(100)
+  source_org    String?                    @db.VarChar(200)
+  package_type  String                     @db.VarChar(50)
+  status        ceh_change_package_status  @default(DRAFT)
+  scope         Json?                      @default("{}")
+  risk          Json?                      @default("{}")
+  metadata      Json?                      @default("{}")
+  created_at    DateTime?                  @default(now()) @db.Timestamptz(6)
+  updated_at    DateTime?                  @default(now()) @db.Timestamptz(6)
+  tenant        ceh_tenant                 @relation(fields: [tenant_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  approvals     ceh_approval_decision_log[]
+
+  @@index([tenant_id, status])
+}
+
+model ceh_approval_decision_log {
+  id                String                 @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  change_package_id String                 @db.Uuid
+  approver_role     String                 @db.VarChar(100)
+  approver_id       String                 @db.VarChar(150)
+  decision          ceh_approval_decision
+  reason            String?
+  evidence_refs     Json?                  @default("[]")
+  created_at        DateTime?              @default(now()) @db.Timestamptz(6)
+  change_package    ceh_change_package     @relation(fields: [change_package_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@index([change_package_id, created_at])
+}
+
+model ceh_satellite_checkpoint {
+  id            String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  tenant_id     String    @db.Uuid
+  satellite_id  String    @db.VarChar(100)
+  checkpoint    String?   @db.VarChar(200)
+  last_event_id String?   @db.VarChar(200)
+  updated_at    DateTime? @default(now()) @db.Timestamptz(6)
+
+  @@unique([tenant_id, satellite_id])
+}
+

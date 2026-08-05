@@ -1,0 +1,91 @@
+  services:
+  # ── PostgreSQL Database ──
+  # Uses your local PostgreSQL data via a named volume.
+  # For a FRESH database: docker compose -f docker-compose.prod.yml down -v && docker compose -f docker-compose.prod.yml up --build -d
+  # For EXISTING local DB: set DB_HOST=host.docker.internal in .env or shell
+  postgres:
+    image: postgres:15-alpine
+    container_name: assetview-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${DB_USER:-assetview}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-assetview}
+      POSTGRES_DB: ${DB_NAME:-assetview}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./database/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql
+      - ./database/migration_annotations.sql:/docker-entrypoint-initdb.d/02-migration-annotations.sql
+      - ./database/migration_v2.1_storage_versioning.sql:/docker-entrypoint-initdb.d/03-migration-storage.sql
+      - ./database/migration_v3_hierarchy.sql:/docker-entrypoint-initdb.d/04-migration-hierarchy.sql
+      - ./database/migration_approval_status.sql:/docker-entrypoint-initdb.d/05-migration-approval.sql
+      - ./database/migration_tag_document.sql:/docker-entrypoint-initdb.d/06-migration-tag-document.sql
+      - ./database/migration_topology.sql:/docker-entrypoint-initdb.d/07-migration-topology.sql
+      - ./database/migration_ocr.sql:/docker-entrypoint-initdb.d/08-migration-ocr.sql
+      - ./database/migration_pid_annotation_module.sql:/docker-entrypoint-initdb.d/09-migration-pid-annotation.sql
+      - ./database/migration_ocr_v2.sql:/docker-entrypoint-initdb.d/10-migration-ocr-v2.sql
+      - ./database/migration_line_engineering_data.sql:/docker-entrypoint-initdb.d/11-migration-line-engineering.sql
+      - ./database/migrations/003_topology_edges.sql:/docker-entrypoint-initdb.d/12-migration-topology-edges.sql
+      - ./database/migration_tag_dictionary.sql:/docker-entrypoint-initdb.d/13-migration-tag-dictionary.sql
+      - ./database/migration_ocr_ai_analysis.sql:/docker-entrypoint-initdb.d/14-migration-ocr-ai-analysis.sql
+      - ./database/seed.sql:/docker-entrypoint-initdb.d/90-seed.sql
+      - ./database/seed_topology_edges.sql:/docker-entrypoint-initdb.d/91-seed-topology-edges.sql
+      - ./database/seed_test_data.sql:/docker-entrypoint-initdb.d/92-seed-test-data.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-assetview}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - assetview
+
+  # ── Backend API (Fastify + Prisma) ──
+  # Connects to host PostgreSQL (your local DB with existing data) by default.
+  # Set DB_HOST=postgres to use the Docker PostgreSQL container instead.
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: assetview-api
+    restart: unless-stopped
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    environment:
+      DATABASE_URL: postgresql://${DB_USER:-assetview}:${DB_PASSWORD:-assetview}@${DB_HOST:-host.docker.internal}:5432/${DB_NAME:-assetview}
+      PORT: 3001
+      CORS_ORIGIN: "*"
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      NODE_ENV: production
+    volumes:
+      - ./database:/database:ro
+      - pidstorage:/app/storage
+      - ./data:/app/storage/pids
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - assetview
+
+  # ── Frontend (React + Nginx) — serves UI + proxies /api to backend ──
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        VITE_API_URL: /api/v1
+    container_name: assetview-web
+    restart: unless-stopped
+    ports:
+      - "${APP_PORT:-3080}:80"
+    depends_on:
+      - backend
+    networks:
+      - assetview
+
+volumes:
+  pgdata:
+  pidstorage:
+
+networks:
+  assetview:
+    driver: bridge
+

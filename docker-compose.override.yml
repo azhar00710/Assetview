@@ -1,0 +1,7 @@
+# Local override: host has native PostgreSQL 18 on 5432, so map Docker's
+# Postgres to 5433 to avoid the port conflict. Backend/.env DATABASE_URL
+# must use localhost:5433 to match.
+services:
+  postgres:
+    ports:
+      - "5433:5432"

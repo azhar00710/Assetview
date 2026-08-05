@@ -1,0 +1,24 @@
+node_modules/
+dist/
+.env
+*.log
+.DS_Store
+.vite/
+pgdata/
+frontend/dist/
+
+# transient debug / inspection dumps
+audit_*.json
+audit_out*.txt
+batchdetail.json
+inspect_out.txt
+platforms.json
+raw_ocr.json
+
+# one-off patch / repair scripts kept locally
+scripts/patch-*.mjs
+scripts/repair-review-canvas.mjs
+scripts/verify-review-canvas.mjs
+
+# Temporary commit-message scratch file
+.git-commit-msg.tmp

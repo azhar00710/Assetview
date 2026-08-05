@@ -1,0 +1,20 @@
+{
+  "name": "AssetView Dev",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:22",
+  "forwardPorts": [3001, 5173],
+  "portsAttributes": {
+    "5173": { "label": "Frontend", "onAutoForward": "openBrowser" },
+    "3001": { "label": "Backend API" }
+  },
+  "postCreateCommand": "bash .devcontainer/setup.sh || echo 'Setup had errors but container is ready. Run: bash .devcontainer/setup.sh'",
+  "postStartCommand": "bash start.sh",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "dbaeumer.vscode-eslint",
+        "prisma.prisma",
+        "bradlc.vscode-tailwindcss"
+      ]
+    }
+  }
+}

@@ -1,0 +1,39 @@
+export const CENTRAL_HUB_SCOPES = Object.freeze({
+  TENANT_READ: 'central_hub.tenant.read',
+  TENANT_WRITE: 'central_hub.tenant.write',
+  MODULE_ADMIN: 'central_hub.module.admin',
+  CHANGE_PACKAGE_READ: 'central_hub.change_package.read',
+  CHANGE_PACKAGE_WRITE: 'central_hub.change_package.write',
+  CHANGE_PACKAGE_APPROVE: 'central_hub.change_package.approve',
+  CHANGE_PACKAGE_INJECT: 'central_hub.change_package.inject',
+  MASTERDATA_READ: 'central_hub.masterdata.read',
+  MASTERDATA_WRITE: 'central_hub.masterdata.write',
+  SYNC_READ: 'central_hub.sync.read',
+  SYNC_WRITE: 'central_hub.sync.write',
+  EVENT_SUBSCRIPTION_READ: 'central_hub.events.read',
+  EVENT_SUBSCRIPTION_WRITE: 'central_hub.events.write',
+});
+
+export const CENTRAL_HUB_SCOPE_SETS = Object.freeze({
+  INTEGRATOR_READONLY: [
+    CENTRAL_HUB_SCOPES.CHANGE_PACKAGE_READ,
+    CENTRAL_HUB_SCOPES.MASTERDATA_READ,
+    CENTRAL_HUB_SCOPES.SYNC_READ,
+    CENTRAL_HUB_SCOPES.EVENT_SUBSCRIPTION_READ,
+  ],
+  INTEGRATOR_RW: [
+    CENTRAL_HUB_SCOPES.CHANGE_PACKAGE_READ,
+    CENTRAL_HUB_SCOPES.CHANGE_PACKAGE_WRITE,
+    CENTRAL_HUB_SCOPES.MASTERDATA_READ,
+    CENTRAL_HUB_SCOPES.SYNC_READ,
+    CENTRAL_HUB_SCOPES.SYNC_WRITE,
+    CENTRAL_HUB_SCOPES.EVENT_SUBSCRIPTION_READ,
+    CENTRAL_HUB_SCOPES.EVENT_SUBSCRIPTION_WRITE,
+  ],
+  GOVERNANCE_REVIEWER: [
+    CENTRAL_HUB_SCOPES.CHANGE_PACKAGE_READ,
+    CENTRAL_HUB_SCOPES.CHANGE_PACKAGE_APPROVE,
+    CENTRAL_HUB_SCOPES.MASTERDATA_READ,
+  ],
+  PLATFORM_ADMIN: Object.values(CENTRAL_HUB_SCOPES),
+});

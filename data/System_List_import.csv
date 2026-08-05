@@ -1,0 +1,9 @@
+code,name,sys_type,description,system_number
+12,Production,process,Services: Process Fluid. Fluid codes: H,12
+18,Test / Metering,process,Services: Process Fluid. Fluid codes: H,18
+21,Nitrogen,utility,Services: Nitrogen. Fluid codes: N,21
+22,Vent,utility,Services: Vent. Fluid codes: V,22
+27,Fire Water,safety,Services: Fire Water. Fluid codes: WF,27
+29,Chemical Injection,utility,"Services: HP Corrosion Inhibitor, Methanol. Fluid codes: JC, MT",29
+31,Closed Drain,utility,"Services: Closed Drain, Deck Drain / Deluge Drain. Fluid codes: DH, DW",31
+99,Vessel Trim,process,Services: Vessel Trim. Fluid codes: VT,99

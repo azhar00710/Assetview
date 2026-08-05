@@ -1,0 +1,211 @@
+================================================================================
+MASTER P&ID SUMMARY - AKK4 WELL HEAD PLATFORM
+================================================================================
+Project:    11594: AS-BUILT RECOVERY - PHASE II
+Platform:   ABU AL BUKHOOSH WELL HEAD TOWER - AREA 28, AKK 4 WELL HEAD PLATFORM
+Client:     ADNOC Offshore
+Contractor: AVENIR INT'L ENGINEERS & CONSULTANTS
+Date:       18 Jun 2025
+Site Walk:  15 JAN 2024
+
+================================================================================
+1. PLATFORM OVERVIEW
+================================================================================
+
+AKK4 is an unmanned wellhead platform with 3 producing wells (AF-4, AF-9, AF-10)
+connected to a production manifold with pig launcher, exporting via 14" pipeline
+to NKPP platform.
+
+Wells:
+  - AF-4  (Slot 2) - Original well, production via KW-2801 safety cabinet
+  - AF-9  (Slot 2) - New well, production via KW-2801 safety cabinet
+  - AF-10 (Slot 6) - New well, production via KW-2801 safety cabinet
+
+================================================================================
+2. SYSTEMS BREAKDOWN
+================================================================================
+
+SYSTEM 1: PRODUCTION (Sheets 001, 005, 006, 007)
+  Primary Function: Well production, flow control, manifolding, export
+  Components:
+    - 3 wells with DHSV, SSV, WV, HCV (choke) valves each
+    - Wellhead safety cabinet KW-2801 (shared, designed for 2+1 future)
+    - Production manifold with test manifold capability
+    - Pig launcher GP-2802 (350 barg design)
+    - 14" export pipeline to NKPP platform
+    - ESV-289950 (14" ESD valve on export riser)
+    - N2 accumulator skid G-2803.B (for hydraulic control)
+
+SYSTEM 2: CORROSION INHIBITOR (Sheet 002)
+  Primary Function: Chemical injection for corrosion protection
+  Components:
+    - Package G-2802
+    - Storage tank Q-2802 (1000mm OD, 3.5 barg, 55°C, 3 m³/hr)
+    - 3x injection pumps P-2802.A/B/C (6.3 l/hr each, 97/350 barg)
+    - Local control panel (new)
+    - Injection to all 3 wells (A→AF-4, B→AF-9, C→AF-10)
+
+SYSTEM 3: DECK DRAIN & DRY SERVICE WATER (Sheet 003)
+  Primary Function: Platform drainage and service water
+  Components:
+    - Sump tank Q-2803 (2000x2000x1000mm, 4 m³, 1.0 barg)
+    - 4 flame arrestors (FA-2803 to FA-2806)
+    - Drain network across 4 deck levels (well, upper, mezzanine, cellar)
+    - Dry service water hose connections (boat landing)
+    - Overflow to sea
+
+SYSTEM 4: METHANOL INJECTION (Sheet 004)
+  Primary Function: Hydrate inhibition
+  Components:
+    - Package G-2801 (portable skid)
+    - Storage tank Q-2801 (2000mm ID x 6000mm, 3.5 barg, 55°C)
+    - N2 blanketing system
+    - Injection to upstream of choke valves and flowlines
+    - Hose connection for boat supply
+
+================================================================================
+3. CROSS-REFERENCE MATRIX (Sheet-to-Sheet Connections)
+================================================================================
+
+FROM SHEET  | TO SHEET   | REF  | CONNECTION
+------------|------------|------|----------------------------------------------------
+001 → 003   | 1028       | 3"-DH-28-31-0304-B03-N closed drain header
+001 → 003   | 1030       | Closed drain header
+001 → 003   | 1015       | Production header drain
+001 → 005   | 1123       | Methanol injection upstream choke AF9/10
+001 → 006   | 1387       | AF-10 flowline 8"-H-28-12-0221-J85S-N
+001 → 007   | 1102       | AF-4 flowline 8"-H-28-12-0328-J26S-N
+001 → 007   | 1043       | AKK4 test manifold 8"-H-28-12-0332-J26S-N
+002 → 001   | 1035       | Corrosion inhibitor to AF-4 upstream choke
+002 → 005   | 1036       | Corrosion inhibitor to AF-9 upstream choke
+002 → 006   | 1037       | Corrosion inhibitor to AF-10 upstream choke
+002 → 003   | 1014       | G-2802 drain to closed drain header
+003 ← ALL   | various    | Receives all platform drains and vents
+004 → 001   | 1087       | Methanol to AF-4 upstream choke
+004 → 003   | 1033/1034  | Methanol tank vent/PSV to drain
+004 → 007   | 1050       | Methanol to production header
+005 → 007   | 1103       | AF-9 flowline to manifold
+005 → 003   | 1107       | AF-9 drain to closed drain header
+005 → 003   | 1017       | AF-9 vent upstream choke
+006 → 007   | 1101       | AF-10 flowline to manifold/test
+006 → 003   | 1107/1013  | AF-10 drain to closed drain header
+007 → 003   | 1019       | Manifold drain to closed drain header
+007 → 003   | 1021       | Manifold vent to vent line
+007 → 003   | 1022       | GP-2802 drip pan to drain
+007 → NKPP  | -          | 14" production header export
+
+================================================================================
+4. EQUIPMENT REGISTER
+================================================================================
+
+Tag         | Name                               | Sheet | Design Press | Design Temp
+------------|-------------------------------------|-------|--------------|------------
+GP-2801     | Pig Launcher                        | 001   | 350.0 barg   | 46°C/90°C
+GP-2802     | Pig Launcher                        | 007   | 350.0 barg   | -46°C/125°C
+G-2802      | Corrosion Inhibitor Package          | 002   | -            | -
+G-2803.B    | N2 Accumulator Skid                  | 001   | -            | -
+G-2801      | Methanol Injection Package (portable)| 004   | -            | -
+Q-2801      | Methanol Injection Storage Tank      | 004   | 3.5 barg     | 55°C
+Q-2802      | Corrosion Inhibitor Storage Tank     | 002   | 3.5 barg     | 55°C
+Q-2803      | Sump Tank                            | 003   | 1.0 barg     | -25°C/55°C
+P-2802.A    | Corrosion Inhibitor Injection Pump   | 002   | 350 barg     | -
+P-2802.B    | Corrosion Inhibitor Injection Pump   | 002   | 350 barg     | -
+P-2802.C    | Corrosion Inhibitor Injection Pump   | 002   | 350 barg     | -
+KW-2801     | Wellhead Safety Cabinet              | 001   | -            | -
+ESV-289950  | Emergency Shutdown Valve (14")       | 007   | -            | -
+ESV-289960  | Emergency Shutdown Valve             | 001   | -            | -
+ESV-8       | Emergency Shutdown Valve             | 006   | -            | -
+FA-2803     | Flame Arrestor                       | 003   | -            | -
+FA-2804     | Flame Arrestor                       | 003   | -            | -
+FA-2805     | Flame Arrestor                       | 003   | -            | -
+FA-2806     | Flame Arrestor                       | 003   | -            | -
+
+================================================================================
+5. WELL COMPARISON TABLE
+================================================================================
+
+Attribute       | AF-4 (Sheet 001)    | AF-9 (Sheet 005)    | AF-10 (Sheet 006)
+----------------|---------------------|---------------------|---------------------
+Slot            | 2                   | 2                   | 6
+Casing 1        | 20"                 | 20"                 | 20"
+Casing 2        | 13-3/8"             | 13-3/8"             | 13-3/8"
+Casing 3        | 9-5/8"              | 9-5/8"              | 9-5/8"
+Casing 4        | 7-5/8" (VERTICAL)   | -                   | -
+Wellhead        | -                   | API 10000#          | API 10000#
+DHSV Tag        | A.289910            | B.289910            | C.289910
+SSV Tag         | A.289920            | B.289920            | C.289920
+WV Tag          | A.289930            | B.289930            | C.289930
+HCV Tag         | A.281040            | B.281040            | C.281040
+Flowline Size   | 8"                  | 8"                  | 8"
+Flowline Class  | J16                 | J85S                | J85S
+Header Class    | J26S                | J26S                | J26S
+Corr. Inh. Pump | P-2802.A            | P-2802.B            | P-2802.C
+Flow Element    | A.281010.FE         | B.281010.FE         | C.281010.FE
+
+================================================================================
+6. PIPE CLASS SUMMARY
+================================================================================
+
+Class | Typical Service                    | Notes
+------|------------------------------------|-------------------------------
+J16   | Production (AF-4 well)             | Carbon steel
+J26S  | Production header / manifold       | Carbon steel, sour service
+J85S  | Production (AF-9, AF-10 wells)     | Carbon steel, sour service
+J20   | Vent                               | Carbon steel
+J47   | Chemical injection / N2            | Stainless steel
+J48   | Chemical injection / methanol      | Stainless steel
+B03   | Closed drain (LP)                  | Carbon steel
+B06S  | Closed drain (HP, sour)            | Carbon steel, sour service
+B10   | Vent / N2                          | Carbon steel
+B16   | Vent (atmospheric)                 | Carbon steel
+B26S  | Vent (sour service)                | Carbon steel, sour service
+B47   | Methanol                           | Carbon steel
+B48   | Chemical injection                 | Stainless steel
+B56   | Corrosion inhibitor (package)      | -
+B95   | Dry service water                  | Carbon steel
+B02   | Methanol storage                   | Carbon steel
+H03S  | HP drain (sour)                    | Carbon steel, sour service
+J20SPL| Production launcher                | Special
+
+================================================================================
+7. SAFETY SYSTEM HIERARCHY
+================================================================================
+
+ESD-0: Platform total shutdown
+  - ESV-289950 closes (14" export)
+  - All wells shut in
+  - Bypass available (V-28121, V-28122 - locked)
+
+ESD-1: Well shutdown (per well)
+  - DHSV closes (downhole)
+  - SSV closes (surface)
+  - WV closes (wing)
+  - HCV closes (choke) - automatic
+
+ESD-2: Process shutdown
+  - Choke valve closes
+  - Partial shutdown
+
+Fire/Gas Detection:
+  - Fire detection (288801.XA/XS)
+  - Local gas detection (JCS-28710.1)
+  - Fusible plugs on each well
+
+Process Trips:
+  - PSHH (Pressure Switch High High) - multiple locations
+  - PSLL (Pressure Switch Low Low) - multiple locations
+  - TSHH (Temperature Switch High High)
+  - LALL/LSLL (Level Alarm/Switch Low Low) - on tanks
+
+================================================================================
+8. KEY DESIGN PARAMETERS
+================================================================================
+
+Production Flowline Design: 350 barg (based on PSV settings)
+Export Pipeline: 14" to NKPP platform
+Pig Launcher GP-2802: 350 barg / vacuum, -46°C to 125°C, ASME VIII
+Wellhead Safety Cabinet: KW-2801 (3 wells, designed for 2+1 future)
+N2 Accumulator: G-2803.B (for hydraulic valve control)
+Corrosion Inhibitor Pump Capacity: 3 x 6.3 l/hr @ 97 barg discharge
+Methanol Tank: 2000mm ID x 6000mm, 3.5 barg
+Sump Tank: 4 m³ capacity

@@ -1,0 +1,967 @@
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "linux-musl-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum annotation_status {
+  not_annotated
+  in_progress
+  annotated
+  verified
+}
+
+model client {
+  id            String    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  name          String    @db.VarChar(200)
+  code          String    @unique @db.VarChar(50)
+  description   String?
+  contact_name  String?   @db.VarChar(200)
+  contact_email String?   @db.VarChar(200)
+  metadata      Json?     @default("{}")
+  created_at    DateTime? @default(now()) @db.Timestamptz(6)
+  updated_at    DateTime? @default(now()) @db.Timestamptz(6)
+  created_by    String?   @db.VarChar(100)
+  updated_by    String?   @db.VarChar(100)
+  deleted_at    DateTime? @db.Timestamptz(6)
+  project       project[]
+}
+
+model project {
+  id           String       @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  client_id    String       @db.Uuid
+  name         String       @db.VarChar(200)
+  code         String       @db.VarChar(50)
+  project_type String?      @db.VarChar(100)
+  description  String?
+  metadata     Json?        @default("{}")
+  created_at   DateTime?    @default(now()) @db.Timestamptz(6)
+  updated_at   DateTime?    @default(now()) @db.Timestamptz(6)
+  created_by   String?      @db.VarChar(100)
+  updated_by   String?      @db.VarChar(100)
+  deleted_at   DateTime?    @db.Timestamptz(6)
+  concession   concession[]
+  client       client       @relation(fields: [client_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  user_access  app_user_project[]
+
+  @@unique([client_id, code])
+}
+
+model concession {
+  id         String     @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  name       String     @db.VarChar(200)
+  code       String     @unique @db.VarChar(50)
+  operator   String?    @db.VarChar(200)
+  region     String?    @db.VarChar(100)
+  metadata   Json?      @default("{}")
+  created_at DateTime?  @default(now()) @db.Timestamptz(6)
+  updated_at DateTime?  @default(now()) @db.Timestamptz(6)
+  created_by String?    @db.VarChar(100)
+  updated_by String?    @db.VarChar(100)
+  deleted_at DateTime?  @db.Timestamptz(6)
+  project_id String     @db.Uuid
+  project    project    @relation(fields: [project_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  field      field[]
+  location   location[]
+}
+
+model location {
+  id            String     @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  concession_id String     @db.Uuid
+  name          String     @db.VarChar(200)
+  code          String     @db.VarChar(50)
+  location_type String?    @db.VarChar(100)
+  metadata      Json?      @default("{}")
+  created_at    DateTime?  @default(now()) @db.Timestamptz(6)
+  updated_at    DateTime?  @default(now()) @db.Timestamptz(6)
+  created_by    String?    @db.VarChar(100)
+  updated_by    String?    @db.VarChar(100)
+  deleted_at    DateTime?  @db.Timestamptz(6)
+  complex       complex[]  @relation("complex_location")
+  concession    concession @relation(fields: [concession_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  user_access   app_user_location[]
+
+  @@unique([concession_id, code])
+}
+
+model field {
+  id            String     @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  concession_id String     @db.Uuid
+  name          String     @db.VarChar(200)
+  code          String     @db.VarChar(50)
+  field_type    String?    @db.VarChar(100)
+  metadata      Json?      @default("{}")
+  created_at    DateTime?  @default(now()) @db.Timestamptz(6)
+  updated_at    DateTime?  @default(now()) @db.Timestamptz(6)
+  created_by    String?    @db.VarChar(100)
+  updated_by    String?    @db.VarChar(100)
+  deleted_at    DateTime?  @db.Timestamptz(6)
+  complex       complex[]  @relation("complex_field")
+  concession    concession @relation(fields: [concession_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@unique([concession_id, code])
+}
+
+model complex {
+  id          String     @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  field_id    String?    @db.Uuid
+  name        String     @db.VarChar(200)
+  code        String     @db.VarChar(50)
+  metadata    Json?      @default("{}")
+  created_at  DateTime?  @default(now()) @db.Timestamptz(6)
+  updated_at  DateTime?  @default(now()) @db.Timestamptz(6)
+  deleted_at  DateTime?  @db.Timestamptz(6)
+  location_id String     @db.Uuid
+  field       field?     @relation("complex_field", fields: [field_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  location    location   @relation("complex_location", fields: [location_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  platform    platform[]
+
+  @@unique([location_id, code])
+}
+
+model platform {
+  id                  String                @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  complex_id          String                @db.Uuid
+  name                String                @db.VarChar(200)
+  code                String                @db.VarChar(50)
+  platform_type       String?               @db.VarChar(100)
+  status              platform_status?      @default(operating)
+  latitude            Decimal?              @db.Decimal(10, 7)
+  longitude           Decimal?              @db.Decimal(10, 7)
+  metadata            Json?                 @default("{}")
+  created_at          DateTime?             @default(now()) @db.Timestamptz(6)
+  updated_at          DateTime?             @default(now()) @db.Timestamptz(6)
+  deleted_at          DateTime?             @db.Timestamptz(6)
+  list_upload_version list_upload_version[]
+  complex             complex               @relation(fields: [complex_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  system              system[]
+  transmittal         transmittal[]
+
+  @@unique([complex_id, code])
+}
+
+model system {
+  id            String        @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  platform_id   String        @db.Uuid
+  name          String        @db.VarChar(200)
+  code          String        @db.VarChar(50)
+  sys_type      system_type
+  description   String?
+  system_number String?       @db.VarChar(20)
+  metadata      Json?         @default("{}")
+  created_at    DateTime?     @default(now()) @db.Timestamptz(6)
+  updated_at    DateTime?     @default(now()) @db.Timestamptz(6)
+  deleted_at    DateTime?     @db.Timestamptz(6)
+  equipment        equipment[]
+  instrument       instrument[]
+  line             line[]
+  pnid_system      pnid_system[]
+  topology_node    topology_node[]
+  boundary_from    system_boundary[] @relation("boundary_from_system")
+  boundary_to      system_boundary[] @relation("boundary_to_system")
+  system_layout    system_layout[]
+  platform         platform      @relation(fields: [platform_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@unique([platform_id, code])
+  @@index([sys_type], map: "idx_system_type")
+}
+
+model pnid {
+  id                                                  String            @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  drawing_number                                      String            @unique @db.VarChar(100)
+  title                                               String?           @db.VarChar(500)
+  revision                                            String?           @db.VarChar(20)
+  status                                              document_status?  @default(draft)
+  document_type                                       String?           @default("P&ID") @db.VarChar(50)
+  sheet_number                                        Int?              @default(1)
+  total_sheets                                        Int?              @default(1)
+  contractor                                          String?           @db.VarChar(200)
+  has_image                                           Boolean?          @default(false)
+  image_path                                          String?           @db.VarChar(500)
+  pdf_path                                            String?           @db.VarChar(500)
+  metadata                                            Json?             @default("{}")
+  created_at                                          DateTime?         @default(now()) @db.Timestamptz(6)
+  updated_at                                          DateTime?         @default(now()) @db.Timestamptz(6)
+  deleted_at                                          DateTime?         @db.Timestamptz(6)
+  storage_key                                         String?           @db.VarChar(500)
+  thumbnail_key                                       String?           @db.VarChar(500)
+  file_checksum                                       String?           @db.VarChar(128)
+  file_size_bytes                                     BigInt?
+  page_count                                          Int?              @default(1)
+  uploaded_at                                         DateTime?         @db.Timestamptz(6)
+  uploaded_by                                         String?           @db.VarChar(100)
+  active_version_id                                   String?           @db.Uuid
+  annotation_status_col                               annotation_status? @default(not_annotated) @map("annotation_status")
+  ocr_raw_storage_key                                 String?           @db.VarChar(500)
+  ocr_cleaned_storage_key                             String?           @db.VarChar(500)
+  ocr_raw_data                                        Json?
+  ocr_cleaned_data                                    Json?
+  ocr_processed_at                                    DateTime?         @db.Timestamptz(6)
+  ocr_status                                          String?           @default("pending") @db.VarChar(50)
+  ocr_error                                           String?
+  annotation                                          annotation[]
+  pnid_equipment                                      pnid_equipment[]
+  pnid_instrument                                     pnid_instrument[]
+  pnid_line_pnid_line_continuation_from_pnid_idTopnid pnid_line[]       @relation("pnid_line_continuation_from_pnid_idTopnid")
+  pnid_line_pnid_line_pnid_idTopnid                   pnid_line[]       @relation("pnid_line_pnid_idTopnid")
+  pnid_system                                         pnid_system[]
+  pnid_version                                        pnid_version[]
+  ocr_job                                             ocr_job[]
+  ocr_extraction                                      ocr_extraction[]
+
+  @@index([drawing_number], map: "idx_pnid_drawing")
+  @@index([status], map: "idx_pnid_status")
+}
+
+model pnid_equipment {
+  id                   String    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  pnid_id              String    @db.Uuid
+  equipment_id         String    @db.Uuid
+  annotation_x_pct     Decimal?  @db.Decimal(5, 2)
+  annotation_y_pct     Decimal?  @db.Decimal(5, 2)
+  annotation_w_pct     Decimal?  @db.Decimal(5, 2)
+  annotation_h_pct     Decimal?  @db.Decimal(5, 2)
+  annotation_rotation  Decimal?  @default(0) @db.Decimal(5, 2)
+  created_at           DateTime? @default(now()) @db.Timestamptz(6)
+  position_verified    Boolean?  @default(true)
+  verified_for_version String?   @db.Uuid
+  equipment            equipment @relation(fields: [equipment_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  pnid                 pnid      @relation(fields: [pnid_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@unique([pnid_id, equipment_id])
+  @@index([equipment_id], map: "idx_pnid_equipment_equip")
+  @@index([pnid_id], map: "idx_pnid_equipment_pnid")
+}
+
+model pnid_instrument {
+  id                   String     @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  pnid_id              String     @db.Uuid
+  instrument_id        String     @db.Uuid
+  annotation_x_pct     Decimal?   @db.Decimal(5, 2)
+  annotation_y_pct     Decimal?   @db.Decimal(5, 2)
+  annotation_w_pct     Decimal?   @db.Decimal(5, 2)
+  annotation_h_pct     Decimal?   @db.Decimal(5, 2)
+  annotation_rotation  Decimal?   @default(0) @db.Decimal(5, 2)
+  created_at           DateTime?  @default(now()) @db.Timestamptz(6)
+  position_verified    Boolean?   @default(true)
+  verified_for_version String?    @db.Uuid
+  instrument           instrument @relation(fields: [instrument_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  pnid                 pnid       @relation(fields: [pnid_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@unique([pnid_id, instrument_id])
+}
+
+model pnid_line {
+  id                                             String    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  pnid_id                                        String    @db.Uuid
+  line_id                                        String    @db.Uuid
+  is_continuation                                Boolean?  @default(false)
+  continuation_from_pnid_id                      String?   @db.Uuid
+  sheet_entry_point                              String?   @db.VarChar(100)
+  sheet_exit_point                               String?   @db.VarChar(100)
+  annotation_x_pct                               Decimal?  @db.Decimal(5, 2)
+  annotation_y_pct                               Decimal?  @db.Decimal(5, 2)
+  annotation_w_pct                               Decimal?  @db.Decimal(5, 2)
+  annotation_h_pct                               Decimal?  @db.Decimal(5, 2)
+  created_at                                     DateTime? @default(now()) @db.Timestamptz(6)
+  pnid_pnid_line_continuation_from_pnid_idTopnid pnid?     @relation("pnid_line_continuation_from_pnid_idTopnid", fields: [continuation_from_pnid_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  line                                           line      @relation(fields: [line_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  pnid_pnid_line_pnid_idTopnid                   pnid      @relation("pnid_line_pnid_idTopnid", fields: [pnid_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@unique([pnid_id, line_id])
+  @@index([line_id], map: "idx_pnid_line_line")
+  @@index([pnid_id], map: "idx_pnid_line_pnid")
+}
+
+/// This table contains exclusion constraints and requires additional setup for migrations.
+model pnid_system {
+  id         String    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  pnid_id    String    @db.Uuid
+  system_id  String    @db.Uuid
+  is_primary Boolean   @default(false)
+  notes      String?
+  created_at DateTime? @default(now()) @db.Timestamptz(6)
+  pnid       pnid      @relation(fields: [pnid_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  system     system    @relation(fields: [system_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@unique([pnid_id, system_id])
+  @@index([pnid_id], map: "idx_pnid_system_pnid")
+  @@index([system_id], map: "idx_pnid_system_system")
+}
+
+model line {
+  id                        String       @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  system_id                 String       @db.Uuid
+  line_number               String       @db.VarChar(100)
+  service                   String?      @db.VarChar(200)
+  fluid_code                String?      @db.VarChar(50)
+  nominal_size              String?      @db.VarChar(20)
+  pipe_class                String?      @db.VarChar(50)
+  material                  String?      @db.VarChar(100)
+  insulation_code           String?      @db.VarChar(50)
+  insulation_thickness      String?      @db.VarChar(20)
+  tracing                   String?      @db.VarChar(50)
+  // FROM/TO connections (line-to-line, equipment, or descriptors)
+  from_connection           String?      @db.VarChar(500)
+  to_connection             String?      @db.VarChar(500)
+  // Fluid data
+  flow_medium               String?      @db.VarChar(100)
+  liquid_flow_bpd           Decimal?     @db.Decimal(12, 2)
+  water_flow_bwpd           Decimal?     @db.Decimal(12, 2)
+  gas_flow_mmscfd           Decimal?     @db.Decimal(12, 4)
+  viscosity_cp              Decimal?     @db.Decimal(10, 2)
+  molecular_weight          Decimal?     @db.Decimal(10, 2)
+  density_kg_m3             Decimal?     @db.Decimal(10, 2)
+  // Operating conditions (min/max)
+  operating_pressure_min    Decimal?     @db.Decimal(10, 2)
+  operating_pressure_max    Decimal?     @db.Decimal(10, 2)
+  operating_temperature_min Decimal?     @db.Decimal(10, 2)
+  operating_temperature_max Decimal?     @db.Decimal(10, 2)
+  // Design conditions (min/max)
+  design_pressure_min       Decimal?     @db.Decimal(10, 2)
+  design_pressure_max       Decimal?     @db.Decimal(10, 2)
+  design_temperature_min    Decimal?     @db.Decimal(10, 2)
+  design_temperature_max    Decimal?     @db.Decimal(10, 2)
+  // Test conditions
+  test_pressure             Decimal?     @db.Decimal(10, 2)
+  test_medium               String?      @db.VarChar(50)
+  // Piping design
+  design_code               String?      @db.VarChar(100)
+  schedule_wall_thickness   String?      @db.VarChar(100)
+  stress_relief             String?      @db.VarChar(10)
+  nace_mr0175               String?      @db.VarChar(10)
+  // NDT
+  ndt_rt_pct                Decimal?     @db.Decimal(5, 1)
+  ndt_dpi_pct               Decimal?     @db.Decimal(5, 1)
+  ndt_mpi_pct               Decimal?     @db.Decimal(5, 1)
+  pwht                      String?      @db.VarChar(10)
+  // P&ID references (comma-separated drawing numbers)
+  pnid_references           String?      @db.VarChar(500)
+  remarks                   String?      @db.Text
+  // Legacy fields kept for backward compatibility
+  design_pressure           Decimal?     @db.Decimal(10, 2)
+  design_temperature        Decimal?     @db.Decimal(10, 2)
+  operating_pressure        Decimal?     @db.Decimal(10, 2)
+  operating_temperature     Decimal?     @db.Decimal(10, 2)
+  from_equipment_tag        String?      @db.VarChar(100)
+  to_equipment_tag          String?      @db.VarChar(100)
+  line_class_spec           String?      @db.VarChar(100)
+  isometric_ref             String?      @db.VarChar(200)
+  stress_analysis_ref       String?      @db.VarChar(200)
+  metadata                  Json?        @default("{}")
+  created_at                DateTime?    @default(now()) @db.Timestamptz(6)
+  updated_at                DateTime?    @default(now()) @db.Timestamptz(6)
+  deleted_at                DateTime?    @db.Timestamptz(6)
+  equipment                 equipment[]
+  instrument                instrument[]
+  topology_edge             topology_edge[]
+  boundary_from_line        system_boundary[] @relation("boundary_from_line")
+  boundary_to_line          system_boundary[] @relation("boundary_to_line")
+  system                    system       @relation(fields: [system_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  pnid_line                 pnid_line[]
+
+  @@unique([system_id, line_number])
+  @@index([line_number], map: "idx_line_number")
+  @@index([line_number(ops: raw("gin_trgm_ops"))], map: "idx_line_number_trgm", type: Gin)
+}
+
+model equipment {
+  id                 String             @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  system_id          String             @db.Uuid
+  line_id            String?            @db.Uuid
+  tag                String             @db.VarChar(100)
+  equipment_type     String             @db.VarChar(100)
+  description        String?
+  criticality        criticality_level?
+  sil_level          String?            @db.VarChar(20)
+  inspection_group   String?            @db.VarChar(50)
+  corrosion_loop     String?            @db.VarChar(50)
+  manufacturer       String?            @db.VarChar(200)
+  model_number       String?            @db.VarChar(100)
+  serial_number      String?            @db.VarChar(100)
+  weight_kg          Decimal?           @db.Decimal(10, 2)
+  commissioning_date DateTime?          @db.Date
+  last_inspection    DateTime?          @db.Date
+  next_inspection    DateTime?          @db.Date
+  vt_scene_id        String?            @db.VarChar(100)
+  vt_hotspot_id      String?            @db.VarChar(100)
+  model_3d_object_id String?            @db.VarChar(200)
+  cmms_asset_id      String?            @db.VarChar(100)
+  metadata           Json?              @default("{}")
+  created_at         DateTime?          @default(now()) @db.Timestamptz(6)
+  updated_at         DateTime?          @default(now()) @db.Timestamptz(6)
+  deleted_at         DateTime?          @db.Timestamptz(6)
+  line               line?              @relation(fields: [line_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  system             system             @relation(fields: [system_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  pnid_equipment     pnid_equipment[]
+
+  @@index([criticality], map: "idx_equipment_criticality")
+  @@index([tag], map: "idx_equipment_tag")
+  @@index([tag(ops: raw("gin_trgm_ops"))], map: "idx_equipment_tag_trgm", type: Gin)
+  @@index([equipment_type], map: "idx_equipment_type")
+}
+
+model instrument {
+  id                String            @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  system_id         String            @db.Uuid
+  line_id           String?           @db.Uuid
+  tag               String            @db.VarChar(100)
+  instrument_type   instrument_type
+  description       String?
+  range_min         String?           @db.VarChar(50)
+  range_max         String?           @db.VarChar(50)
+  range_unit        String?           @db.VarChar(20)
+  set_point         String?           @db.VarChar(50)
+  calibration_range String?           @db.VarChar(100)
+  scada_tag         String?           @db.VarChar(100)
+  io_type           String?           @db.VarChar(20)
+  signal_type       String?           @db.VarChar(50)
+  loop_number       String?           @db.VarChar(50)
+  junction_box      String?           @db.VarChar(50)
+  cable_number      String?           @db.VarChar(100)
+  hookup_drawing    String?           @db.VarChar(100)
+  datasheet_ref     String?           @db.VarChar(100)
+  vt_scene_id       String?           @db.VarChar(100)
+  vt_hotspot_id     String?           @db.VarChar(100)
+  metadata          Json?             @default("{}")
+  created_at        DateTime?         @default(now()) @db.Timestamptz(6)
+  updated_at        DateTime?         @default(now()) @db.Timestamptz(6)
+  deleted_at        DateTime?         @db.Timestamptz(6)
+  line              line?             @relation(fields: [line_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  system            system            @relation(fields: [system_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  pnid_instrument   pnid_instrument[]
+
+  @@index([line_id], map: "idx_instrument_line")
+  @@index([tag], map: "idx_instrument_tag")
+  @@index([tag(ops: raw("gin_trgm_ops"))], map: "idx_instrument_tag_trgm", type: Gin)
+  @@index([instrument_type], map: "idx_instrument_type")
+}
+
+model annotation {
+  id               String             @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  pnid_id          String             @db.Uuid
+  author_id        String             @db.Uuid
+  x_pct            Decimal            @db.Decimal(5, 2)
+  y_pct            Decimal            @db.Decimal(5, 2)
+  w_pct            Decimal?           @db.Decimal(5, 2)
+  h_pct            Decimal?           @db.Decimal(5, 2)
+  x2_pct           Decimal?           @db.Decimal(5, 2)
+  y2_pct           Decimal?           @db.Decimal(5, 2)
+  annotation_type  String             @db.VarChar(20)
+  shape            String?            @db.VarChar(20)
+  color            String?            @default("#4FE2B0") @db.VarChar(20)
+  stroke_width     Int?               @default(2)
+  rotation         Decimal?           @default(0) @db.Decimal(5, 2)
+  fill_opacity     Decimal?           @default(0.15) @db.Decimal(3, 2)
+  stroke_style     String?            @default("solid") @db.VarChar(10)
+  show_label       Boolean?           @default(true)
+  text             String?
+  attachment_url   String?            @db.VarChar(500)
+  linked_entity_type String?          @db.VarChar(20)
+  linked_entity_id   String?          @db.Uuid
+  status           String?            @default("open") @db.VarChar(20)
+  resolved_by      String?            @db.Uuid
+  resolved_at      DateTime?          @db.Timestamptz(6)
+  approval_status  String?            @default("draft") @db.VarChar(20)
+  approved_by      String?            @db.Uuid
+  approved_at      DateTime?          @db.Timestamptz(6)
+  metadata         Json?              @default("{}")
+  created_at       DateTime?          @default(now()) @db.Timestamptz(6)
+  updated_at       DateTime?          @default(now()) @db.Timestamptz(6)
+  deleted_at       DateTime?          @db.Timestamptz(6)
+  pnid             pnid               @relation(fields: [pnid_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  annotation_reply annotation_reply[]
+
+  @@index([status], map: "idx_annotation_status")
+  @@index([approval_status], map: "idx_annotation_approval_status")
+}
+
+model annotation_reply {
+  id            String     @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  annotation_id String     @db.Uuid
+  author_id     String     @db.Uuid
+  text          String
+  created_at    DateTime?  @default(now()) @db.Timestamptz(6)
+  deleted_at    DateTime?  @db.Timestamptz(6)
+  annotation    annotation @relation(fields: [annotation_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model storage_config {
+  id                      String    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  scope_type              String    @default("global") @db.VarChar(20)
+  scope_id                String?   @db.Uuid
+  provider                String    @db.VarChar(20)
+  bucket_or_container     String?   @db.VarChar(255)
+  region                  String?   @db.VarChar(50)
+  endpoint_url            String?   @db.VarChar(500)
+  base_path               String?   @db.VarChar(500)
+  credentials_ref         String?   @db.Text
+  vision_credentials_ref  String?   @db.Text
+  ai_credentials_ref      String?   @db.Text
+  ai_model_preference     String?   @default("claude-sonnet-4-20250514") @db.VarChar(100)
+  ocr_provider_preference String?   @default("google") @db.VarChar(20)
+  is_active               Boolean?  @default(true)
+  created_at              DateTime? @default(now()) @db.Timestamptz(6)
+  updated_at              DateTime? @default(now()) @db.Timestamptz(6)
+
+  @@index([scope_type, scope_id])
+}
+
+model pnid_version {
+  id                     String                @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  pnid_id                String                @db.Uuid
+  version_number         Int
+  revision               String                @db.VarChar(20)
+  storage_key            String                @db.VarChar(500)
+  pdf_storage_key        String?               @db.VarChar(500)
+  thumbnail_key          String?               @db.VarChar(500)
+  file_checksum          String?               @db.VarChar(128)
+  file_size_bytes        BigInt?
+  change_summary         String?
+  change_type            String?               @default("minor_update") @db.VarChar(50)
+  status                 String?               @default("draft") @db.VarChar(20)
+  annotation_snapshot_id String?               @db.Uuid
+  transmittal_id         String?               @db.Uuid
+  created_at             DateTime?             @default(now()) @db.Timestamptz(6)
+  created_by             String?               @db.VarChar(100)
+  superseded_at          DateTime?             @db.Timestamptz(6)
+  superseded_by          String?               @db.VarChar(100)
+  annotation_snapshot    annotation_snapshot[]
+  pnid                   pnid                  @relation(fields: [pnid_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  transmittal            transmittal?          @relation(fields: [transmittal_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@unique([pnid_id, version_number])
+  @@index([pnid_id], map: "idx_pnid_version_pnid")
+  @@index([transmittal_id], map: "idx_pnid_version_transmittal")
+}
+
+model annotation_snapshot {
+  id              String       @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  pnid_version_id String       @db.Uuid
+  snapshot_data   Json
+  created_at      DateTime?    @default(now()) @db.Timestamptz(6)
+  pnid_version    pnid_version @relation(fields: [pnid_version_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model change_log {
+  id          String    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  entity_type String    @db.VarChar(50)
+  entity_id   String    @db.Uuid
+  action      String    @db.VarChar(20)
+  changes     Json?
+  source      String?   @db.VarChar(50)
+  batch_id    String?   @db.Uuid
+  created_at  DateTime? @default(now()) @db.Timestamptz(6)
+  created_by  String?   @db.VarChar(100)
+
+  @@index([entity_type, entity_id], map: "idx_change_log_entity")
+  @@index([batch_id], map: "idx_change_log_batch")
+  @@index([created_at(sort: Desc)], map: "idx_change_log_created")
+}
+
+model transmittal {
+  id                  String                @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  reference_number    String                @db.VarChar(100)
+  platform_id         String                @db.Uuid
+  description         String?
+  upload_date         DateTime?             @default(now()) @db.Timestamptz(6)
+  uploaded_by         String?               @db.VarChar(100)
+  document_count      Int?                  @default(0)
+  status              String?               @default("open") @db.VarChar(20)
+  metadata            Json?                 @default("{}")
+  created_at          DateTime?             @default(now()) @db.Timestamptz(6)
+  updated_at          DateTime?             @default(now()) @db.Timestamptz(6)
+  deleted_at          DateTime?             @db.Timestamptz(6)
+  document_upload     document_upload[]
+  list_upload_version list_upload_version[]
+  pnid_version        pnid_version[]
+  platform            platform              @relation(fields: [platform_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@unique([platform_id, reference_number])
+}
+
+model document_upload {
+  id                  String                @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  transmittal_id      String                @db.Uuid
+  document_type       String                @db.VarChar(50)
+  original_filename   String                @db.VarChar(500)
+  parsed_identifier   String?               @db.VarChar(200)
+  revision            String?               @db.VarChar(20)
+  entity_id           String?               @db.Uuid
+  version_id          String?               @db.Uuid
+  storage_key         String?               @db.VarChar(500)
+  file_size_bytes     BigInt?
+  file_checksum       String?               @db.VarChar(128)
+  record_count        Int?
+  records_created     Int?                  @default(0)
+  records_updated     Int?                  @default(0)
+  records_errors      Int?                  @default(0)
+  parse_errors        Json?                 @default("[]")
+  status              String?               @default("draft") @db.VarChar(20)
+  approved_at         DateTime?             @db.Timestamptz(6)
+  approved_by         String?               @db.VarChar(100)
+  metadata            Json?                 @default("{}")
+  created_at          DateTime?             @default(now()) @db.Timestamptz(6)
+  created_by          String?               @db.VarChar(100)
+  transmittal         transmittal           @relation(fields: [transmittal_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  list_upload_version list_upload_version[]
+
+  @@index([transmittal_id], map: "idx_document_upload_transmittal")
+  @@index([status], map: "idx_document_upload_status")
+}
+
+model list_upload_version {
+  id                 String           @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  platform_id        String           @db.Uuid
+  list_type          String           @db.VarChar(50)
+  version_number     Int
+  revision           String?          @db.VarChar(20)
+  transmittal_id     String?          @db.Uuid
+  document_upload_id String?          @db.Uuid
+  original_filename  String?          @db.VarChar(500)
+  storage_key        String?          @db.VarChar(500)
+  record_count       Int?
+  records_created    Int?             @default(0)
+  records_updated    Int?             @default(0)
+  records_deleted    Int?             @default(0)
+  change_summary     String?
+  status             String?          @default("draft") @db.VarChar(20)
+  snapshot_data      Json?
+  batch_id           String?          @db.Uuid
+  created_at         DateTime?        @default(now()) @db.Timestamptz(6)
+  created_by         String?          @db.VarChar(100)
+  superseded_at      DateTime?        @db.Timestamptz(6)
+  superseded_by      String?          @db.VarChar(100)
+  document_upload    document_upload? @relation(fields: [document_upload_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  platform           platform         @relation(fields: [platform_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  transmittal        transmittal?     @relation(fields: [transmittal_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@unique([platform_id, list_type, version_number])
+  @@index([platform_id], map: "idx_list_upload_version_platform")
+}
+
+model ocr_job {
+  id              String    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  pnid_id         String    @db.Uuid
+  pnid_version_id String?   @db.Uuid
+  status          String?   @default("pending") @db.VarChar(20)
+  total_words     Int?      @default(0)
+  tags_found      Int?      @default(0)
+  tags_matched    Int?      @default(0)
+  started_at      DateTime? @db.Timestamptz(6)
+  completed_at    DateTime? @db.Timestamptz(6)
+  error_message   String?
+  created_at      DateTime? @default(now()) @db.Timestamptz(6)
+  created_by      String?   @db.VarChar(100)
+  pnid            pnid      @relation(fields: [pnid_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@index([pnid_id], map: "idx_ocr_job_pnid")
+  @@index([status], map: "idx_ocr_job_status")
+}
+
+model ocr_extraction {
+  id                String    @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  pnid_id           String    @db.Uuid
+  pnid_version_id   String?   @db.Uuid
+  extracted_text    String    @db.VarChar(200)
+  tag_type          String    @db.VarChar(20)
+  confidence        Decimal?  @default(0) @db.Decimal(4, 3)
+  bbox_x_pct        Decimal   @default(0) @db.Decimal(5, 2)
+  bbox_y_pct        Decimal   @default(0) @db.Decimal(5, 2)
+  bbox_w_pct        Decimal   @default(0) @db.Decimal(5, 2)
+  bbox_h_pct        Decimal   @default(0) @db.Decimal(5, 2)
+  bbox_x_px         Int?      @default(0)
+  bbox_y_px         Int?      @default(0)
+  bbox_w_px         Int?      @default(0)
+  bbox_h_px         Int?      @default(0)
+  matched_entity_id String?   @db.Uuid
+  match_confidence  Decimal?  @default(0) @db.Decimal(4, 3)
+  match_method      String?   @db.VarChar(50)
+  status            String?   @default("pending") @db.VarChar(20)
+  reviewed_by       String?   @db.VarChar(100)
+  reviewed_at       DateTime? @db.Timestamptz(6)
+  image_width_px    Int?      @default(0)
+  image_height_px   Int?      @default(0)
+  created_at        DateTime? @default(now()) @db.Timestamptz(6)
+  pnid              pnid      @relation(fields: [pnid_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@index([pnid_id], map: "idx_ocr_extraction_pnid")
+  @@index([status], map: "idx_ocr_extraction_status")
+  @@index([tag_type], map: "idx_ocr_extraction_tag_type")
+  @@index([matched_entity_id], map: "idx_ocr_extraction_matched")
+}
+
+model ocr_zone_profile {
+  id          String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  platform_id String    @db.Uuid
+  zone_name   String    @db.VarChar(100)
+  x_pct       Decimal   @db.Decimal(5, 2)
+  y_pct       Decimal   @db.Decimal(5, 2)
+  w_pct       Decimal   @db.Decimal(5, 2)
+  h_pct       Decimal   @db.Decimal(5, 2)
+  noise_mode  String?   @default("exclude") @db.VarChar(20)
+  is_active   Boolean?  @default(true)
+  metadata    Json?     @default("{}")
+  created_at  DateTime? @default(now()) @db.Timestamptz(6)
+  updated_at  DateTime? @default(now()) @db.Timestamptz(6)
+
+  @@unique([platform_id, zone_name])
+  @@index([platform_id], map: "idx_ocr_zone_profile_platform")
+  @@index([is_active], map: "idx_ocr_zone_profile_active")
+}
+
+model ocr_feedback_event {
+  id             String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  platform_id    String    @db.Uuid
+  batch_id       String?   @db.Uuid
+  batch_file_id  String?   @db.Uuid
+  action         String    @db.VarChar(20)
+  original_text  String?   @db.VarChar(200)
+  corrected_text String?   @db.VarChar(200)
+  original_type  String?   @db.VarChar(30)
+  corrected_type String?   @db.VarChar(30)
+  notes          String?
+  created_at     DateTime? @default(now()) @db.Timestamptz(6)
+
+  @@index([platform_id], map: "idx_ocr_feedback_platform")
+  @@index([action], map: "idx_ocr_feedback_action")
+}
+
+model ocr_learned_pattern {
+  id            String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  platform_id   String    @db.Uuid
+  pattern_key   String    @db.VarChar(50)
+  regex_pattern String    @db.VarChar(300)
+  target_type   String    @db.VarChar(30)
+  support_count Int?      @default(0)
+  confidence    Decimal?  @default(0) @db.Decimal(4, 3)
+  source        String?   @default("review_feedback") @db.VarChar(40)
+  is_active     Boolean?  @default(true)
+  metadata      Json?     @default("{}")
+  created_at    DateTime? @default(now()) @db.Timestamptz(6)
+  updated_at    DateTime? @default(now()) @db.Timestamptz(6)
+
+  @@unique([platform_id, pattern_key, target_type])
+  @@index([platform_id], map: "idx_ocr_learned_pattern_platform")
+  @@index([is_active], map: "idx_ocr_learned_pattern_active")
+}
+
+enum criticality_level {
+  high
+  medium
+  low
+}
+
+enum document_status {
+  as_built
+  approved
+  issued_for_construction
+  issued_for_review
+  draft
+  superseded
+}
+
+enum instrument_type {
+  pressure
+  temperature
+  flow
+  level
+  safety_valve
+  control_valve
+  analyzer
+  other
+}
+
+enum platform_status {
+  operating
+  under_construction
+  decommissioned
+  planned
+}
+
+model tag_document_link {
+  id            String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  tag           String    @db.VarChar(100)
+  document_type String    @db.VarChar(30)
+  document_id   String?   @db.Uuid
+  document_ref  String?   @db.VarChar(200)
+  page_number   Int?
+  region_x_pct  Decimal?  @db.Decimal(5, 2)
+  region_y_pct  Decimal?  @db.Decimal(5, 2)
+  metadata      Json?     @default("{}")
+  created_at    DateTime? @default(now()) @db.Timestamptz(6)
+
+  @@index([tag], map: "idx_tag_doc_tag")
+  @@index([document_type], map: "idx_tag_doc_type")
+  @@index([tag(ops: raw("gin_trgm_ops"))], map: "idx_tag_doc_tag_trgm", type: Gin)
+}
+
+enum system_type {
+  process
+  utility
+  safety
+  instrument
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// TOPOLOGY MODELS: Graph representation of system interconnections
+// ═══════════════════════════════════════════════════════════════════
+
+model topology_node {
+  id             String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  node_type      String          @db.VarChar(30)
+  reference_id   String?         @db.Uuid
+  system_id      String?         @db.Uuid
+  tag            String?         @db.VarChar(100)
+  label          String?         @db.VarChar(200)
+  metadata       Json?           @default("{}")
+  created_at     DateTime?       @default(now()) @db.Timestamptz(6)
+  system         system?         @relation(fields: [system_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  edges_from     topology_edge[] @relation("edge_from_node")
+  edges_to       topology_edge[] @relation("edge_to_node")
+  boundary_from  system_boundary[] @relation("boundary_from_node")
+  boundary_to    system_boundary[] @relation("boundary_to_node")
+
+  @@index([system_id], map: "idx_topo_node_system")
+  @@index([tag], map: "idx_topo_node_tag")
+  @@index([node_type], map: "idx_topo_node_type")
+}
+
+model topology_edge {
+  id             String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  line_id        String?        @db.Uuid
+  from_node_id   String?        @db.Uuid
+  to_node_id     String?        @db.Uuid
+  edge_type      String         @db.VarChar(30)
+  segment_order  Int?           @default(0)
+  flow_direction String?        @db.VarChar(15)
+  metadata       Json?          @default("{}")
+  created_at     DateTime?      @default(now()) @db.Timestamptz(6)
+  line           line?          @relation(fields: [line_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  from_node      topology_node? @relation("edge_from_node", fields: [from_node_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  to_node        topology_node? @relation("edge_to_node", fields: [to_node_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@index([from_node_id], map: "idx_topo_edge_from")
+  @@index([to_node_id], map: "idx_topo_edge_to")
+  @@index([line_id], map: "idx_topo_edge_line")
+  @@index([edge_type], map: "idx_topo_edge_type")
+}
+
+model system_boundary {
+  id             String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  from_system_id String?        @db.Uuid
+  to_system_id   String?        @db.Uuid
+  boundary_type  String         @db.VarChar(50)
+  from_node_id   String?        @db.Uuid
+  to_node_id     String?        @db.Uuid
+  from_line_id   String?        @db.Uuid
+  to_line_id     String?        @db.Uuid
+  description    String?
+  metadata       Json?          @default("{}")
+  created_at     DateTime?      @default(now()) @db.Timestamptz(6)
+  from_system    system?        @relation("boundary_from_system", fields: [from_system_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  to_system      system?        @relation("boundary_to_system", fields: [to_system_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  from_node      topology_node? @relation("boundary_from_node", fields: [from_node_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  to_node        topology_node? @relation("boundary_to_node", fields: [to_node_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  from_line      line?          @relation("boundary_from_line", fields: [from_line_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  to_line        line?          @relation("boundary_to_line", fields: [to_line_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@index([from_system_id], map: "idx_system_boundary_from")
+  @@index([to_system_id], map: "idx_system_boundary_to")
+}
+
+model system_layout {
+  id             String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  system_id      String?   @db.Uuid
+  layout_type    String    @db.VarChar(30)
+  node_positions Json
+  edge_routes    Json?
+  viewport       Json?
+  is_default     Boolean?  @default(false)
+  created_by     String?   @db.Uuid
+  created_at     DateTime? @default(now()) @db.Timestamptz(6)
+  updated_at     DateTime? @default(now()) @db.Timestamptz(6)
+  system         system?   @relation(fields: [system_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@index([system_id], map: "idx_system_layout_system")
+}
+
+model pid_symbol {
+  id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  symbol_key  String   @unique @db.VarChar(64)
+  label       String   @db.VarChar(200)
+  abbr        String?  @db.VarChar(20)
+  category    String   @default("general") @db.VarChar(20)
+  keywords    String[] @default([])
+  render_type String   @default("raster") @db.VarChar(10)
+  storage_key String?  @db.VarChar(500)
+  mime_type   String?  @default("image/png") @db.VarChar(100)
+  is_active   Boolean  @default(true)
+  created_at  DateTime @default(now()) @db.Timestamptz(6)
+  updated_at  DateTime @default(now()) @db.Timestamptz(6)
+
+  @@index([category], map: "idx_pid_symbol_category")
+  @@index([is_active], map: "idx_pid_symbol_active")
+}
+
+model app_role {
+  id          String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name        String         @unique @db.VarChar(100)
+  description String?
+  permissions Json           @default("[]")
+  is_system   Boolean        @default(false)
+  created_at  DateTime       @default(now()) @db.Timestamptz(6)
+  updated_at  DateTime       @default(now()) @db.Timestamptz(6)
+  users       app_user_role[]
+}
+
+model app_user {
+  id            String              @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  email         String              @unique @db.VarChar(255)
+  password_hash String              @db.VarChar(255)
+  display_name  String              @db.VarChar(200)
+  is_active     Boolean             @default(true)
+  created_at    DateTime            @default(now()) @db.Timestamptz(6)
+  updated_at    DateTime            @default(now()) @db.Timestamptz(6)
+  last_login_at DateTime?           @db.Timestamptz(6)
+  roles         app_user_role[]
+  projects      app_user_project[]
+  locations     app_user_location[]
+}
+
+model app_user_role {
+  user_id     String   @db.Uuid
+  role_id     String   @db.Uuid
+  assigned_at DateTime @default(now()) @db.Timestamptz(6)
+  user        app_user @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  role        app_role @relation(fields: [role_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@id([user_id, role_id])
+  @@index([role_id], map: "idx_app_user_role_role")
+}
+
+model app_user_project {
+  user_id     String   @db.Uuid
+  project_id  String   @db.Uuid
+  assigned_at DateTime @default(now()) @db.Timestamptz(6)
+  user        app_user @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  project     project  @relation(fields: [project_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@id([user_id, project_id])
+  @@index([project_id], map: "idx_app_user_project_project")
+}
+
+model app_user_location {
+  user_id     String   @db.Uuid
+  location_id String   @db.Uuid
+  assigned_at DateTime @default(now()) @db.Timestamptz(6)
+  user        app_user @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  location    location @relation(fields: [location_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@id([user_id, location_id])
+  @@index([location_id], map: "idx_app_user_location_location")
+}

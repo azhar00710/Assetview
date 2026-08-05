@@ -1,0 +1,135 @@
+================================================================================
+METHANOL INJECTION PACKAGE G-2801 - P&ID
+================================================================================
+Drawing No:     AD-28-D-100004-SHT-001
+Project:        11594: AS-BUILT RECOVERY - PHASE II
+                (PACKAGE 5: LZ - ZCSC & PACKAGE 6: ABK)
+Client:         ADNOC Offshore
+Location:       ABU AL BUKHOOSH WELL HEAD TOWER - AREA 28
+Platform:       AKK 4 WELL HEAD PLATFORM
+Type:           METHANOL INJECTION PACKAGE G-2801 P&ID
+Revision:       1
+Date:           18 Jun 2025
+Scale:          N.T.S
+Supersedes:     TOTAL ABK DWG. NO. 0000617-28-U-99-105 1/1 REV-8
+Site Walkthrough: 15 JAN 2024
+
+================================================================================
+REFERENCE DRAWINGS
+================================================================================
+P&ID Legend, Symbols & Instrument Details:  AD-82-D-100001 TO AD-82-D-100005
+Instrument Connections Standard:            SP.A714Y.00.1311.003
+
+================================================================================
+EQUIPMENT
+================================================================================
+
+Tag         | Name                              | Size                        | Design Press | Design Temp | Capacity | Trim Number
+------------|-----------------------------------|-----------------------------|--------------|-------------|----------|------------------
+Q-2801      | METHANOL INJECTION STORAGE TANK   | 2000 mm ID X 6000 mm TL/TL  | 3.5 barg     | 55°C        | m³/hr    | VT-B02-Q-2801-N
+
+================================================================================
+INSTRUMENTS
+================================================================================
+
+Tag             | Type  | Description / Service
+----------------|-------|----------------------------------------------------------
+282010.LI       | LI    | Level Indicator (Q-2801 tank)
+282010.LG       | LG    | Level Gauge (Q-2801 tank)
+282010.LT       | LT    | Level Transmitter (Q-2801 tank)
+282010.LALL     | LALL  | Level Alarm Low Low (Q-2801 tank)
+282010.LSLL     | LSLL  | Level Switch Low Low (Q-2801 tank)
+
+================================================================================
+SAFETY VALVES
+================================================================================
+
+Tag             | Type  | Set Pressure
+----------------|-------|-------------
+PSV-282010      | PSV   | 3.50 barg
+PCV-282020      | PCV   | Pressure Control Valve
+
+================================================================================
+LINES (PIPING)
+================================================================================
+
+Line Number                         | Size  | Class | Service
+------------------------------------|-------|-------|---------------------------
+2"-DH-28-31-0710-B06S-N            | 2"    | B06S  | Closed drain from package
+2"-DH-28-31-0205-B03-N             | 2"    | B03   | Closed drain
+2"-DH-28-31-0202-B03-N             | 2"    | B03   | Closed drain
+2"-DH-28-31-0215-B06S-N            | 2"    | B06S  | Closed drain
+2"-MT-28-29-0203-B47-N             | 2"    | B47   | Methanol
+2"-MT-28-29-0207-B47-N             | 2"    | B47   | Methanol
+2"-MT-28-29-0711-J48-N             | 2"    | J48   | Methanol injection
+2"-MT-28-29-0715-J48-N             | 2"    | J48   | Methanol injection
+2"-MT-28-29-0713-J48-N             | 2"    | J48   | Methanol injection
+3"-MT-28-29-0206-B47-N             | 3"    | B47   | Methanol (main)
+1-1/2"-MT-28-29-0201-J47-N         | 1-1/2"| J47   | Methanol injection to well
+1-1/2"-MT-28-29-0512-B48-N         | 1-1/2"| B48   | Methanol
+4"-V-28-22-0202-B47-N              | 4"    | B47   | Vent
+2"-V-28-22-0203-B10-N              | 2"    | B10   | Vent
+2"-N-28-21-0202-B10-N              | 2"    | B10   | Nitrogen blanketing
+2"-DH-28-31-0320-B03-N             | 2"    | B03   | Closed drain
+
+================================================================================
+INLINE VALVES
+================================================================================
+
+Tag         | Size  | Notes
+------------|-------|------------------------------------------
+V-28143     | -     | On methanol line
+V-28144     | 2"    | On vent line
+V-28145     | 2"    | On supply line
+V-28146     | -     | On drain
+V-28147     | 2"    | On methanol header
+V-28148     | 2"    | On drain line
+V-28149     | -     | On methanol line
+V-28150     | -     | On methanol line
+V-28151     | -     | On methanol line
+V-28152     | -     | On methanol line
+V-28153     | -     | On methanol supply
+V-28154     | 1"    | LO drain
+V-28155     | 2"    | On methanol line
+V-28156     | -     | On methanol line
+V-28157     | -     | On methanol line
+V-28158     | -     | On N2 line
+
+================================================================================
+CROSS-REFERENCES TO OTHER SHEETS
+================================================================================
+
+Ref   | Drawing                          | Description
+------|----------------------------------|------------------------------------------------
+1047  | AD-28-D-100007-SHT-001          | DRAIN FROM WELLHEAD SAFETY CABINET
+1033  | AD-28-D-100003-SHT-001          | TO ATMOSPHERIC VENT SAFE AREA
+1010  | AD-28-D-100003-SHT-001          | TO ATMOSPHERIC VENT SAFE AREA
+1087  | AD-28-D-100001-SHT-001          | METHANOL INJECTION TO UPSTREAM CHOKE HCV-281040.A
+1050  | AD-28-D-100007-SHT-001          | TO NEW PRODUCTION HEADER
+1046  | AD-28-D-100001-SHT-001          | METHANOL SOLUTION TO FLOWLINE
+1036  | AD-28-D-100003-SHT-001          | TO OPEN DRAIN HEADER
+
+================================================================================
+CONNECTIONS
+================================================================================
+- HOSE CONNECTION FOR BOAT SUPPLY (BOAT LANDING) - 2" for methanol supply
+- 18" tank access manhole
+- N2 blanketing connection for Q-2801
+- HIGH POINT vent connections
+- LOW POINT drain connections
+
+================================================================================
+NOTES
+================================================================================
+1. G-2801 IS PORTABLE SKID TO BE USED AS PER OPERATIONAL REQUIREMENT. REFER P&ID NO.
+   AD-28-D-100029-SHT-001 FOR DETAILS OF PORTABLE METHANOL INJECTION PACKAGE.
+2. LINE TO BE BLINDED WHEN SKID IS REMOVED.
+3. G-2801 IS NOT AVAILABLE DURING SITE WALKTHROUGH.
+
+================================================================================
+METHANOL INJECTION DESTINATIONS
+================================================================================
+- TO UPSTREAM CHOKE HCV-281040.A (AF-4 well) via AD-28-D-100001-SHT-001
+- TO FLOWLINE via AD-28-D-100001-SHT-001
+- TO NEW PRODUCTION HEADER via AD-28-D-100007-SHT-001
+- TO OPEN DRAIN HEADER via AD-28-D-100003-SHT-001

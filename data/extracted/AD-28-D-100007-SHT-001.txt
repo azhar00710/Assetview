@@ -1,0 +1,264 @@
+================================================================================
+PIG LAUNCHER & MANIFOLD - P&ID
+================================================================================
+Drawing No:     AD-28-D-100007-SHT-001
+Project:        11594: AS-BUILT RECOVERY - PHASE II
+                (PACKAGE 5: LZ - ZCSC & PACKAGE 6: ABK)
+Client:         ADNOC Offshore
+Location:       ABU AL BUKHOOSH WELL HEAD TOWER - AREA 28
+Platform:       AKK 4 WELL HEAD PLATFORM
+Type:           PIG LAUNCHER & MANIFOLD P&ID
+Revision:       1
+Date:           18 Jun 2025
+Scale:          N.T.S
+Supersedes:     TOTAL ABK DWG. NO. 0000617-28-U-99-108 1/1 REV-4
+Site Walkthrough: 15 JAN 2024
+
+================================================================================
+REFERENCE DRAWINGS
+================================================================================
+P&ID Legend, Symbols & Instrument Details:  AD-82-D-100001 TO AD-82-D-100005
+Instrument Connections Standard:            SP.A714Y.00.1311.003
+
+================================================================================
+EQUIPMENT
+================================================================================
+
+Tag         | Name           | Size                                | Design Press          | Design Temp    | Trim Number
+------------|----------------|-------------------------------------|-----------------------|----------------|------------------
+GP-2802     | PIG LAUNCHER   | (405 X 505) mm OD DIA X 5900 mm L  | 350.0 barg / VACUUM   | -46°C / 125°C  | -
+
+Design Code: ASME VIII / B31.3
+
+================================================================================
+VALVES (PROCESS)
+================================================================================
+
+Tag                 | Type  | Size    | Service/Notes
+--------------------|-------|---------|------------------------------------------------
+ESV-289950          | ESV   | 14"     | Emergency Shutdown Valve (on production header)
+PSV-281011          | PSV   | -       | PSET=350 barg (pig launcher relief)
+HV-280201           | HV    | 8"      | Manifold inlet valve (AF-4)
+HV-280202           | HV    | -       | Manifold valve
+HV-280203           | HV    | -       | Manifold valve
+HV-280204           | HV    | -       | Manifold valve
+HV-280205           | HV    | -       | Manifold valve
+HV-281002.A-02      | HV    | -       | Pig launcher valve
+HV-281002.A-03      | HV    | -       | Pig launcher valve
+HV-281002.A-04      | HV    | -       | Pig launcher valve
+RO-280102           | RO    | -       | Restriction Orifice
+RO-280103           | RO    | -       | Restriction Orifice
+A.281051.HV         | HV    | -       | Manifold HV (multiple: A, B, C)
+A.281052.HV         | HV    | -       | Manifold HV (multiple: A, B, C)
+B.281051.HV         | HV    | -       | Manifold HV (multiple: A, B, C)
+B.281052.HV         | HV    | -       | Manifold HV (multiple: A, B, C)
+C.281051.HV         | HV    | -       | Manifold HV (multiple: A, B, C)
+C.281052.HV         | HV    | -       | Manifold HV (multiple: A, B, C)
+
+================================================================================
+INSTRUMENTS
+================================================================================
+
+Tag             | Type  | Description / Service
+----------------|-------|----------------------------------------------------------
+289950.ZSO      | ZSO   | Position Switch Open (ESV-289950, ESD)
+289950.ZST      | ZST   | Position Switch Travel (ESV-289950)
+289950.ZSC      | ZSC   | Position Switch Closed (ESV-289950, ESD)
+289950.ZLC      | ZLC   | Position Limit Closed (ESV-289950)
+289950.ZLO      | ZLO   | Position Limit Open (ESV-289950)
+289950.HS       | HS    | Hand Switch (ESV-289950, ESD)
+289950.PY       | PY    | Pressure Relay (ESV-289950)
+289950.PSHH     | PSHH  | Pressure Switch High High (ESV-289950)
+289950.PAHL     | PAHL  | Pressure Alarm High/Low (ESV-289950, ESD)
+289951.PSLL     | PSLL  | Pressure Switch Low Low
+280101.ZI       | ZI    | Position Indicator (ESD)
+281021.TT       | TT    | Temperature Transmitter (ESD)
+281021.TW       | TW    | Temperature Well (A, ESD)
+281021.TE       | TE    | Temperature Element (ESD)
+281021.TI       | TI    | Temperature Indicator
+281022.TW       | TW    | Temperature Well
+281022.TG       | TG    | Temperature Gauge
+281031.PT       | PT    | Pressure Transmitter
+281031.PI       | PI    | Pressure Indicator
+281032.PG       | PG    | Pressure Gauge
+281011.PG (1)   | PG    | Pressure Gauge (location 1)
+281011.PG (2)   | PG    | Pressure Gauge (location 2)
+289900.XA       | XA    | Alarm
+289900.XS       | XS    | Shutdown Switch
+289900.HS       | HS    | Hand Switch
+287801.XA       | XA    | Alarm
+287801.XS       | XS    | Shutdown Switch
+289902.XS (A4)  | XS    | Shutdown Switch
+289903.XS (4)   | XS    | Shutdown Switch
+519900.XS (J)   | XS    | Shutdown Switch
+A.281051.ZSC    | ZSC   | Position Switch Closed (manifold valve A)
+A.281051.ZSO    | ZSO   | Position Switch Open (manifold valve A)
+A.281051.ZLC    | ZLC   | Position Limit Closed (manifold valve A)
+A.281051.ZLO    | ZLO   | Position Limit Open (manifold valve A)
+A.281052.ZSC    | ZSC   | Position Switch Closed (manifold valve A)
+A.281052.ZSO    | ZSO   | Position Switch Open (manifold valve A)
+A.281052.ZLC    | ZLC   | Position Limit Closed (manifold valve A)
+A.281052.ZLO    | ZLO   | Position Limit Open (manifold valve A)
+B.281051.ZSC    | ZSC   | Position Switch Closed (manifold valve B)
+B.281051.ZSO    | ZSO   | Position Switch Open (manifold valve B)
+B.281051.ZLC    | ZLC   | Position Limit Closed (manifold valve B)
+B.281051.ZLO    | ZLO   | Position Limit Open (manifold valve B)
+B.281052.ZSC    | ZSC   | Position Switch Closed (manifold valve B)
+B.281052.ZSO    | ZSO   | Position Switch Open (manifold valve B)
+B.281052.ZLC    | ZLC   | Position Limit Closed (manifold valve B)
+B.281052.ZLO    | ZLO   | Position Limit Open (manifold valve B)
+C.281051.ZSC    | ZSC   | Position Switch Closed (manifold valve C)
+C.281051.ZSO    | ZSO   | Position Switch Open (manifold valve C)
+C.281051.ZLC    | ZLC   | Position Limit Closed (manifold valve C)
+C.281051.ZLO    | ZLO   | Position Limit Open (manifold valve C)
+C.281052.ZSC    | ZSC   | Position Switch Closed (manifold valve C)
+C.281052.ZSO    | ZSO   | Position Switch Open (manifold valve C)
+C.281052.ZLC    | ZLC   | Position Limit Closed (manifold valve C)
+C.281052.ZLO    | ZLO   | Position Limit Open (manifold valve C)
+
+================================================================================
+LINES (PIPING)
+================================================================================
+
+Line Number                         | Size  | Class | Service
+------------------------------------|-------|-------|---------------------------
+14"-H-28-12-0320-J26S-P            | 14"   | J26S  | Production header (main)
+14"-H-28-12-0321-J26S-P            | 14"   | J26S  | Production header
+14"-H-28-12-0322-J26S-P            | 14"   | J26S  | Production header (to NKPP platform)
+8"-H-28-12-0122-J26S-P             | 8"    | J26S  | From AF-9 wellhead
+8"-H-28-12-0222-J26S-P             | 8"    | J26S  | From AF-10 wellhead (test)
+8"-H-28-12-0328-J26S-P             | 8"    | J26S  | From AF-4 wellhead
+8"-H-28-12-0331-J26S-P             | 8"    | J26S  | AKK4 test manifold
+8"-H-28-12-0332-J26S-P             | 8"    | J26S  | Test manifold
+8"-H-28-12-0333-J26S-N             | 8"    | J26S  | Manifold branch
+6"-H-28-12-0323-J26S-N             | 6"    | J26S  | Manifold branch
+6"-H-28-12-0324-J26S-N             | 6"    | J26S  | Manifold branch
+2"-H-28-12-0326-J26S-N             | 2"    | J26S  | Drain
+2"-H-28-12-0327-J26S-P             | 2"    | J26S  | Branch
+2"-H-28-12-0330-J26S-N             | 2"    | J26S  | Drain
+2"-H-28-12-0334-J26S-N             | 2"    | J26S  | Drain
+3"-V-28-22-0310-B26S-N             | 3"    | B26S  | Vent
+3"-V-28-22-0311-B26S-N             | 3"    | B26S  | Vent
+3"-V-28-22-0312-B26S-N             | 3"    | B26S  | Vent
+3"-V-28-22-0313-B26S-N             | 3"    | B26S  | Vent
+2"-DH-28-31-0311-B06S-N            | 2"    | B06S  | Closed drain
+2"-DH-28-31-0215-B06S-N            | 2"    | B06S  | Closed drain
+3"-DH-28-31-0211-B06S-N            | 3"    | B06S  | Closed drain
+2"-MT-28-29-0711-J48-N             | 2"    | J48   | Methanol injection
+
+================================================================================
+INLINE VALVES
+================================================================================
+
+Tag         | Size  | Notes
+------------|-------|------------------------------------------
+V-28110     | -     | On manifold line
+V-28111     | -     | FB (full bore)
+V-28112     | -     | On manifold
+V-28113     | -     | On manifold
+V-28114     | -     | On pig launcher line
+V-28115     | -     | On pig launcher
+V-28116     | -     | On pig launcher
+V-28117     | -     | LO FB (lock open, full bore)
+V-28118     | 2"    | On branch
+V-28119     | -     | On pig launcher
+V-28120     | -     | On manifold
+V-28121     | -     | On ESD-0 bypass
+V-28122     | -     | On ESD-0 bypass
+V-28123     | -     | LC (locked closed)
+V-28124     | 6"    | On manifold branch
+V-28125     | -     | On manifold
+V-28126     | -     | On manifold
+V-28127     | -     | On manifold
+V-28128     | 14"   | On production header
+V-28129     | 6"    | On manifold branch
+V-28130     | 2"    | NKPP/KPP
+V-28131     | 2"    | NKPP/KPP
+V-28202     | -     | On manifold
+
+================================================================================
+MANIFOLD CONFIGURATION
+================================================================================
+
+The manifold connects three well flowlines to the production header and pig launcher:
+
+INLET CONNECTIONS:
+  - AF-9 Wellhead: 8"-H-28-12-0122-J26S-P (from Sheet 005)
+  - AF-10 Wellhead: 8"-H-28-12-0222-J26S-P (from Sheet 006, also to test manifold)
+  - AF-4 Wellhead: 8"-H-28-12-0328-J26S-P (from Sheet 001)
+
+OUTLET:
+  - 14" Production Header: 14"-H-28-12-0322-J26S-P → TO NKPP PLATFORM
+  - Test Manifold: 8"-H-28-12-0331-J26S-P
+  - Pig Launcher GP-2802: For pigging operations
+
+BYPASS:
+  - ESD-0 BYPASS with locked valves (V-28121, V-28122)
+  - ESD-0 BYPASSED indication
+
+DRIP PAN:
+  - Located below pig launcher GP-2802
+  - Drains to closed drain header
+
+================================================================================
+CROSS-REFERENCES TO OTHER SHEETS
+================================================================================
+
+Ref   | Drawing                          | Description
+------|----------------------------------|------------------------------------------------
+1103  | AD-28-D-100005-SHT-001          | FROM 8"-H-28-12-0121-J85S-N AF-9 WELLHEAD FLOWLINE
+1101  | AD-28-D-100006-SHT-001          | FROM 8"-H-28-12-0221-J85S-P AF-10 WELLHEAD FLOWLINE
+1102  | AD-28-D-100001-SHT-001          | FROM 8"-H-28-12-0328-J26S-N AF-4 WELLHEAD FLOWLINE
+1043  | AD-28-D-100001-SHT-001          | FROM 8"-H-28-12-0332-J26S-N AKK4 TEST MANIFOLD
+1050  | AD-28-D-100004-SHT-001          | FROM PORTABLE METHANOL INJECTION PACKAGE
+1019  | AD-28-D-100003-SHT-001          | TO 3"-DH-28-31-0211-B06S-N CLOSED DRAIN HEADER
+1021  | AD-28-D-100003-SHT-001          | TO 3"-V-28-22-0103-B16-N VENT LINE
+1047  | AD-28-D-100004-SHT-001          | TO METHANOL INJECTION PACKAGE
+1022  | AD-28-D-100003-SHT-001          | TO CLOSED DRAIN HEADER (drip pan)
+1050  | AD-28-D-100004-SHT-001          | FROM METHANOL INJECTION PACKAGE
+      | AD-19-D-100013-SHT-001          | TO NKPP PLATFORM (14" production header)
+
+================================================================================
+NOTES
+================================================================================
+1.  LOW/LOW OR HIGH/HIGH PRESSURE, CLOSE WING AND MASTER VALVES OF EXISTING AND NEW WELLS.
+2.  SPOOL PIECE FOR MAINTENANCE PURPOSES.
+3.  SIGNAL TO WHPP SWITCHBOARD.
+4.  ESV ON RISER TO BE LOCATED IN SAFE AREA AWAY FROM EXTERNAL FIRE OR EXPLOSION SOURCES.
+    HOWEVER, ACCESS AND MAINTENANCE FACILITIES TO BE PROVIDED.
+5.  METHANOL AND NITROGEN SUPPLY POINTS TO BE CLOSE TO PIG TRAP, 8MM MANIFOLD AFTER
+    PIGGING OPERATIONS.
+6.  METHANOL INJECTION DEPENDANT ON WELLSTREAM TEMPERATURE AND PRESSURE.
+7.  CONNECTION FOR FUTURE WELLHEADS.
+8.  BUILT-IN VALVE OF PIG CLOSURE PART OF VENDOR SUPPLY.
+9.  TAG NOS. FOR ALL SINDERED HUBS SHALL BE:
+    SP-217AIB FOR PIPE CLASS J85S.
+    SP-217AXB FOR PIPE CLASS J26S.
+10. NOZZLES ON PIG LAUNCHER SHALL BE VERTICAL TO THE TRUE HORIZONTAL PLANE.
+11. QUICK OPENING CLOSURE DOOR. PROVIDE SPACE FOR DRIP PAN/NELING DOOR TO BE PROVIDED WITH A
+    MECHANICAL DEVICE TO PROTECT AGAINST OPENING UNDER PRESSURE.
+12. THE LAUNCHER SHALL BE PROVIDED WITH KEY INTERLOCK SYSTEM TO PREVENT INADVERTENT OPENING
+    OF LAUNCHER END CLOSURE UNDER PRESSURE.
+13. CLOSURES WELD TO BE 100% RADIOGRAPHED.
+14. HUBS 99/893 SCRUB VIA SUBMARINE CABLE.
+15. SPOOL PIECE FOR THREE PHASE FUTURE TEST METER ASSEMBLY TO BE PROVIDED ON VERTICAL LEG.
+16. LOW AND HIGH RANGE PRESSURE GAUGE.
+17. FOR EACH BLIND SPACE CORRESPONDING SPACER SHOULD ALSO BE PROVIDED.
+18. TELL TALE CONNECTION TO BE USED FOR CHECKING HCS LEVEL INSIDE PIG LAUNCHER AFTER N2 PURGING.
+19. MINIMUM DISTANCE LARGER THAN THE LENGTH OF INTELLIGENT PIG IS REQUIRED BETWEEN BENDS/CSY
+    AND FLUSHING TEE.
+20. ESV-289950 SHALL BE PROVIDED WITH PARTIAL STROKING FACILITY.
+21. LOCATE AS CLOSE AS POSSIBLE TO THE ENDS OF PIG LAUNCHER.
+
+================================================================================
+LOGIC NOTES
+================================================================================
+1. TO/FROM WELLHEAD SAFETY CABINET
+
+================================================================================
+PRODUCTION HEADER ROUTING
+================================================================================
+14"-H-28-12-0322-J26S-P → TO NKPP PLATFORM (via AD-19-D-100013-SHT-001)
+  - This is the main export line from AKK4 platform
+  - Protected by ESV-289950 (14" emergency shutdown valve)
+  - Design pressure: 350 barg (per PSV setting)

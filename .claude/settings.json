@@ -1,0 +1,33 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "command": "bash -c 'FILE=\"$CLAUDE_TOOL_PARAM_file_path\"; if [[ \"$FILE\" == *.jsx ]] || [[ \"$FILE\" == *.js ]]; then node -c \"$FILE\" 2>&1 || echo \"SYNTAX ERROR in $FILE\" >&2; fi'",
+        "description": "Syntax-check JS/JSX files after every edit"
+      }
+    ],
+    "PostSession": [
+      {
+        "command": "bash -c 'cd /home/user/PID_assetview && date >> .claude/.session-log && git log --oneline -1 >> .claude/.session-log && echo \"---\" >> .claude/.session-log'",
+        "description": "Log session end with last commit"
+      }
+    ]
+  },
+  "permissions": {
+    "allow": [
+      "Read",
+      "Glob",
+      "Grep",
+      "Bash(cd frontend && npm run build*)",
+      "Bash(cd backend && npm test*)",
+      "Bash(bash scripts/*)",
+      "Bash(git status*)",
+      "Bash(git log*)",
+      "Bash(git diff*)",
+      "Bash(git branch*)",
+      "Bash(git fetch*)",
+      "Bash(node -c *)"
+    ]
+  }
+}

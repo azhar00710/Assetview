@@ -1,0 +1,8 @@
+ALTER TABLE annotation
+  ADD COLUMN IF NOT EXISTS fill_opacity DECIMAL(3,2) DEFAULT 0.15;
+
+ALTER TABLE annotation
+  ADD COLUMN IF NOT EXISTS stroke_style VARCHAR(10) DEFAULT 'solid';
+
+ALTER TABLE annotation
+  ADD COLUMN IF NOT EXISTS show_label BOOLEAN DEFAULT true;
