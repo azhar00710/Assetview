@@ -33,16 +33,16 @@ export default function SystemManager({ platformId }) {
   const systems = systemsData?.systems || systemsData?.data || systemsData || [];
 
   const handleAdd = async (item) => {
-    try { await mutation.create({ ...item, platform_id: platformId }); } catch (err) { console.error('Failed to create system:', err); }
+    await mutation.create({ ...item, platform_id: platformId });
   };
   const handleUpdate = async (id, item) => {
-    try { await mutation.update(id, item); } catch (err) { console.error('Failed to update system:', err); }
+    await mutation.update(id, item);
   };
   const handleDelete = async (id) => {
-    try { await mutation.remove(id); } catch (err) { console.error('Failed to delete system:', err); }
+    await mutation.remove(id);
   };
   const handleImport = async (csvText) => {
-    try { await importMut.mutateAsync(csvText); } catch (err) { console.error('Failed to import systems:', err); }
+    await importMut.mutateAsync(csvText);
   };
 
   return (

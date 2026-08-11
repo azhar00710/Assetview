@@ -1,4 +1,5 @@
-import { useAdminInstruments, useInstrumentMutation, useImport, useExportUrl } from '../../hooks/useAdminApi';
+import { useMemo } from 'react';
+import { useAdminInstruments, useInstrumentMutation, useAdminSystems, useImport, useExportUrl } from '../../hooks/useAdminApi';
 import EntityManager from './EntityManager';
 
 const IO_TYPE_COLORS = {
@@ -93,23 +94,37 @@ const COLUMN_GROUPS = [
 
 export default function InstrumentManager({ platformId }) {
   const { data: instData } = useAdminInstruments(platformId);
+  const { data: systemsData } = useAdminSystems(platformId);
   const mutation = useInstrumentMutation();
   const importMut = useImport('instruments', platformId);
   const exportUrl = useExportUrl('instruments', platformId);
 
   const instruments = instData?.instruments || instData?.data || instData || [];
 
+  // Inline "+ Add" must supply a system; offer this platform's systems as a
+  // dropdown since the API resolves system_code -> system_id.
+  const systems = systemsData?.systems || systemsData?.data || systemsData || [];
+  const editableColumns = useMemo(() => {
+    const options = (Array.isArray(systems) ? systems : []).map(s => ({
+      value: s.code,
+      label: s.code ? `${s.code} — ${s.name || ''}`.trim().replace(/—\s*$/, '') : (s.name || ''),
+    }));
+    return COLUMNS.map(col =>
+      col.key === 'system_code' ? { ...col, editable: true, type: 'select', options } : col
+    );
+  }, [systems]);
+
   const handleAdd = async (item) => {
-    try { await mutation.create({ ...item, platformId }); } catch (err) { console.error('Failed to create instrument:', err); }
+    await mutation.create({ ...item, platformId });
   };
   const handleUpdate = async (id, item) => {
-    try { await mutation.update(id, item); } catch (err) { console.error('Failed to update instrument:', err); }
+    await mutation.update(id, item);
   };
   const handleDelete = async (id) => {
-    try { await mutation.remove(id); } catch (err) { console.error('Failed to delete instrument:', err); }
+    await mutation.remove(id);
   };
   const handleImport = async (csvText) => {
-    try { await importMut.mutateAsync(csvText); } catch (err) { console.error('Failed to import instruments:', err); }
+    await importMut.mutateAsync(csvText);
   };
 
   return (
@@ -117,7 +132,7 @@ export default function InstrumentManager({ platformId }) {
       title="Instrument List"
       icon="sensors"
       accentHex="#8AB4FF"
-      columns={COLUMNS}
+      columns={editableColumns}
       columnGroups={COLUMN_GROUPS}
       data={Array.isArray(instruments) ? instruments : []}
       onAdd={handleAdd}

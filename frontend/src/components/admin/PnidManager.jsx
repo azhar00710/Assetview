@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useMemo } from 'react';
 import { useTheme } from '../../context/ThemeContext';
 import { STC } from '../../data/constants';
 import {
@@ -296,17 +296,32 @@ export default function PnidManager({ platformId }) {
     has_file: (p.has_image || p.storage_key) ? 'Yes' : '-',
   }));
 
+  // A new P&ID must be linked to a primary system, so offer this platform's
+  // systems as a dropdown — the column is otherwise read-only and the create
+  // fails with "A primary system is required".
+  const editableColumns = useMemo(() => {
+    const options = (Array.isArray(systems) ? systems : []).map(s => ({
+      value: s.code,
+      label: s.code ? `${s.code} — ${s.name || ''}`.trim().replace(/—\s*$/, '') : (s.name || ''),
+    }));
+    return COLUMNS.map(col =>
+      col.key === 'primary_system_code'
+        ? { ...col, editable: true, type: 'select', options }
+        : col
+    );
+  }, [systems]);
+
   const handleAdd = async (item) => {
-    try { await mutation.create({ ...item, platformId }); } catch (err) { console.error('Failed:', err); }
+    await mutation.create({ ...item, platformId });
   };
   const handleUpdate = async (id, item) => {
-    try { await mutation.update(id, item); } catch (err) { console.error('Failed:', err); }
+    await mutation.update(id, item);
   };
   const handleDelete = async (id) => {
-    try { await mutation.remove(id); } catch (err) { console.error('Failed:', err); }
+    await mutation.remove(id);
   };
   const handleImport = async (csvText) => {
-    try { await importMut.mutateAsync(csvText); } catch (err) { console.error('Failed to import P&IDs:', err); }
+    await importMut.mutateAsync(csvText);
   };
 
   // Draft P&IDs are editable; approved/as_built require changing to draft first
@@ -323,7 +338,7 @@ export default function PnidManager({ platformId }) {
           title="P&ID List"
           icon="description"
           accentHex="#8AB4FF"
-          columns={COLUMNS}
+          columns={editableColumns}
           data={enhancedPnids}
           onAdd={handleAdd}
           onUpdate={handleUpdate}

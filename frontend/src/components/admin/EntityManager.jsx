@@ -67,6 +67,23 @@ function exportToCsv(columns, data, title) {
   URL.revokeObjectURL(url);
 }
 
+/**
+ * Pull the server's message out of an Error, trimming the noisy API prefix.
+ * Parses the JSON body rather than regexing it — server messages quote the
+ * offending value (e.g. Unknown system code "X"), which breaks naive patterns.
+ */
+function errText(err) {
+  const raw = err?.message || String(err || 'Unknown error');
+  const start = raw.indexOf('{');
+  if (start !== -1) {
+    try {
+      const parsed = JSON.parse(raw.slice(start));
+      if (parsed?.error) return parsed.error;
+    } catch { /* not JSON — fall through to the trimmed string */ }
+  }
+  return raw.replace(/^API error \d+:\s*/, '');
+}
+
 export default function EntityManager({
   title,
   icon,
@@ -96,6 +113,7 @@ export default function EntityManager({
   const [editingId, setEditingId] = useState(null);
   const [editValues, setEditValues] = useState({});
   const [deleteConfirmId, setDeleteConfirmId] = useState(null);
+  const [actionError, setActionError] = useState(null);
 
   // Column visibility
   const [hiddenCols, setHiddenCols] = useState(new Set());
@@ -186,7 +204,18 @@ export default function EntityManager({
   useEffect(() => { setPage(0); }, [filters]);
 
   const handleNewRowChange = (key, value) => setNewRow(p => ({ ...p, [key]: value }));
-  const handleSaveNewRow = () => { if (onAdd) onAdd(newRow); setNewRow({}); setAddingRow(false); };
+  /** Keep the draft row open when the save fails so typed values aren't lost. */
+  const handleSaveNewRow = async () => {
+    if (!onAdd) return;
+    setActionError(null);
+    try {
+      await onAdd(newRow);
+      setNewRow({});
+      setAddingRow(false);
+    } catch (err) {
+      setActionError(`Could not add ${title}: ${errText(err)}`);
+    }
+  };
   const handleStartEdit = (row) => {
     setEditingId(row.id);
     const vals = {};
@@ -194,18 +223,52 @@ export default function EntityManager({
     setEditValues(vals);
   };
   const handleEditChange = (key, value) => setEditValues(p => ({ ...p, [key]: value }));
-  const handleSaveEdit = () => { if (onUpdate && editingId) onUpdate(editingId, editValues); setEditingId(null); setEditValues({}); };
-  const handleCancelEdit = () => { setEditingId(null); setEditValues({}); };
-  const handleDelete = (id) => { if (onDelete) onDelete(id); setDeleteConfirmId(null); };
+  const handleSaveEdit = async () => {
+    if (!onUpdate || !editingId) return;
+    setActionError(null);
+    try {
+      await onUpdate(editingId, editValues);
+      setEditingId(null);
+      setEditValues({});
+    } catch (err) {
+      setActionError(`Could not save changes: ${errText(err)}`);
+    }
+  };
+  const handleCancelEdit = () => { setEditingId(null); setEditValues({}); setActionError(null); };
+  const handleDelete = async (id) => {
+    setDeleteConfirmId(null);
+    if (!onDelete) return;
+    setActionError(null);
+    try {
+      await onDelete(id);
+    } catch (err) {
+      setActionError(`Could not delete: ${errText(err)}`);
+    }
+  };
 
   const handleImportClick = () => fileInputRef.current?.click();
-  const handleFileChange = (e) => {
+  const handleFileChange = async (e) => {
     const file = e.target.files?.[0];
-    if (!file || !onImport) return;
-    const reader = new FileReader();
-    reader.onload = (evt) => onImport(evt.target.result);
-    reader.readAsText(file);
     e.target.value = '';
+    if (!file || !onImport) return;
+    setActionError(null);
+
+    // `accept` only filters the dialog — users can still pick anything, and
+    // readAsText happily decodes binary into garbage. Reject it up front.
+    if (!/\.(csv|xlsx)$/i.test(file.name)) {
+      setActionError(
+        `"${file.name}" is not a spreadsheet. Import expects a .csv (or .xlsx) file — ` +
+        'use the Template button for the expected columns. To attach a drawing, use P&IDs → Upload File.'
+      );
+      return;
+    }
+
+    try {
+      const text = await file.text();
+      await onImport(text);
+    } catch (err) {
+      setActionError(`Import failed: ${errText(err)}`);
+    }
   };
 
   const handleDownloadTemplate = () => {
@@ -358,6 +421,28 @@ export default function EntityManager({
           <span className="material-symbols-outlined text-[14px]">add</span> Add
         </button>
       </div>
+
+      {/* ── Error banner — failures used to go only to console.error ── */}
+      {actionError && (
+        <div
+          className="px-4 py-2 flex items-start gap-2 shrink-0"
+          style={{
+            background: 'var(--md-error-container, rgba(255,137,122,0.12))',
+            borderBottom: '1px solid var(--md-outline-variant)',
+          }}
+          role="alert"
+        >
+          <span className="material-symbols-outlined text-[16px] shrink-0" style={{ color: 'var(--md-error, #FF897A)' }}>error</span>
+          <span className="text-[11px] leading-snug flex-1" style={{ color: 'var(--md-on-error-container, #FF897A)' }}>{actionError}</span>
+          <button
+            onClick={() => setActionError(null)}
+            className="text-[11px] font-semibold cursor-pointer shrink-0"
+            style={{ color: 'var(--md-on-surface-variant)' }}
+          >
+            Dismiss
+          </button>
+        </div>
+      )}
 
       {/* ── Scrollable Table — both directions ── */}
       <div ref={tableRef} className="flex-1" style={{ overflow: 'auto', height: 0, minWidth: 0 }}>

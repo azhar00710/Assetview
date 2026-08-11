@@ -1,4 +1,5 @@
-import { useAdminLines, useLineMutation, useImport, useExportUrl } from '../../hooks/useAdminApi';
+import { useMemo } from 'react';
+import { useAdminLines, useLineMutation, useAdminSystems, useImport, useExportUrl } from '../../hooks/useAdminApi';
 import { STC } from '../../data/constants';
 import EntityManager from './EntityManager';
 
@@ -89,31 +90,38 @@ const COLUMN_GROUPS = [
 
 export default function LineManager({ platformId }) {
   const { data: linesData } = useAdminLines(platformId);
+  const { data: systemsData } = useAdminSystems(platformId);
   const mutation = useLineMutation();
   const importMut = useImport('lines', platformId);
   const exportUrl = useExportUrl('lines', platformId);
 
   const lines = linesData?.lines || linesData?.data || linesData || [];
 
-  const handleAdd = async (item) => {
-    try { await mutation.create({ ...item, platformId }); } catch (err) { console.error('Failed to create line:', err); }
-  };
-  const handleUpdate = async (id, item) => {
-    try { await mutation.update(id, item); } catch (err) { console.error('Failed to update line:', err); }
-  };
-  const handleDelete = async (id) => {
-    try { await mutation.remove(id); } catch (err) { console.error('Failed to delete line:', err); }
-  };
-  const handleImport = async (csvText) => {
-    try { await importMut.mutateAsync(csvText); } catch (err) { console.error('Failed to import lines:', err); }
-  };
+  // Inline "+ Add" must supply a system; offer this platform's systems as a
+  // dropdown since the API resolves system_code -> system_id.
+  const systems = systemsData?.systems || systemsData?.data || systemsData || [];
+  const editableColumns = useMemo(() => {
+    const options = (Array.isArray(systems) ? systems : []).map(s => ({
+      value: s.code,
+      label: s.code ? `${s.code} — ${s.name || ''}`.trim().replace(/—\s*$/, '') : (s.name || ''),
+    }));
+    return COLUMNS.map(col =>
+      col.key === 'system_code' ? { ...col, editable: true, type: 'select', options } : col
+    );
+  }, [systems]);
+
+  // Errors propagate to EntityManager, which shows them in its banner.
+  const handleAdd = async (item) => { await mutation.create({ ...item, platformId }); };
+  const handleUpdate = async (id, item) => { await mutation.update(id, item); };
+  const handleDelete = async (id) => { await mutation.remove(id); };
+  const handleImport = async (csvText) => { await importMut.mutateAsync(csvText); };
 
   return (
     <EntityManager
       title="Line List"
       icon="route"
       accentHex="#FFB068"
-      columns={COLUMNS}
+      columns={editableColumns}
       columnGroups={COLUMN_GROUPS}
       data={Array.isArray(lines) ? lines : []}
       onAdd={handleAdd}

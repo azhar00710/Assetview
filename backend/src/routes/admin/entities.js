@@ -30,6 +30,61 @@ function splitFields(body, knownFields) {
   return known;
 }
 
+/**
+ * Resolve a system UUID from a human-entered system code, scoped to a platform.
+ * The admin tables expose `system_code` (not the UUID), so inline "+ Add" sends
+ * the code — mirror what the CSV importer does instead of rejecting the row.
+ * Returns null when the code is unknown or the platform is not supplied.
+ */
+async function findSystemIdByCode(code, platformId) {
+  if (!code || !platformId) return null;
+  const system = await prisma.system.findFirst({
+    where: { code: String(code).trim(), platform_id: platformId, deleted_at: null },
+    select: { id: true },
+  });
+  return system?.id || null;
+}
+
+/**
+ * HTML inputs always produce strings, and a cleared field produces ''. Prisma
+ * rejects both for Int/Decimal/Date columns ("Expected Int, provided String"),
+ * so normalise them before writing.
+ */
+function coerceTypes(data, { ints = [], decimals = [], dates = [] }) {
+  const blank = (v) => v === '' || v === null || v === undefined;
+  for (const key of ints) {
+    if (!(key in data)) continue;
+    if (blank(data[key])) { data[key] = null; continue; }
+    const n = Number(data[key]);
+    data[key] = Number.isFinite(n) ? Math.trunc(n) : null;
+  }
+  for (const key of decimals) {
+    if (!(key in data)) continue;
+    if (blank(data[key])) { data[key] = null; continue; }
+    const n = Number(data[key]);
+    data[key] = Number.isFinite(n) ? n : null;
+  }
+  for (const key of dates) {
+    if (!(key in data)) continue;
+    if (blank(data[key])) { data[key] = null; continue; }
+    const d = new Date(data[key]);
+    data[key] = Number.isNaN(d.getTime()) ? null : d;
+  }
+  return data;
+}
+
+const PNID_NUMERIC = { ints: ['sheet_number', 'total_sheets', 'page_count'] };
+const LINE_NUMERIC = { decimals: ['design_pressure', 'design_temperature', 'operating_pressure', 'operating_temperature', 'test_pressure'] };
+const EQUIPMENT_NUMERIC = { decimals: ['weight_kg'], dates: ['commissioning_date', 'last_inspection', 'next_inspection'] };
+
+/** Drop transport-only keys that splitFields would otherwise bury in metadata. */
+function stripMetaKeys(data, keys) {
+  if (!data.metadata || typeof data.metadata !== 'object') return data;
+  for (const key of keys) delete data.metadata[key];
+  if (Object.keys(data.metadata).length === 0) delete data.metadata;
+  return data;
+}
+
 const SYSTEM_FIELDS = new Set(['platform_id', 'name', 'code', 'sys_type', 'description', 'system_number', 'metadata']);
 const LINE_FIELDS = new Set(['system_id', 'line_number', 'service', 'fluid_code', 'nominal_size', 'pipe_class', 'material', 'insulation_code', 'design_pressure', 'design_temperature', 'operating_pressure', 'operating_temperature', 'test_pressure', 'from_equipment_tag', 'to_equipment_tag', 'line_class_spec', 'isometric_ref', 'stress_analysis_ref', 'metadata']);
 const EQUIPMENT_FIELDS = new Set(['system_id', 'line_id', 'tag', 'equipment_type', 'description', 'criticality', 'sil_level', 'inspection_group', 'corrosion_loop', 'manufacturer', 'model_number', 'serial_number', 'weight_kg', 'commissioning_date', 'last_inspection', 'next_inspection', 'metadata']);
@@ -167,13 +222,24 @@ export default async function adminEntitiesRoutes(fastify) {
   // POST /admin/pnids
   fastify.post('/admin/pnids', async (request, reply) => {
     const data = splitFields(request.body, PNID_FIELDS);
-    const primary_system_id = request.body.primary_system_id;
+    const platformId = request.body.platformId || request.body.platform_id;
+
+    // The P&ID table exposes `primary_system_code`, so accept either form.
+    const primary_system_id = request.body.primary_system_id
+      || await findSystemIdByCode(request.body.primary_system_code, platformId);
+    stripMetaKeys(data, ['primary_system_code', 'primary_system_id', 'platformId', 'platform_id']);
+    delete data.primary_system_id; // linked via pnid_system, not a column on pnid
+    coerceTypes(data, PNID_NUMERIC);
 
     if (!data.drawing_number) {
       return reply.status(400).send({ error: 'drawing_number is required' });
     }
     if (!primary_system_id) {
-      return reply.status(400).send({ error: 'primary_system_id is required' });
+      return reply.status(400).send({
+        error: request.body.primary_system_code
+          ? `Unknown system code "${request.body.primary_system_code}" for this platform. Create the system first, or pick an existing one.`
+          : 'A primary system is required — provide primary_system_code (or primary_system_id).',
+      });
     }
 
     try {
@@ -208,6 +274,7 @@ export default async function adminEntitiesRoutes(fastify) {
       body.metadata = { ...(existing.metadata || {}), ...(body.metadata || {}) };
     }
     const data = splitFields(body, PNID_FIELDS);
+    coerceTypes(data, PNID_NUMERIC);
     // Remove primary_system_id from data — it's handled separately
     delete data.primary_system_id;
     data.updated_at = new Date();
@@ -339,9 +406,23 @@ export default async function adminEntitiesRoutes(fastify) {
   // POST /admin/lines
   fastify.post('/admin/lines', async (request, reply) => {
     const data = splitFields(request.body, LINE_FIELDS);
+    const platformId = request.body.platformId || request.body.platform_id;
 
-    if (!data.system_id || !data.line_number) {
-      return reply.status(400).send({ error: 'system_id and line_number are required' });
+    if (!data.system_id) {
+      data.system_id = await findSystemIdByCode(request.body.system_code, platformId);
+    }
+    stripMetaKeys(data, ['system_code', 'platformId', 'platform_id']);
+    coerceTypes(data, LINE_NUMERIC);
+
+    if (!data.system_id) {
+      return reply.status(400).send({
+        error: request.body.system_code
+          ? `Unknown system code "${request.body.system_code}" for this platform. Create the system first, or pick an existing one.`
+          : 'A system is required — provide system_code (or system_id).',
+      });
+    }
+    if (!data.line_number) {
+      return reply.status(400).send({ error: 'line_number is required' });
     }
 
     try {
@@ -364,6 +445,7 @@ export default async function adminEntitiesRoutes(fastify) {
       body.metadata = { ...(existing.metadata || {}), ...(body.metadata || {}) };
     }
     const data = splitFields(body, LINE_FIELDS);
+    coerceTypes(data, LINE_NUMERIC);
     data.updated_at = new Date();
 
     try {
@@ -444,9 +526,23 @@ export default async function adminEntitiesRoutes(fastify) {
   // POST /admin/equipment
   fastify.post('/admin/equipment', async (request, reply) => {
     const data = splitFields(request.body, EQUIPMENT_FIELDS);
+    const platformId = request.body.platformId || request.body.platform_id;
 
-    if (!data.system_id || !data.tag || !data.equipment_type) {
-      return reply.status(400).send({ error: 'system_id, tag, and equipment_type are required' });
+    if (!data.system_id) {
+      data.system_id = await findSystemIdByCode(request.body.system_code, platformId);
+    }
+    stripMetaKeys(data, ['system_code', 'platformId', 'platform_id']);
+    coerceTypes(data, EQUIPMENT_NUMERIC);
+
+    if (!data.system_id) {
+      return reply.status(400).send({
+        error: request.body.system_code
+          ? `Unknown system code "${request.body.system_code}" for this platform. Create the system first, or pick an existing one.`
+          : 'A system is required — provide system_code (or system_id).',
+      });
+    }
+    if (!data.tag || !data.equipment_type) {
+      return reply.status(400).send({ error: 'tag and equipment_type are required' });
     }
 
     try {
@@ -469,6 +565,7 @@ export default async function adminEntitiesRoutes(fastify) {
       body.metadata = { ...(existing.metadata || {}), ...(body.metadata || {}) };
     }
     const data = splitFields(body, EQUIPMENT_FIELDS);
+    coerceTypes(data, EQUIPMENT_NUMERIC);
     data.updated_at = new Date();
 
     try {
@@ -544,9 +641,22 @@ export default async function adminEntitiesRoutes(fastify) {
   // POST /admin/instruments
   fastify.post('/admin/instruments', async (request, reply) => {
     const data = splitFields(request.body, INSTRUMENT_FIELDS);
+    const platformId = request.body.platformId || request.body.platform_id;
 
-    if (!data.system_id || !data.tag || !data.instrument_type) {
-      return reply.status(400).send({ error: 'system_id, tag, and instrument_type are required' });
+    if (!data.system_id) {
+      data.system_id = await findSystemIdByCode(request.body.system_code, platformId);
+    }
+    stripMetaKeys(data, ['system_code', 'platformId', 'platform_id']);
+
+    if (!data.system_id) {
+      return reply.status(400).send({
+        error: request.body.system_code
+          ? `Unknown system code "${request.body.system_code}" for this platform. Create the system first, or pick an existing one.`
+          : 'A system is required — provide system_code (or system_id).',
+      });
+    }
+    if (!data.tag || !data.instrument_type) {
+      return reply.status(400).send({ error: 'tag and instrument_type are required' });
     }
 
     try {
