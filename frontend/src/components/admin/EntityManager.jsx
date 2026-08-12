@@ -44,7 +44,9 @@ function CellEditor({ column, value, onChange }) {
 
 // Generate CSV template string from columns
 function generateTemplate(columns, title) {
-  const headers = columns.filter(c => c.editable !== false).map(c => c.label);
+  // Header must be the DB field keys, not the display labels — the import
+  // endpoints match on keys (system_code, tag, ...) and reject label headers.
+  const headers = columns.filter(c => c.editable !== false).map(c => c.key);
   return `${headers.join(',')}\n`;
 }
 

@@ -606,10 +606,12 @@ export default async function adminImportExportRoutes(fastify) {
       const data = {
         instrument_type: obj.instrument_type,
         description: obj.description,
-        range_min: toNumber(obj.range_min),
-        range_max: toNumber(obj.range_max),
+        // These are VarChar columns, not numerics — ranges are often written as
+        // "0-100" or "1.5 barg", so keep the text as-is rather than coercing.
+        range_min: obj.range_min || null,
+        range_max: obj.range_max || null,
         range_unit: obj.range_unit,
-        set_point: toNumber(obj.set_point),
+        set_point: obj.set_point || null,
         scada_tag: obj.scada_tag,
         io_type: obj.io_type,
         signal_type: obj.signal_type,

@@ -133,6 +133,7 @@ export default function PnidViewer({ pnidId, pnidTitle, drawingNumber, onClose, 
   const [tagSearchSelection, setTagSearchSelection] = useState(null);
   const [tagSearchRelations, setTagSearchRelations] = useState(null);
   const smartIdentInitRef = useRef(false);
+  const smartIdentSessionFailedRef = useRef(false);
   const smartDrawStageRef = useRef(null);
   const smartIdentHistory = useSmartIdentHistory();
 
@@ -434,9 +435,10 @@ export default function PnidViewer({ pnidId, pnidTitle, drawingNumber, onClose, 
   useEffect(() => {
     if (!smartIdentMode) {
       smartIdentInitRef.current = false;
+      smartIdentSessionFailedRef.current = false;
       return;
     }
-    if (smartIdentSession || smartIdentInitRef.current) return;
+    if (smartIdentSession || smartIdentInitRef.current || smartIdentSessionFailedRef.current) return;
     if (loadingSmartSessions) return;
 
     smartIdentInitRef.current = true;
@@ -472,6 +474,7 @@ export default function PnidViewer({ pnidId, pnidTitle, drawingNumber, onClose, 
     if (resume?.id) {
       loadSession(resume.id).catch(() => {
         smartIdentInitRef.current = false;
+        smartIdentSessionFailedRef.current = true;
         setSmartIdentSaveError('Could not resume draw session');
       });
       return;
@@ -485,9 +488,17 @@ export default function PnidViewer({ pnidId, pnidTitle, drawingNumber, onClose, 
           setSmartIdentSegments(data.segments || []);
           setSmartIdentSaveError(null);
         },
-        onError: () => {
+        onError: (err) => {
           smartIdentInitRef.current = false;
-          setSmartIdentSaveError('Could not start draw session');
+          smartIdentSessionFailedRef.current = true;
+          const msg = err?.message || '';
+          if (msg.includes('401') || msg.toLowerCase().includes('authentication')) {
+            setSmartIdentSaveError('Sign in required — log in again to use Smart Identification');
+          } else if (msg.includes('403') || msg.toLowerCase().includes('permission')) {
+            setSmartIdentSaveError('You do not have Smart Annotation permission');
+          } else {
+            setSmartIdentSaveError('Could not start draw session');
+          }
         },
       }
     );

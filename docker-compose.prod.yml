@@ -1,4 +1,4 @@
-  services:
+services:
   # ── PostgreSQL Database ──
   # Uses your local PostgreSQL data via a named volume.
   # For a FRESH database: docker compose -f docker-compose.prod.yml down -v && docker compose -f docker-compose.prod.yml up --build -d
